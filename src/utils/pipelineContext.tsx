@@ -1,5 +1,5 @@
 /**
- * PaperKnife - The Swiss Army Knife for PDFs
+ * Zia-PDF - The Swiss Army Knife for PDFs
  * Copyright (C) 2026 Zackery Alline Fajardo
  * 
  * This program is free software: you can redistribute it and/or modify

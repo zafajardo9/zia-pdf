@@ -1,5 +1,5 @@
 /**
- * PaperKnife - The Swiss Army Knife for PDFs
+ * Zia-PDF - The Swiss Army Knife for PDFs
  * Copyright (C) 2026 Zackery Alline Fajardo
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -14,6 +14,7 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Share } from '@capacitor/share';
 // Explicitly import the worker as a URL so Vite handles it correctly
 import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+import { BRAND } from '../config/brand';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
@@ -26,7 +27,7 @@ export interface PdfMetaData {
 // Fixed cMapUrl for true offline usage (relative to base)
 const getCMapUrl = () => {
   const isCapacitor = Capacitor.isNativePlatform();
-  return isCapacitor ? 'cmaps/' : '/PaperKnife/cmaps/';
+  return isCapacitor ? 'cmaps/' : `${import.meta.env.BASE_URL}cmaps/`;
 };
 
 /**
@@ -130,7 +131,7 @@ export const shareFile = async (data: Uint8Array | string, fileName: string, mim
 
       await Share.share({
         title: fileName,
-        text: `Shared via PaperKnife`,
+        text: `${BRAND.shareMessage} with ${BRAND.name}`,
         url: result.uri,
         dialogTitle: 'Share PDF'
       });
@@ -153,7 +154,7 @@ export const shareFile = async (data: Uint8Array | string, fileName: string, mim
         await navigator.share({
           files: [file],
           title: fileName,
-          text: 'Shared via PaperKnife'
+          text: `${BRAND.shareMessage} with ${BRAND.name}`
         });
         return true;
       } catch (e) {

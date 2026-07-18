@@ -9,6 +9,7 @@ import { usePipeline } from '../../utils/pipelineContext'
 import SuccessState from './shared/SuccessState'
 import PrivacyBadge from './shared/PrivacyBadge'
 import { NativeToolLayout } from './shared/NativeToolLayout'
+import { BRAND } from '../../config/brand'
 
 type PageNumberPdfData = { file: File, pageCount: number, isLocked: boolean, password?: string, pdfDoc?: any, thumbnail?: string }
 type Position = 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right'
@@ -19,7 +20,7 @@ export default function PageNumberTool() {
   const [pdfData, setPdfData] = useState<PageNumberPdfData | null>(null)
   const [isProcessing, setIsProcessing] = useState(false)
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null)
-  const [customFileName, setCustomFileName] = useState('paperknife-numbered')
+  const [customFileName, setCustomFileName] = useState(`${BRAND.filePrefix}-numbered`)
   const [unlockPassword, setUnlockPassword] = useState('')
   const [format, setFormat] = useState('Page {n} of {total}')
   const [position, setPosition] = useState<Position>('bottom-center')
@@ -89,7 +90,7 @@ export default function PageNumberTool() {
   }
 
   const ActionButton = () => (
-    <button onClick={applyPageNumbers} disabled={isProcessing} className={`w-full bg-rose-500 hover:bg-rose-600 text-white font-black uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 py-4 rounded-2xl text-sm md:p-6 md:rounded-3xl md:text-xl flex items-center justify-center gap-3 shadow-lg shadow-rose-500/20`}>
+    <button onClick={applyPageNumbers} disabled={isProcessing} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:p-6 md:rounded-xl md:text-xl flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20`}>
       {isProcessing ? <Loader2 className="animate-spin" /> : <Hash size={20} />} Add Page Numbers
     </button>
   )
@@ -108,25 +109,25 @@ export default function PageNumberTool() {
       <input type="file" accept=".pdf" className="hidden" ref={fileInputRef} onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])} />
       
       {!pdfData ? (
-        <div onClick={() => !isProcessing && fileInputRef.current?.click()} className="border-4 border-dashed border-gray-100 dark:border-zinc-900 rounded-[2.5rem] p-12 text-center hover:bg-rose-50 dark:hover:bg-rose-900/10 transition-all cursor-pointer group">
-          <div className="w-20 h-20 bg-rose-50 dark:bg-rose-900/20 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform"><Hash size={32} /></div>
+        <div onClick={() => !isProcessing && fileInputRef.current?.click()} className="border-4 border-dashed border-gray-100 dark:border-zinc-900 rounded-xl p-12 text-center hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all cursor-pointer group">
+          <div className="w-20 h-20 bg-blue-50 dark:bg-blue-900/20 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform"><Hash size={32} /></div>
           <h3 className="text-xl font-bold dark:text-white mb-2">Select PDF</h3>
           <p className="text-sm text-gray-400">Tap to start numbering</p>
         </div>
       ) : pdfData.isLocked ? (
         <div className="max-w-md mx-auto relative z-[100]">
-          <div className="bg-white dark:bg-zinc-900 p-8 rounded-[2.5rem] border border-gray-100 dark:border-white/5 text-center shadow-2xl">
-            <div className="w-16 h-16 bg-rose-100 dark:bg-rose-900/30 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-6"><Lock size={32} /></div>
-            <input type="password" value={unlockPassword} onChange={(e) => setUnlockPassword(e.target.value)} placeholder="Password" className="w-full bg-gray-50 dark:bg-black rounded-xl px-4 py-4 border border-transparent focus:border-rose-500 outline-none font-bold text-center mb-4 dark:text-white" />
-            <button onClick={handleUnlock} disabled={!unlockPassword || isProcessing} className="w-full bg-rose-500 text-white p-4 rounded-2xl font-black uppercase text-xs">Unlock</button>
+          <div className="bg-white dark:bg-zinc-900 p-8 rounded-xl border border-gray-100 dark:border-white/5 text-center shadow-ambient">
+            <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-6"><Lock size={32} /></div>
+            <input type="password" value={unlockPassword} onChange={(e) => setUnlockPassword(e.target.value)} placeholder="Password" className="w-full bg-gray-50 dark:bg-black rounded-xl px-4 py-4 border border-transparent focus:border-blue-500 outline-none font-bold text-center mb-4 dark:text-white" />
+            <button onClick={handleUnlock} disabled={!unlockPassword || isProcessing} className="w-full bg-blue-500 text-white p-4 rounded-lg font-semibold uppercase text-xs">Unlock</button>
           </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-in fade-in duration-500">
           <div className="lg:col-span-2 space-y-6">
-            <div className="bg-white dark:bg-zinc-900 p-6 rounded-[2rem] border border-gray-100 dark:border-white/5 shadow-sm flex flex-col items-center">
+            <div className="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-gray-100 dark:border-white/5 shadow-sm flex flex-col items-center">
                <div className="flex justify-between items-center w-full mb-4 px-2">
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-gray-400 flex items-center gap-2"><Eye size={12}/> Live Preview</h4>
+                  <h4 className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 flex items-center gap-2"><Eye size={12}/> Live Preview</h4>
                </div>
                <div className="relative aspect-[3/4] w-full max-w-[300px] bg-white border border-gray-100 dark:border-zinc-800 rounded-xl overflow-hidden shadow-inner">
                   {pdfData.thumbnail ? (
@@ -142,20 +143,20 @@ export default function PageNumberTool() {
           </div>
 
           <div className="space-y-6">
-            <div className="bg-white dark:bg-zinc-900 p-8 rounded-[2rem] border border-gray-100 dark:border-white/5 shadow-sm space-y-6">
+            <div className="bg-white dark:bg-zinc-900 p-8 rounded-xl border border-gray-100 dark:border-white/5 shadow-sm space-y-6">
               {!downloadUrl ? (
                 <>
                   <div>
-                    <label className="block text-[10px] font-black uppercase text-gray-400 mb-3">Label Format</label>
-                    <input type="text" value={format} onChange={(e) => setFormat(e.target.value)} className="w-full bg-gray-50 dark:bg-black rounded-xl px-4 py-3 border border-transparent focus:border-rose-500 outline-none font-bold text-sm dark:text-white" placeholder="Page {n} of {total}" />
+                    <label className="block text-[10px] font-semibold uppercase text-gray-400 mb-3">Label Format</label>
+                    <input type="text" value={format} onChange={(e) => setFormat(e.target.value)} className="w-full bg-gray-50 dark:bg-black rounded-xl px-4 py-3 border border-transparent focus:border-blue-500 outline-none font-bold text-sm dark:text-white" placeholder="Page {n} of {total}" />
                     <p className="text-[8px] text-gray-400 mt-2">Use <b>{'{n}'}</b> for page number and <b>{'{total}'}</b> for total pages.</p>
                   </div>
                   
                   <div>
-                    <label className="block text-[10px] font-black uppercase text-gray-400 mb-3">Position</label>
+                    <label className="block text-[10px] font-semibold uppercase text-gray-400 mb-3">Position</label>
                     <div className="grid grid-cols-3 gap-2">
                       {(['top-left', 'top-center', 'top-right', 'bottom-left', 'bottom-center', 'bottom-right'] as Position[]).map(pos => (
-                        <button key={pos} onClick={() => setPosition(pos)} className={`py-3 px-1 rounded-xl text-[8px] font-black uppercase transition-all border ${position === pos ? 'bg-rose-500 text-white border-rose-500 shadow-lg shadow-rose-500/20' : 'bg-gray-50 dark:bg-black text-gray-400 border-gray-100 dark:border-zinc-800'}`}>
+                        <button key={pos} onClick={() => setPosition(pos)} className={`py-3 px-1 rounded-xl text-[8px] font-semibold uppercase transition-all border ${position === pos ? 'bg-blue-500 text-white border-blue-500 shadow-sm shadow-blue-500/20' : 'bg-gray-50 dark:bg-black text-gray-400 border-gray-100 dark:border-zinc-800'}`}>
                           {pos.replace('-', ' ')}
                         </button>
                       ))}
@@ -163,14 +164,14 @@ export default function PageNumberTool() {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-black uppercase text-gray-400 mb-3">Output Filename</label>
-                    <input type="text" value={customFileName} onChange={(e) => setCustomFileName(e.target.value)} className="w-full bg-gray-50 dark:bg-black rounded-xl px-4 py-3 border border-transparent focus:border-rose-500 outline-none font-bold text-sm dark:text-white" />
+                    <label className="block text-[10px] font-semibold uppercase text-gray-400 mb-3">Output Filename</label>
+                    <input type="text" value={customFileName} onChange={(e) => setCustomFileName(e.target.value)} className="w-full bg-gray-50 dark:bg-black rounded-xl px-4 py-3 border border-transparent focus:border-blue-500 outline-none font-bold text-sm dark:text-white" />
                   </div>
                 </>
               ) : (
                 <SuccessState message="Numbers Applied Successfully!" downloadUrl={downloadUrl} fileName={`${customFileName}.pdf`} onStartOver={() => setDownloadUrl(null)} />
               )}
-              <button onClick={() => setPdfData(null)} className="w-full py-2 text-[10px] font-black uppercase text-gray-300 hover:text-rose-500 transition-colors">Close File</button>
+              <button onClick={() => setPdfData(null)} className="w-full py-2 text-[10px] font-semibold uppercase text-gray-300 hover:text-blue-500 transition-colors">Close File</button>
             </div>
           </div>
         </div>

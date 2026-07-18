@@ -1,1 +1,1 @@
-PaperKnife: Privacy-First PDF Utility
+Zia-PDF: Private & Offline PDF Tools

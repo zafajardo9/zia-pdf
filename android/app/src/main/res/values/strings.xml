@@ -1,7 +1,7 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PaperKnife</string>
-    <string name="title_activity_main">PaperKnife</string>
-    <string name="package_name">com.paperknife.app</string>
-    <string name="custom_url_scheme">com.paperknife.app</string>
+    <string name="app_name">Zia-PDF</string>
+    <string name="title_activity_main">Zia-PDF</string>
+    <string name="package_name">com.ziapdf.app</string>
+    <string name="custom_url_scheme">com.ziapdf.app</string>
 </resources>

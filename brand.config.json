@@ -1,0 +1,21 @@
+{
+  "name": "Zia-PDF",
+  "shortName": "Zia-PDF",
+  "tagline": "Private & Offline PDF Tools",
+  "description": "Private PDF utilities that merge, split, compress, sign, and protect documents entirely on your device.",
+  "shareMessage": "Processed privately and locally",
+  "filePrefix": "zia-pdf",
+  "appId": "com.ziapdf.app",
+  "version": "1.0.9",
+  "siteUrl": "https://zafajardo9.github.io/Zia-PDF/",
+  "repositoryUrl": "https://github.com/zafajardo9/Zia-PDF",
+  "authorName": "Zackery Alline Fajardo",
+  "copyrightYear": 2026,
+  "themeColor": "#0969DA",
+  "backgroundColor": "#0B0D10",
+  "logo": {
+    "source": "assets/new-logo.svg",
+    "publicPath": "./icons/logo.png",
+    "launcherBackground": "#0B0D10"
+  }
+}

@@ -32,7 +32,7 @@
                 <data android:mimeType="application/pdf" />
             </intent-filter>
 
-            <!-- Share to PaperKnife -->
+            <!-- Share to Zia-PDF -->
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />

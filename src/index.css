@@ -32,10 +32,48 @@
 
 :root {
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  color-scheme: light;
+  --bg-primary: #f6f7f9;
+  --bg-secondary: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-hover: #f0f2f5;
+  --fg-primary: #101114;
+  --fg-muted: #686d76;
+  --border: #dde0e5;
+  --accent: #0969da;
+  --accent-hover: #0759bc;
+  --accent-soft: #eaf3ff;
+  --focus: rgba(9, 105, 218, 0.24);
+  --success: #17803d;
+  --warning: #a15c00;
+  --danger: #cf222e;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --shadow-ambient: 0 12px 38px rgba(22, 27, 34, 0.07);
+  --shell-height: 64px;
+}
+
+.dark {
+  color-scheme: dark;
+  --bg-primary: #0b0d10;
+  --bg-secondary: #12151a;
+  --bg-elevated: #171a20;
+  --bg-hover: #1d2128;
+  --fg-primary: #f3f5f7;
+  --fg-muted: #9aa1ab;
+  --border: #292e36;
+  --accent: #58a6ff;
+  --accent-hover: #79b8ff;
+  --accent-soft: rgba(56, 139, 253, 0.14);
+  --focus: rgba(88, 166, 255, 0.26);
+  --success: #3fb950;
+  --warning: #d29922;
+  --danger: #f85149;
+  --shadow-ambient: 0 16px 44px rgba(0, 0, 0, 0.26);
 }
 
 html, body {
-  @apply bg-[#FAFAFA] dark:bg-black;
+  background: var(--bg-primary);
   margin: 0;
   padding: 0;
   height: 100%;
@@ -44,18 +82,122 @@ html, body {
 
 body {
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-  @apply text-gray-900 dark:text-zinc-100 bg-[#FAFAFA] dark:bg-black transition-colors duration-500 ease-in-out;
+  background: var(--bg-primary);
+  color: var(--fg-primary);
+  font-size: 14px;
+  line-height: 1.5;
+  transition: background-color 180ms ease, color 180ms ease;
   overflow-x: hidden;
 }
 
 /* Global seamless theme transition - target only background and text colors */
 .theme-transition {
-  @apply transition-colors duration-500 ease-in-out;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
 }
 
-/* Specific component transitions */
-header, footer, nav, aside, main, section, div, button, input, select {
-  transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out, color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+button, a, input, select, textarea {
+  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease, opacity 140ms ease, transform 140ms ease;
+}
+
+:where(button, a, input, select, textarea):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  color: white;
+  background: var(--accent);
+}
+
+/* Shared visual migration layer for existing PDF workflows. */
+.tool-workspace {
+  color: var(--fg-primary);
+}
+
+.tool-workspace :where(input:not([type='range']), select, textarea) {
+  background: var(--bg-primary) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--fg-primary) !important;
+  box-shadow: none !important;
+}
+
+.tool-workspace :where(input:not([type='range']), select, textarea):focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--focus) !important;
+}
+
+.tool-workspace :where(.rounded-\[2\.5rem\], .rounded-\[2\.25rem\], .rounded-\[2rem\], .rounded-3xl) {
+  border-radius: var(--radius-md) !important;
+}
+
+.tool-workspace :where(.shadow-2xl, .shadow-xl, .shadow-lg) {
+  box-shadow: var(--shadow-ambient) !important;
+}
+
+.tool-workspace :where(.border-4) {
+  border-width: 1px !important;
+}
+
+.tool-workspace :where(.font-black) {
+  font-weight: 600 !important;
+}
+
+.tool-workspace :where(.uppercase) {
+  letter-spacing: .08em !important;
+}
+
+.tool-workspace :where(.bg-rose-500) {
+  background-color: var(--accent) !important;
+}
+
+.tool-workspace :where(.text-rose-500, .text-rose-600) {
+  color: var(--accent) !important;
+}
+
+.tool-workspace :where(.border-rose-500) {
+  border-color: var(--accent) !important;
+}
+
+.tool-workspace :where(.bg-rose-50) {
+  background-color: var(--accent-soft) !important;
+}
+
+.tool-workspace :where(.hover\:bg-rose-50:hover) {
+  background-color: var(--accent-soft) !important;
+}
+
+.system-surface {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.system-label {
+  color: var(--fg-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.system-button-primary {
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.system-button-primary:hover {
+  background: var(--accent-hover);
+}
+
+.system-button-primary:disabled {
+  opacity: .4;
+  cursor: not-allowed;
 }
 
 .pt-safe {
@@ -80,9 +222,19 @@ header, footer, nav, aside, main, section, div, button, input, select {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-200 dark:bg-zinc-800 rounded-full;
+  background: var(--border);
+  border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-300 dark:bg-zinc-700;
+  background: var(--fg-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
 }

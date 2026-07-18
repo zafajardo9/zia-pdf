@@ -8,6 +8,7 @@ import { usePipeline } from '../../utils/pipelineContext'
 import SuccessState from './shared/SuccessState'
 import PrivacyBadge from './shared/PrivacyBadge'
 import { NativeToolLayout } from './shared/NativeToolLayout'
+import { BRAND } from '../../config/brand'
 
 export default function RepairTool() {
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -57,7 +58,7 @@ export default function RepairTool() {
   }
 
   const ActionButton = () => (
-    <button onClick={startRepair} disabled={isProcessing} className="w-full bg-rose-500 hover:bg-rose-600 text-white font-black uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 py-4 rounded-2xl text-sm md:p-6 md:rounded-3xl md:text-xl flex items-center justify-center gap-3 shadow-lg shadow-rose-500/20">
+    <button onClick={startRepair} disabled={isProcessing} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:p-6 md:rounded-xl md:text-xl flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20">
       {isProcessing ? <Loader2 className="animate-spin" /> : <FileCheck size={20} />} Attempt Repair
     </button>
   )
@@ -67,32 +68,32 @@ export default function RepairTool() {
       <input type="file" accept=".pdf" className="hidden" ref={fileInputRef} onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])} />
       
       {!originalFile ? (
-        <div onClick={() => !isProcessing && fileInputRef.current?.click()} className="border-4 border-dashed border-gray-100 dark:border-zinc-900 rounded-[2.5rem] p-12 text-center hover:bg-rose-50 dark:hover:bg-rose-900/10 transition-all cursor-pointer group">
-          <div className="w-20 h-20 bg-rose-50 dark:bg-rose-900/20 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform"><Upload size={32} /></div>
+        <div onClick={() => !isProcessing && fileInputRef.current?.click()} className="border-4 border-dashed border-gray-100 dark:border-zinc-900 rounded-xl p-12 text-center hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all cursor-pointer group">
+          <div className="w-20 h-20 bg-blue-50 dark:bg-blue-900/20 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform"><Upload size={32} /></div>
           <h3 className="text-xl font-bold dark:text-white mb-2">Select Corrupted PDF</h3>
           <p className="text-sm text-gray-400">Tap to browse local files</p>
         </div>
       ) : (
         <div className="space-y-6">
-          <div className="bg-white dark:bg-zinc-900 p-6 rounded-3xl border border-gray-100 dark:border-white/5 flex items-center gap-6 shadow-sm">
-            <div className="w-16 h-16 bg-rose-50 dark:bg-rose-900/20 text-rose-500 rounded-2xl flex items-center justify-center shrink-0"><ShieldAlert size={24} /></div>
+          <div className="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-gray-100 dark:border-white/5 flex items-center gap-6 shadow-sm">
+            <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/20 text-blue-500 rounded-lg flex items-center justify-center shrink-0"><ShieldAlert size={24} /></div>
             <div className="flex-1 min-w-0 text-left">
               <h3 className="font-bold text-sm truncate dark:text-white">{originalFile.name}</h3>
-              <p className="text-[10px] text-gray-400 uppercase font-black">{(originalFile.size / (1024*1024)).toFixed(2)} MB</p>
+              <p className="text-[10px] text-gray-400 uppercase font-semibold">{(originalFile.size / (1024*1024)).toFixed(2)} MB</p>
             </div>
-            <button onClick={() => setOriginalFile(null)} className="p-2 text-gray-400 hover:text-rose-500 transition-colors"><X size={20} /></button>
+            <button onClick={() => setOriginalFile(null)} className="p-2 text-gray-400 hover:text-blue-500 transition-colors"><X size={20} /></button>
           </div>
 
-          <div className="bg-white dark:bg-zinc-900 p-8 rounded-[2rem] border border-gray-100 dark:border-white/5 space-y-8 shadow-sm">
+          <div className="bg-white dark:bg-zinc-900 p-8 rounded-xl border border-gray-100 dark:border-white/5 space-y-8 shadow-sm">
             {!downloadUrl ? (
               <div className="space-y-6">
                 <div>
-                  <label className="block text-[10px] font-black uppercase text-gray-400 mb-3">Output Filename</label>
+                  <label className="block text-[10px] font-semibold uppercase text-gray-400 mb-3">Output Filename</label>
                   <input 
                     type="text" 
                     value={customFileName} 
                     onChange={(e) => setCustomFileName(e.target.value)} 
-                    className="w-full bg-gray-50 dark:bg-black rounded-xl px-4 py-3 border border-transparent focus:border-rose-500 outline-none font-bold text-sm dark:text-white" 
+                    className="w-full bg-gray-50 dark:bg-black rounded-xl px-4 py-3 border border-transparent focus:border-blue-500 outline-none font-bold text-sm dark:text-white" 
                   />
                 </div>
               </div>
@@ -103,11 +104,11 @@ export default function RepairTool() {
         </div>
       )}
 
-      <div className="mt-8 p-6 bg-amber-50 dark:bg-amber-900/10 rounded-2xl border border-amber-100 dark:border-white/5 flex items-start gap-4">
+      <div className="mt-8 p-6 bg-amber-50 dark:bg-amber-900/10 rounded-lg border border-amber-100 dark:border-white/5 flex items-start gap-4">
         <ShieldAlert className="text-amber-500 shrink-0" size={20} />
         <div className="text-xs text-amber-700 dark:text-amber-400 leading-relaxed text-left">
-          <p className="font-black mb-1 uppercase tracking-widest text-[10px]">Technical Protocol:</p>
-          PaperKnife rebuilds the internal cross-reference table and regenerates the file structure from scratch. This can restore access to many files that "cannot be opened."
+          <p className="font-semibold mb-1 uppercase tracking-widest text-[10px]">Technical Protocol:</p>
+          {BRAND.name} rebuilds the internal cross-reference table and regenerates the file structure from scratch. This can restore access to many files that "cannot be opened."
         </div>
       </div>
       <PrivacyBadge />

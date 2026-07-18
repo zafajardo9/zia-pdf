@@ -4,17 +4,18 @@ import {
   Search, ChevronRight
 } from 'lucide-react'
 import { Tool, ToolCategory } from '../types'
-import { PaperKnifeLogo } from './Logo'
+import { BrandLogo } from './Logo'
+import { BRAND } from '../config/brand'
 
 export default function AndroidToolsView({ tools }: { tools: Tool[] }) {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
 
   const categoryColors: Record<ToolCategory, { bg: string, text: string, icon: string, border: string }> = {
-    Edit: { bg: 'bg-rose-50 dark:bg-rose-900/10', text: 'text-rose-600 dark:text-rose-400', icon: 'text-rose-500', border: 'border-rose-100/50 dark:border-rose-900/20' },
-    Secure: { bg: 'bg-indigo-50 dark:bg-indigo-900/10', text: 'text-indigo-600 dark:text-indigo-400', icon: 'text-indigo-500', border: 'border-indigo-100/50 dark:border-indigo-900/20' },
-    Convert: { bg: 'bg-emerald-50 dark:bg-emerald-900/10', text: 'text-emerald-600 dark:text-emerald-400', icon: 'text-emerald-500', border: 'border-emerald-100/50 dark:border-emerald-900/20' },
-    Optimize: { bg: 'bg-amber-50 dark:bg-amber-900/10', text: 'text-amber-600 dark:text-amber-400', icon: 'text-amber-500', border: 'border-amber-100/50 dark:border-amber-900/20' }
+    Edit: { bg: 'bg-[var(--accent-soft)]', text: 'text-accent', icon: 'text-accent', border: 'border-line' },
+    Secure: { bg: 'bg-[var(--accent-soft)]', text: 'text-accent', icon: 'text-accent', border: 'border-line' },
+    Convert: { bg: 'bg-[var(--accent-soft)]', text: 'text-accent', icon: 'text-accent', border: 'border-line' },
+    Optimize: { bg: 'bg-[var(--accent-soft)]', text: 'text-accent', icon: 'text-accent', border: 'border-line' }
   }
 
   const filteredTools = useMemo(() => {
@@ -33,9 +34,10 @@ export default function AndroidToolsView({ tools }: { tools: Tool[] }) {
   }, [filteredTools])
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] dark:bg-black pb-32 transition-colors">
+    <div className="min-h-screen bg-canvas pb-32 text-ink">
       <header className="px-6 pt-[calc(env(safe-area-inset-top)+0.75rem)] pb-6">
-        <h1 className="text-4xl font-black tracking-tighter dark:text-white mb-8">All Tools</h1>
+        <p className="system-label mb-2">Local toolkit</p>
+        <h1 className="mb-6 text-3xl font-semibold tracking-[-0.035em]">All tools</h1>
         
         <div className="relative group">
           <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-gray-500">
@@ -46,7 +48,7 @@ export default function AndroidToolsView({ tools }: { tools: Tool[] }) {
             placeholder="Search for a tool..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#EEE8F4] dark:bg-[#2B2930] border-none rounded-[1.75rem] py-4 pl-14 pr-6 text-base font-bold placeholder:text-gray-400 focus:bg-white dark:focus:bg-[#36343B] ring-2 ring-transparent focus:ring-rose-500/10 transition-all dark:text-white outline-none shadow-sm"
+            className="w-full rounded-ui border border-line bg-surface py-3.5 pl-12 pr-5 text-sm text-ink outline-none placeholder:text-muted focus:border-accent focus:ring-4 focus:ring-[var(--focus)]"
           />
         </div>
       </header>
@@ -54,7 +56,7 @@ export default function AndroidToolsView({ tools }: { tools: Tool[] }) {
       <main className="px-4 space-y-8">
         {(Object.keys(groupedTools) as ToolCategory[]).map((category) => (
           <section key={category} className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <h3 className="px-2 mb-4 text-[11px] font-black uppercase tracking-[0.2em] text-[#49454F] dark:text-[#CAC4D0]">
+            <h3 className="system-label mb-3 px-1">
               {category} Tools
             </h3>
             <div className="grid grid-cols-1 gap-2">
@@ -65,7 +67,7 @@ export default function AndroidToolsView({ tools }: { tools: Tool[] }) {
                   <button
                     key={i}
                     onClick={() => tool.implemented && tool.path && navigate(tool.path)}
-                    className="flex items-center gap-4 p-4 bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 active:bg-gray-50 dark:active:bg-black transition-all shadow-sm"
+                    className="flex items-center gap-4 rounded-panel border border-line bg-surface p-4 hover:border-accent/40 hover:bg-hover"
                   >
                     <div className={`w-12 h-12 ${colors.bg} ${colors.icon} rounded-xl flex items-center justify-center shrink-0`}>
                       <Icon size={24} strokeWidth={1.5} />
@@ -84,8 +86,8 @@ export default function AndroidToolsView({ tools }: { tools: Tool[] }) {
       </main>
 
       <footer className="text-center py-12 opacity-20">
-         <PaperKnifeLogo size={24} iconColor="#F43F5E" partColor="currentColor" className="mx-auto mb-4" />
-         <p className="text-[9px] font-black uppercase tracking-[0.5em]">PaperKnife Version 1.0.9</p>
+         <BrandLogo size={24} className="mx-auto mb-4" />
+         <p className="text-[9px] font-semibold uppercase tracking-[0.5em]">{BRAND.name} Version {BRAND.version}</p>
       </footer>
     </div>
   )

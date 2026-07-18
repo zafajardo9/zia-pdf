@@ -87,7 +87,7 @@ export default function SuccessState({ message, downloadUrl, fileName, onStartOv
   }
 
   return (
-    <div className="animate-in slide-in-from-bottom duration-500 fade-in space-y-6">
+    <div className="space-y-5" role="status" aria-live="polite">
       {internalPreviewFile && (
         <PdfPreview 
           file={internalPreviewFile} 
@@ -105,7 +105,7 @@ export default function SuccessState({ message, downloadUrl, fileName, onStartOv
         />
       )}
 
-      <div className="bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 p-3 md:p-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-xs md:text-sm border border-green-100 dark:border-green-900/30">
+      <div className="flex items-center gap-3 rounded-panel border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold text-emerald-700 dark:border-emerald-900/50 dark:bg-emerald-950/30 dark:text-emerald-400">
         <CheckCircle2 size={16} /> {message}
       </div>
       
@@ -114,7 +114,7 @@ export default function SuccessState({ message, downloadUrl, fileName, onStartOv
           {showPreview && (
             <button 
               onClick={handlePreview}
-              className="flex-1 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white border border-gray-200 dark:border-zinc-800 p-4 rounded-2xl md:rounded-3xl shadow-sm font-black text-sm md:text-xl tracking-tight transition-all hover:bg-gray-50 active:scale-95 flex items-center justify-center gap-2"
+              className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-ui border border-line bg-surface px-4 py-3 text-sm font-semibold text-ink hover:bg-hover"
             >
               <Eye size={20} /> Preview
             </button>
@@ -122,7 +122,7 @@ export default function SuccessState({ message, downloadUrl, fileName, onStartOv
           
           <button 
             onClick={handleShare}
-            className="flex-1 bg-rose-50 dark:bg-rose-900/20 text-rose-500 border border-rose-100 dark:border-rose-900/30 p-4 rounded-2xl md:rounded-3xl shadow-sm font-black text-sm md:text-xl tracking-tight transition-all active:scale-95 flex items-center justify-center gap-2"
+            className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-ui border border-line bg-surface px-4 py-3 text-sm font-semibold text-ink hover:bg-hover"
           >
             <Share2 size={20} /> Share
           </button>
@@ -130,7 +130,7 @@ export default function SuccessState({ message, downloadUrl, fileName, onStartOv
         
         <button 
           onClick={handleDownload}
-          className="w-full bg-gray-900 dark:bg-white text-white dark:text-black p-4 md:p-6 rounded-2xl md:rounded-3xl shadow-xl font-black text-lg md:text-xl tracking-tight transition-all hover:scale-[1.01] active:scale-95 flex items-center justify-center gap-3"
+          className="system-button-primary flex w-full items-center justify-center gap-2"
         >
           <Download size={24} /> {isNative ? 'Save to Device' : 'Download'}
         </button>
@@ -138,7 +138,7 @@ export default function SuccessState({ message, downloadUrl, fileName, onStartOv
 
       <button 
         onClick={onStartOver}
-        className="w-full mt-6 py-4 bg-gray-50 dark:bg-zinc-900 text-gray-400 hover:text-rose-500 dark:hover:text-rose-500 rounded-2xl border border-gray-100 dark:border-white/5 font-black text-[10px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 active:scale-95 shadow-sm"
+        className="mt-2 flex w-full items-center justify-center gap-2 rounded-ui px-4 py-3 text-xs font-semibold text-muted hover:bg-hover hover:text-accent"
       >
         <RotateCcw size={14} /> Start New Session
       </button>

@@ -7,8 +7,26 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        canvas: 'var(--bg-primary)',
+        surface: 'var(--bg-secondary)',
+        elevated: 'var(--bg-elevated)',
+        hover: 'var(--bg-hover)',
+        ink: 'var(--fg-primary)',
+        muted: 'var(--fg-muted)',
+        line: 'var(--border)',
+        accent: 'var(--accent)',
+        'accent-hover': 'var(--accent-hover)',
+      },
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+      },
+      borderRadius: {
+        ui: 'var(--radius-sm)',
+        panel: 'var(--radius-md)',
+      },
+      boxShadow: {
+        ambient: 'var(--shadow-ambient)',
       },
       keyframes: {
         slideIn: {

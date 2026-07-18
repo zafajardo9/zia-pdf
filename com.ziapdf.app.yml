@@ -2,15 +2,15 @@ Categories:
   - Security
   - Writing
 License: AGPL-3.0-or-later
-WebSite: https://zafajardo9.github.io/PaperKnife/
-SourceCode: https://github.com/zafajardo9/PaperKnife
-IssueTracker: https://github.com/zafajardo9/PaperKnife/issues
+WebSite: https://zafajardo9.github.io/Zia-PDF/
+SourceCode: https://github.com/zafajardo9/Zia-PDF
+IssueTracker: https://github.com/zafajardo9/Zia-PDF/issues
 
-AutoName: PaperKnife
+AutoName: Zia-PDF
 
 Summary: Privacy-first PDF utility (Zero-Server Architecture)
 Description: |-
-  PaperKnife is a professional-grade, open-source PDF utility designed with a 
+  Zia-PDF is a professional-grade, open-source PDF utility designed with a 
   "Zero-Server Architecture." Every operation (Merge, Split, Compress, etc.) 
   happens 100% locally on your device.
 
@@ -22,13 +22,13 @@ Description: |-
   - Convert Images to PDF and vice versa.
   - Edit metadata and sign documents electronically.
 
-  Built for the community, PaperKnife is fully open-source and contains no tracking, 
+  Built for the community, Zia-PDF is fully open-source and contains no tracking, 
   no analytics, and no advertisements.
 
 RepoType: git
-Repo: https://github.com/zafajardo9/PaperKnife.git
+Repo: https://github.com/zafajardo9/Zia-PDF.git
 Binaries: 
-  https://github.com/zafajardo9/PaperKnife/releases/download/v%v/paperknife-lite-v%v.apk
+  https://github.com/zafajardo9/Zia-PDF/releases/download/v%v/zia-pdf-lite-v%v.apk
 
 Builds:
   - versionName: 1.0.9

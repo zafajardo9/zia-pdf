@@ -1,67 +1,80 @@
-<p align="center">
-  <img src="public/icons/logo-github.svg" width="120" alt="PaperKnife Logo">
-</p>
+# Zia-PDF
 
-# PaperKnife
-
-**A simple, honest PDF utility that respects your privacy.**
-
-[![License](https://img.shields.io/badge/license-AGPL--3.0-rose.svg)](LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/zafajardo9/PaperKnife?style=flat&color=rose)](https://github.com/zafajardo9/PaperKnife/stargazers)
-[![Web App](https://img.shields.io/badge/web-live-emerald.svg)](https://zafajardo9.github.io/PaperKnife/)
-[![Android App](https://img.shields.io/badge/android-apk-blue.svg)](https://github.com/zafajardo9/PaperKnife/releases/latest)
+**A privacy-first PDF utility that runs entirely on your device — no uploads, no servers, no tracking.**
 
 ---
 
-## Preview
+## Goals
 
-<p align="center">
-  <img src="assets/preview/screenshot1.jpg" width="45%" alt="Web View">
-  <img src="assets/preview/screenshot2.jpg" width="45%" alt="Android View">
-</p>
-
----
-
-### Why I built this
-
-Most PDF websites ask you to upload your sensitive documents—bank statements, IDs, contracts—to their servers. Even if they promise to delete them, your data still leaves your device and travels across the internet.
-
-I built **PaperKnife** to solve this. It's a collection of tools that run entirely in your browser or on your phone. Your files never leave your memory, they aren't stored in any database, and no server ever sees them. It works 100% offline.
-
-### What it can do
-
-*   **Modify:** Merge multiple files, split pages, rotate, and rearrange.
-*   **Optimize:** Reduce file size with different quality presets.
-*   **Secure:** Encrypt files with passwords or remove them locally.
-*   **Convert:** Convert between PDF and images (JPG/PNG) or plain text.
-*   **Sign:** Add an electronic signature to your documents safely.
-*   **Sanitize:** Deep clean metadata (like Author or Producer) to keep your files anonymous.
-
-### How to use it
-
-*   **On Android:** Download the [latest APK](https://github.com/zafajardo9/PaperKnife/releases/latest) or get it from:
-
-[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png" height="80" alt="Get it at IzzyOnDroid">](https://apt.izzysoft.de/packages/com.paperknife.app)
-
-*   **On the Web:** Visit the [live site](https://zafajardo9.github.io/PaperKnife/). You can use it like any other website, or "install" it as a PWA for offline access.
+- **100% Local Processing.** Every operation happens in the browser or on-device. Files never leave your memory, are never uploaded to any server, and are never stored in any database.
+- **Offline-First.** Works without an internet connection. No network requests, no telemetry, no analytics.
+- **Privacy by Design.** No accounts, no sign-ups, no data collection. Your documents remain yours alone.
+- **Cross-Platform.** Available as a web app (PWA) and a native Android app from a single codebase.
+- **Open & Transparent.** Licensed under AGPL v3 to ensure the code stays open forever. No hidden functionality, no trackers, no ads.
 
 ---
 
-### Support the project
+## Features
 
-PaperKnife is a free, open-source, ad-free, and tracker-free tool because privacy is a right, not a luxury.
+### Modify
+- **Merge** — Combine multiple PDFs into a single file.
+- **Split** — Extract specific pages or split by page ranges.
+- **Rotate** — Rotate individual or all pages in 90° increments.
+- **Rearrange** — Drag-and-drop to reorder, add, or remove pages.
 
-If this tool has saved you time or kept your data safe, please consider:
-*   **Giving a Star:** It helps other people find the project.
-*   **Spreading the word:** Share it with anyone who handles sensitive documents.
+### Optimize
+- **Compress** — Reduce file size with multiple quality presets (low, medium, high).
+- **Resize** — Adjust page dimensions while preserving content.
+
+### Secure
+- **Encrypt** — Password-protect PDFs with user and owner passwords.
+- **Decrypt** — Remove password protection from encrypted files (locally).
+
+### Convert
+- **PDF to Image** — Export pages as JPG or PNG at configurable resolutions.
+- **PDF to Text** — Extract readable text using OCR via Tesseract.js.
+- **Images to PDF** — Combine multiple images into a single PDF.
+
+### Sign
+- **Electronic Signature** — Add drawn, typed, or uploaded signatures directly onto documents.
+
+### Sanitize
+- **Metadata Cleaner** — Strip author, producer, creator, and other hidden metadata to keep files anonymous.
+- **Redact** — Permanently remove sensitive content from pages.
 
 ---
 
-### Under the hood
+## Architecture
 
-PaperKnife is built with **React** and **TypeScript**. The core processing is handled by **pdf-lib** and **pdfjs-dist**, which run in a sandboxed environment using WebAssembly. The Android version is powered by **Capacitor**.
-
-This project is licensed under the **GNU AGPL v3** to ensure it remains open and transparent forever.
+| Layer | Technology |
+|-------|-----------|
+| UI Framework | React 18 + TypeScript |
+| Styling | Tailwind CSS |
+| Rendering & Manipulation | pdf-lib, pdfjs-dist (WebAssembly) |
+| OCR | Tesseract.js |
+| Routing | React Router |
+| Drag & Drop | dnd-kit |
+| Mobile (Android) | Capacitor |
+| Build Tooling | Vite + PWA plugin |
 
 ---
-*Made with care by [Zackery Alline Fajardo](https://github.com/zafajardo9)*
+
+## Change the App Name and Logo
+
+All brand settings live in [`brand.config.json`](brand.config.json). The master logo artwork is [`assets/new-logo.svg`](assets/new-logo.svg), referenced by the `logo.source` field.
+
+Change the name, tagline, URLs, application ID, file prefix, or logo source there. To replace the artwork, overwrite the single SVG referenced by `logo.source`. Then run:
+
+```bash
+npm run brand:sync
+```
+
+The sync is also automatic before `npm run dev` and `npm run build`. It updates the UI logo and name, browser favicon and metadata, PWA manifest, sharing text, default output filenames, Capacitor name, Android labels, adaptive icons, legacy launcher PNGs, and Play Store title.
+
+Changing `appId` changes the Android application identity. Keep it unchanged when updating an existing published app.
+
+---
+
+## License
+
+GNU Affero General Public License v3.0 (AGPL-3.0)

@@ -16,7 +16,7 @@ if (sourceDateEpoch != null) {
 }
 
 android {
-    namespace "com.paperknife.app"
+    namespace "com.ziapdf.app"
     compileSdk rootProject.ext.compileSdkVersion
     
     // Ensure deterministic output for Manifest and classes.dex
@@ -26,7 +26,7 @@ android {
         }
     }
         defaultConfig {
-            applicationId "com.paperknife.app"
+            applicationId "com.ziapdf.app"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             versionCode 10009

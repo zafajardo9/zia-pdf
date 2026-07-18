@@ -11,6 +11,7 @@ import { addActivity } from '../../utils/recentActivity'
 import SuccessState from './shared/SuccessState'
 import PrivacyBadge from './shared/PrivacyBadge'
 import { NativeToolLayout } from './shared/NativeToolLayout'
+import { BRAND } from '../../config/brand'
 
 type ImageFile = { id: string, file: File, preview: string }
 
@@ -18,11 +19,11 @@ function SortableImageItem({ id, img, onRemove }: { id: string, img: ImageFile, 
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id })
   const style = { transform: CSS.Transform.toString(transform), transition, zIndex: isDragging ? 50 : 0 }
   return (
-    <div ref={setNodeRef} style={style} className={`flex items-center gap-3 p-3 bg-white dark:bg-zinc-900 rounded-2xl border transition-colors shadow-sm group touch-none relative ${isDragging ? 'border-rose-500 shadow-xl scale-[1.02]' : 'border-gray-100 dark:border-white/5'}`}>
-      <div {...attributes} {...listeners} className="p-2 cursor-grab text-rose-400 hover:text-rose-600 active:scale-90 transition-transform"><GripVertical size={20} /></div>
+    <div ref={setNodeRef} style={style} className={`flex items-center gap-3 p-3 bg-white dark:bg-zinc-900 rounded-lg border transition-colors shadow-sm group touch-none relative ${isDragging ? 'border-blue-500 shadow-sm scale-[1.02]' : 'border-gray-100 dark:border-white/5'}`}>
+      <div {...attributes} {...listeners} className="p-2 cursor-grab text-blue-400 hover:text-blue-600 active:scale-90 transition-transform"><GripVertical size={20} /></div>
       <div className="w-12 h-16 bg-gray-100 dark:bg-black rounded-lg overflow-hidden shrink-0 border border-gray-200 dark:border-zinc-800"><img src={img.preview} alt="P" className="w-full h-full object-cover" /></div>
       <div className="flex-1 min-w-0"><p className="font-bold text-sm truncate dark:text-white">{img.file.name}</p></div>
-      <button onClick={() => onRemove(id)} className="p-2 text-gray-400 hover:text-rose-500"><X size={18} /></button>
+      <button onClick={() => onRemove(id)} className="p-2 text-gray-400 hover:text-blue-500"><X size={18} /></button>
     </div>
   )
 }
@@ -32,7 +33,7 @@ export default function ImageToPdfTool() {
   const [images, setImages] = useState<ImageFile[]>([])
   const [isProcessing, setIsProcessing] = useState(false)
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null)
-  const [customFileName, setCustomFileName] = useState('paperknife-images-to-pdf')
+  const [customFileName, setCustomFileName] = useState(`${BRAND.filePrefix}-images-to-pdf`)
   const isNative = Capacitor.isNativePlatform()
 
   const sensors = useSensors(useSensor(PointerSensor), useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }))
@@ -65,7 +66,7 @@ export default function ImageToPdfTool() {
   }
 
   const ActionButton = () => (
-    <button onClick={convertToPDF} disabled={isProcessing || images.length === 0} className={`w-full bg-rose-500 hover:bg-rose-600 text-white font-black uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-xl shadow-rose-500/20 ${isNative ? 'py-4 rounded-2xl text-sm' : 'p-6 rounded-3xl text-xl'}`}>
+    <button onClick={convertToPDF} disabled={isProcessing || images.length === 0} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 ${isNative ? 'py-4 rounded-lg text-sm' : 'p-6 rounded-xl text-xl'}`}>
       {isProcessing ? <><Loader2 className="animate-spin" /> Working...</> : <>Generate PDF <ArrowRight size={18} /></>}
     </button>
   )
@@ -74,17 +75,17 @@ export default function ImageToPdfTool() {
     <NativeToolLayout title="Image to PDF" description="Convert photos and images into a professional PDF." actions={images.length > 0 && !downloadUrl && <ActionButton />}>
       <input type="file" multiple accept="image/*" className="hidden" ref={fileInputRef} onChange={(e) => e.target.files && handleFiles(e.target.files)} />
       {images.length === 0 ? (
-        <div onClick={() => fileInputRef.current?.click()} className="border-4 border-dashed border-gray-100 dark:border-zinc-900 rounded-[2.5rem] p-12 text-center hover:bg-rose-50 dark:hover:bg-rose-900/10 transition-all cursor-pointer group">
-          <div className="w-20 h-20 bg-rose-50 dark:bg-rose-900/20 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform"><Upload size={32} /></div>
+        <div onClick={() => fileInputRef.current?.click()} className="border-4 border-dashed border-gray-100 dark:border-zinc-900 rounded-xl p-12 text-center hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all cursor-pointer group">
+          <div className="w-20 h-20 bg-blue-50 dark:bg-blue-900/20 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform"><Upload size={32} /></div>
           <h3 className="text-xl font-bold dark:text-white mb-2">Select Images</h3>
           <p className="text-sm text-gray-400">JPG, PNG, or WebP</p>
         </div>
       ) : !downloadUrl ? (
         <div className="space-y-6">
-          <div className="flex justify-between items-center px-1"><p className="text-[10px] font-black uppercase text-gray-400">{images.length} Images</p><button onClick={() => setImages([])} className="text-[10px] font-black uppercase text-rose-500/60">Clear</button></div>
+          <div className="flex justify-between items-center px-1"><p className="text-[10px] font-semibold uppercase text-gray-400">{images.length} Images</p><button onClick={() => setImages([])} className="text-[10px] font-semibold uppercase text-blue-500/60">Clear</button></div>
           <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}><SortableContext items={images.map(img => img.id)} strategy={verticalListSortingStrategy}><div className="space-y-2">{images.map(img => <SortableImageItem key={img.id} id={img.id} img={img} onRemove={(id) => setImages(prev => prev.filter(i => i.id !== id))} />)}</div></SortableContext></DndContext>
-          <button onClick={() => fileInputRef.current?.click()} className="w-full py-3 border-2 border-dashed border-gray-200 dark:border-zinc-800 rounded-2xl text-gray-400 font-bold text-sm flex items-center justify-center gap-2 hover:border-rose-500 hover:text-rose-500 transition-all"><Plus size={16} /> Add More</button>
-          <div><label className="block text-[10px] font-black uppercase text-gray-400 mb-2">Filename</label><input type="text" value={customFileName} onChange={(e) => setCustomFileName(e.target.value)} className="w-full bg-gray-50 dark:bg-black rounded-xl px-4 py-3 border border-transparent focus:border-rose-500 outline-none font-bold text-sm" /></div>
+          <button onClick={() => fileInputRef.current?.click()} className="w-full py-3 border-2 border-dashed border-gray-200 dark:border-zinc-800 rounded-lg text-gray-400 font-bold text-sm flex items-center justify-center gap-2 hover:border-blue-500 hover:text-blue-500 transition-all"><Plus size={16} /> Add More</button>
+          <div><label className="block text-[10px] font-semibold uppercase text-gray-400 mb-2">Filename</label><input type="text" value={customFileName} onChange={(e) => setCustomFileName(e.target.value)} className="w-full bg-gray-50 dark:bg-black rounded-xl px-4 py-3 border border-transparent focus:border-blue-500 outline-none font-bold text-sm" /></div>
           {!isNative && <ActionButton />}
         </div>
       ) : (
