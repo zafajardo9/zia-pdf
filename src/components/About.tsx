@@ -15,14 +15,13 @@ import {
   ExternalLink as ExternalLinkIcon,
   ChevronRight as ChevronRightIcon,
   Sparkles as SparklesIcon,
-  HardDrivnew-logo.png
-  new-logo.svge as DiskIcon,
+  HardDrive as DiskIcon,
   EyeOff as PrivacyIcon
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { Capacitor } from '@capacitor/core'
 import { NativeToolLayout } from './tools/shared/NativeToolLayout'
-import { PaperKnifeLogo } from './Logo'
+import { BrandLogo } from './Logo'
 import { BRAND } from '../config/brand'
 import { ViewMode } from '../types'
 
@@ -162,7 +161,7 @@ const AboutWeb = () => {
         </div>
         
         <div className="opacity-20 hover:opacity-50 transition-opacity duration-700">
-          <PaperKnifeLogo size={32} className="mx-auto mb-4" />
+          <BrandLogo size={32} className="mx-auto mb-4" />
           <p className="text-[9px] font-semibold uppercase tracking-[0.6em] text-gray-400">Zackery Alline Fajardo</p>
         </div>
       </section>
@@ -182,7 +181,7 @@ const AboutAPK = () => {
         {/* 1. App Identity */}
         <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-gray-100 dark:border-white/5 shadow-sm flex flex-col items-center text-center">
           <div className="w-20 h-20 bg-gray-50 dark:bg-black rounded-[1.5rem] flex items-center justify-center shadow-inner mb-4">
-            <PaperKnifeLogo size={40} />
+            <BrandLogo size={40} />
           </div>
           <h2 className="text-2xl font-semibold tracking-tighter dark:text-white leading-none mb-1">{BRAND.name}</h2>
           <p className="text-[9px] font-semibold uppercase tracking-widest text-blue-500">v1.0.9 Stable • Absolute Privacy</p>
