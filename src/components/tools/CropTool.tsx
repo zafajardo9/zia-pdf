@@ -14,7 +14,7 @@ import { toast } from 'sonner'
 
 import { addActivity } from '../../utils/recentActivity'
 import { usePdfToolFile } from '../../utils/usePdfToolFile'
-import { loadPdfDocument } from '../../utils/pdfHelpers' // pdfjs loader for page-size readout
+import { loadPdfDocument } from '../../utils/pdfHelpers' // pdfjs loader for the live page preview
 import SuccessState from './shared/SuccessState'
 import PrivacyBadge from './shared/PrivacyBadge'
 import { NativeToolLayout } from './shared/NativeToolLayout'
@@ -37,24 +37,51 @@ export default function CropTool() {
   const [customFileName, setCustomFileName] = useState(`${BRAND.filePrefix}-crop`)
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null)
   const [unlockPassword, setUnlockPassword] = useState('')
-  const [pageSize, setPageSize] = useState<{ w: number; h: number } | null>(null)
+  const [pdfJsDoc, setPdfJsDoc] = useState<any>(null)
+  const [previewPage, setPreviewPage] = useState(1)
+  const [preview, setPreview] = useState<{ url: string; w: number; h: number } | null>(null)
 
-  // Load page 1 size (pdfjs viewport at scale 1 == PDF points) for the live result readout
+  // Load the pdfjs document for preview rendering
   useEffect(() => {
     let cancelled = false
     if (pdfData && !pdfData.isLocked) {
       loadPdfDocument(pdfData.file)
-        .then(async (doc) => {
-          const page = await doc.getPage(1)
-          const vp = page.getViewport({ scale: 1 })
-          if (!cancelled) setPageSize({ w: Math.round(vp.width), h: Math.round(vp.height) })
-        })
+        .then((doc) => { if (!cancelled) { setPdfJsDoc(doc); setPreviewPage(1) } })
         .catch(() => {})
     } else {
-      setPageSize(null)
+      setPdfJsDoc(null)
+      setPreview(null)
     }
     return () => { cancelled = true }
   }, [pdfData])
+
+  // Render the previewed page whenever the document or page changes
+  useEffect(() => {
+    let cancelled = false
+    if (!pdfJsDoc) return
+    ;(async () => {
+      try {
+        const page = await pdfJsDoc.getPage(previewPage)
+        const base = page.getViewport({ scale: 1 }) // scale-1 dims == PDF points
+        const scale = Math.min(800 / base.width, 1.6)
+        const vp = page.getViewport({ scale })
+        const canvas = document.createElement('canvas')
+        canvas.width = vp.width
+        canvas.height = vp.height
+        const ctx = canvas.getContext('2d')
+        if (!ctx) return
+        ctx.fillStyle = '#ffffff'
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+        await page.render({ canvasContext: ctx, viewport: vp }).promise
+        if (!cancelled) {
+          setPreview({ url: canvas.toDataURL('image/webp', 0.9), w: base.width, h: base.height })
+        }
+      } catch {
+        // ignore render errors
+      }
+    })()
+    return () => { cancelled = true }
+  }, [pdfJsDoc, previewPage])
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) handleFile(e.target.files[0])
@@ -77,7 +104,7 @@ export default function CropTool() {
     await new Promise(resolve => setTimeout(resolve, 300)) // min spinner time, matches MetadataTool
     try {
       const doc = await loadPdfLib()
-      for (const page of doc.getPages()) { // v1: applies to all pages
+      for (const page of doc.getPages()) { // applies to all pages
         const { width, height } = page.getSize()
         const x = margins.left
         const y = margins.bottom
@@ -98,8 +125,8 @@ export default function CropTool() {
     }
   }
 
-  const resultW = pageSize ? Math.max(1, pageSize.w - margins.left - margins.right) : null
-  const resultH = pageSize ? Math.max(1, pageSize.h - margins.top - margins.bottom) : null
+  const resultW = preview ? Math.max(1, preview.w - margins.left - margins.right) : null
+  const resultH = preview ? Math.max(1, preview.h - margins.top - margins.bottom) : null
 
   const ActionButtons = () => (
     <button
@@ -158,6 +185,46 @@ export default function CropTool() {
                   </div>
                 </div>
 
+                {preview && (
+                  <div>
+                    <div className="flex items-center justify-between px-1 mb-3">
+                      <span className="text-[10px] font-semibold uppercase tracking-widest text-gray-400">Preview</span>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => setPreviewPage(p => Math.max(1, p - 1))}
+                          disabled={previewPage <= 1}
+                          aria-label="Previous page"
+                          className="p-1.5 rounded-ui bg-gray-50 dark:bg-black border border-gray-100 dark:border-zinc-800 text-gray-500 hover:text-blue-500 disabled:opacity-30 text-xs font-bold leading-none"
+                        >
+                          ‹
+                        </button>
+                        <span className="text-[10px] font-bold text-gray-400">{previewPage} / {pdfData.pageCount}</span>
+                        <button
+                          onClick={() => setPreviewPage(p => Math.min(pdfData.pageCount, p + 1))}
+                          disabled={previewPage >= pdfData.pageCount}
+                          aria-label="Next page"
+                          className="p-1.5 rounded-ui bg-gray-50 dark:bg-black border border-gray-100 dark:border-zinc-800 text-gray-500 hover:text-blue-500 disabled:opacity-30 text-xs font-bold leading-none"
+                        >
+                          ›
+                        </button>
+                      </div>
+                    </div>
+                    <div className="relative mx-auto max-w-xl overflow-hidden rounded-xl border border-gray-100 dark:border-zinc-800 shadow-sm" style={{ aspectRatio: `${preview.w} / ${preview.h}` }}>
+                      <img src={preview.url} alt={`Page ${previewPage} preview`} className="absolute inset-0 h-full w-full object-contain" />
+                      <div
+                        className="pointer-events-none absolute z-10 rounded-md border-2 border-blue-500"
+                        style={{
+                          top: `${(margins.top / preview.h) * 100}%`,
+                          left: `${(margins.left / preview.w) * 100}%`,
+                          width: `${Math.max(1, ((preview.w - margins.left - margins.right) / preview.w) * 100)}%`,
+                          height: `${Math.max(1, ((preview.h - margins.top - margins.bottom) / preview.h) * 100)}%`,
+                          boxShadow: '0 0 0 9999px rgba(0,0,0,0.45)',
+                        }}
+                      />
+                    </div>
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {(['top', 'bottom', 'left', 'right'] as Side[]).map(side => (
                     <div key={side}>
@@ -178,7 +245,7 @@ export default function CropTool() {
                   ))}
                 </div>
 
-                {pageSize && resultW !== null && resultH !== null && (
+                {preview && resultW !== null && resultH !== null && (
                   <div className="flex items-center justify-between rounded-ui bg-gray-50 dark:bg-black border border-gray-100 dark:border-zinc-800 px-4 py-3">
                     <span className="text-[10px] font-semibold uppercase tracking-widest text-gray-400">Result</span>
                     <span className="text-xs font-bold text-gray-900 dark:text-white">{resultW} × {resultH} pt</span>

@@ -8,12 +8,13 @@
  * (at your option) any later version.
  */
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Scaling, Info, Loader2, Lock, X } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { addActivity } from '../../utils/recentActivity'
 import { usePdfToolFile } from '../../utils/usePdfToolFile'
+import { loadPdfDocument as loadPdfJs, renderPageThumbnail } from '../../utils/pdfHelpers' // pdfjs loader + thumbnail
 import SuccessState from './shared/SuccessState'
 import PrivacyBadge from './shared/PrivacyBadge'
 import { NativeToolLayout } from './shared/NativeToolLayout'
@@ -40,6 +41,27 @@ export default function ResizeTool() {
   const [customFileName, setCustomFileName] = useState(`${BRAND.filePrefix}-resize`)
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null)
   const [unlockPassword, setUnlockPassword] = useState('')
+  const [currentSize, setCurrentSize] = useState<{ w: number; h: number } | null>(null)
+  const [thumb, setThumb] = useState<string | null>(null)
+
+  // Load page 1 size + thumbnail for the before/after preview
+  useEffect(() => {
+    let cancelled = false
+    if (pdfData && !pdfData.isLocked) {
+      loadPdfJs(pdfData.file)
+        .then(async (doc) => {
+          const page = await doc.getPage(1)
+          const vp = page.getViewport({ scale: 1 }) // scale-1 dims == PDF points
+          const t = await renderPageThumbnail(doc, 1)
+          if (!cancelled) { setCurrentSize({ w: Math.round(vp.width), h: Math.round(vp.height) }); setThumb(t) }
+        })
+        .catch(() => {})
+    } else {
+      setCurrentSize(null)
+      setThumb(null)
+    }
+    return () => { cancelled = true }
+  }, [pdfData])
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) handleFile(e.target.files[0])
@@ -65,6 +87,14 @@ export default function ResizeTool() {
     const [w, h] = STANDARD_SIZES[target]
     return { w, h }
   }
+
+  // Quiet target resolution for the preview display (no toast on incomplete custom input)
+  const displayTarget = target === 'custom'
+    ? { w: Number(customW) || 0, h: Number(customH) || 0 }
+    : { w: STANDARD_SIZES[target][0], h: STANDARD_SIZES[target][1] }
+  const box = displayTarget.w > 0 && displayTarget.h > 0
+    ? (() => { const s = Math.min(120 / displayTarget.w, 144 / displayTarget.h); return { w: Math.max(displayTarget.w * s, 8), h: Math.max(displayTarget.h * s, 8) } })()
+    : { w: 120, h: 144 }
 
   const resizePdf = async () => {
     const t = resolveTarget()
@@ -141,6 +171,27 @@ export default function ResizeTool() {
           <div className="bg-white dark:bg-zinc-900 p-8 rounded-xl border border-gray-100 dark:border-white/5 space-y-6 shadow-sm">
             {!downloadUrl ? (
               <div className="space-y-6">
+                {(currentSize || thumb) && (
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="rounded-ui border border-gray-100 dark:border-zinc-800 p-4 text-center">
+                      <span className="system-label">Current</span>
+                      <div className="mt-3 mx-auto flex h-36 items-center justify-center overflow-hidden rounded-lg bg-gray-50 dark:bg-black">
+                        {thumb && <img src={thumb} alt="Current page preview" className="max-h-full max-w-full object-contain" />}
+                      </div>
+                      {currentSize && <p className="mt-2 text-xs font-bold text-gray-900 dark:text-white">{currentSize.w} × {currentSize.h} pt</p>}
+                    </div>
+                    <div className="rounded-ui border border-blue-200 dark:border-blue-900/40 p-4 text-center">
+                      <span className="system-label">Target</span>
+                      <div className="mt-3 mx-auto flex h-36 items-center justify-center">
+                        <div className="rounded-lg border-2 border-dashed border-blue-400" style={{ width: box.w, height: box.h }} />
+                      </div>
+                      <p className="mt-2 text-xs font-bold text-blue-500">
+                        {displayTarget.w > 0 ? `${displayTarget.w} × ${displayTarget.h} pt` : 'Enter valid dimensions'}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
                 <div>
                   <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3 px-1">Target Size</label>
                   <div className="flex flex-wrap gap-2">
