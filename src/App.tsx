@@ -12,7 +12,8 @@ import { useState, useEffect, Suspense } from 'react'
 import { 
   Layers, Scissors, Zap, Smartphone as SmartphoneIcon, Monitor as MonitorIcon, Lock, Unlock, 
   RotateCw, Type, Hash, Tags, FileText, ArrowUpDown, PenTool, 
-  Wrench, ImagePlus, FileImage, Palette, X, ChevronDown
+  Wrench, ImagePlus, FileImage, Palette, X, ChevronDown,
+  Crop, Scaling, FileMinus2, Bookmark, AppWindow
 } from 'lucide-react'
 import { HashRouter, Routes, Route, useNavigate } from 'react-router-dom'
 import { Toaster, toast } from 'sonner'
@@ -54,6 +55,11 @@ import SignatureTool from './components/tools/SignatureTool'
 import RepairTool from './components/tools/RepairTool'
 import ExtractImagesTool from './components/tools/ExtractImagesTool'
 import GrayscaleTool from './components/tools/GrayscaleTool'
+import CropTool from './components/tools/CropTool'
+import ResizeTool from './components/tools/ResizeTool'
+import RemovePagesTool from './components/tools/RemovePagesTool'
+import BookmarksTool from './components/tools/BookmarksTool'
+import ViewerPrefsTool from './components/tools/ViewerPrefsTool'
 
 const tools: Tool[] = [
   { title: 'Merge PDF', desc: 'Combine multiple PDF files into one document.', icon: Layers, implemented: true, path: '/merge', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
@@ -73,6 +79,11 @@ const tools: Tool[] = [
   { title: 'Extract Images', desc: 'Pull out all original images embedded in a PDF.', icon: FileImage, implemented: true, path: '/extract-images', category: 'Convert', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'PDF to Text', desc: 'Extract plain text from your PDF documents.', icon: FileText, implemented: true, path: '/pdf-to-text', category: 'Convert', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'Repair PDF', desc: 'Attempt to fix corrupted or unreadable documents.', icon: Wrench, implemented: true, path: '/repair', category: 'Optimize', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
+  { title: 'Crop Pages', desc: 'Trim margins or whitespace from your pages.', icon: Crop, implemented: true, path: '/crop-pdf', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
+  { title: 'Resize Pages', desc: 'Scale pages to standard or custom sizes.', icon: Scaling, implemented: true, path: '/resize-pdf', category: 'Optimize', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
+  { title: 'Remove Pages', desc: 'Delete specific pages from your document.', icon: FileMinus2, implemented: true, path: '/remove-pages', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
+  { title: 'Bookmarks', desc: 'Add a clickable table of contents to your PDF.', icon: Bookmark, implemented: true, path: '/bookmarks', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
+  { title: 'Viewer Preferences', desc: 'Control how your PDF opens — layout, mode, zoom.', icon: AppWindow, implemented: true, path: '/viewer-preferences', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
 ]
 
 export const IS_OCR_DISABLED = import.meta.env.VITE_DISABLE_OCR === 'true'
@@ -373,6 +384,11 @@ function App() {
                 <Route path="/repair" element={<RepairTool />} />
                 <Route path="/extract-images" element={<ExtractImagesTool />} />
                 <Route path="/grayscale" element={<GrayscaleTool />} />
+                <Route path="/crop-pdf" element={<CropTool />} />
+                <Route path="/resize-pdf" element={<ResizeTool />} />
+                <Route path="/remove-pages" element={<RemovePagesTool />} />
+                <Route path="/bookmarks" element={<BookmarksTool />} />
+                <Route path="/viewer-preferences" element={<ViewerPrefsTool />} />
                 <Route path="/about" element={<About viewMode={viewMode} />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />
                 <Route path="/settings" element={<SettingsView theme={theme} setTheme={setTheme} />} />
