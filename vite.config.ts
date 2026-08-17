@@ -23,6 +23,11 @@ export default defineConfig({
     },
     VitePWA({
       registerType: 'autoUpdate',
+      workbox: {
+        // OCR assets (Tesseract core + language data) exceed Workbox's 2 MiB
+        // default, so raise the limit so they are precached and work offline.
+        maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
+      },
       manifest: {
         name: brand.name,
         short_name: brand.shortName,

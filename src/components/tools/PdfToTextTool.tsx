@@ -78,7 +78,7 @@ export default function PdfToTextTool() {
           workerPath: '/tesseract/worker.min.js',
           corePath: '/tesseract/tesseract-core.wasm.js',
           langPath: '/tesseract/',
-          gzip: false,
+          gzip: true,
           cacheMethod: 'none',
           logger: (m: any) => { 
             if (m.status === 'recognizing text') { 
