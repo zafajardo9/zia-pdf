@@ -13,7 +13,7 @@ import {
   Layers, Scissors, Zap, Smartphone as SmartphoneIcon, Monitor as MonitorIcon, Lock, Unlock, 
   RotateCw, Type, Hash, Tags, FileText, ArrowUpDown, PenTool, 
   Wrench, ImagePlus, FileImage, Palette, X, ChevronDown,
-  Crop, Scaling, FileMinus2, Bookmark, AppWindow
+  Crop, Scaling, FileMinus2, Bookmark, AppWindow, Images
 } from 'lucide-react'
 import { HashRouter, Routes, Route, useNavigate } from 'react-router-dom'
 import { Toaster, toast } from 'sonner'
@@ -60,6 +60,7 @@ import ResizeTool from './components/tools/ResizeTool'
 import RemovePagesTool from './components/tools/RemovePagesTool'
 import BookmarksTool from './components/tools/BookmarksTool'
 import ViewerPrefsTool from './components/tools/ViewerPrefsTool'
+import ImageConverterTool from './components/tools/ImageConverterTool'
 
 const tools: Tool[] = [
   { title: 'Merge PDF', desc: 'Combine multiple PDF files into one document.', icon: Layers, implemented: true, path: '/merge', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
@@ -76,6 +77,7 @@ const tools: Tool[] = [
   { title: 'Grayscale', desc: 'Convert all document pages to black and white.', icon: Palette, implemented: true, path: '/grayscale', category: 'Optimize', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'PDF to Image', desc: 'Convert document pages into high-quality images.', icon: FileImage, implemented: true, path: '/pdf-to-image', category: 'Convert', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'Image to PDF', desc: 'Convert JPG, PNG, and WebP into a professional PDF.', icon: ImagePlus, implemented: true, path: '/image-to-pdf', category: 'Convert', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
+  { title: 'Image Converter', desc: 'Convert images to WebP, JPG, or PNG and resize them.', icon: Images, implemented: true, path: '/image-converter', category: 'Convert', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'Extract Images', desc: 'Pull out all original images embedded in a PDF.', icon: FileImage, implemented: true, path: '/extract-images', category: 'Convert', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'PDF to Text', desc: 'Extract plain text from your PDF documents.', icon: FileText, implemented: true, path: '/pdf-to-text', category: 'Convert', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'Repair PDF', desc: 'Attempt to fix corrupted or unreadable documents.', icon: Wrench, implemented: true, path: '/repair', category: 'Optimize', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
@@ -380,6 +382,7 @@ function App() {
                 <Route path="/page-numbers" element={<PageNumberTool />} />
                 <Route path="/metadata" element={<MetadataTool />} />
                 <Route path="/image-to-pdf" element={<ImageToPdfTool />} />
+                <Route path="/image-converter" element={<ImageConverterTool />} />
                 <Route path="/signature" element={<SignatureTool />} />
                 <Route path="/repair" element={<RepairTool />} />
                 <Route path="/extract-images" element={<ExtractImagesTool />} />
