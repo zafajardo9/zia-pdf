@@ -73,7 +73,7 @@ const tools: Tool[] = [
   { title: 'Page Numbers', desc: 'Add numbering to your documents automatically.', icon: Hash, implemented: true, path: '/page-numbers', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'Watermark', desc: 'Overlay custom text for branding or security.', icon: Type, implemented: true, path: '/watermark', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'Metadata', desc: 'Edit document properties for better privacy.', icon: Tags, implemented: true, path: '/metadata', category: 'Secure', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
-  { title: 'Signature', desc: 'Add your electronic signature to any document.', icon: PenTool, implemented: true, path: '/signature', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
+  { title: 'Signature', desc: 'Draw or upload your signature, then place it anywhere on the document.', icon: PenTool, implemented: true, path: '/signature', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'Grayscale', desc: 'Convert all document pages to black and white.', icon: Palette, implemented: true, path: '/grayscale', category: 'Optimize', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'PDF to Image', desc: 'Convert document pages into high-quality images.', icon: FileImage, implemented: true, path: '/pdf-to-image', category: 'Convert', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'Image to PDF', desc: 'Convert JPG, PNG, and WebP into a professional PDF.', icon: ImagePlus, implemented: true, path: '/image-to-pdf', category: 'Convert', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
