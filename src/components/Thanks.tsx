@@ -1,4 +1,4 @@
-import { Github as GHIcon, Heart as HeartIcon, Sparkles, ChevronRight } from 'lucide-react'
+import { Heart as HeartIcon, Sparkles, Package } from 'lucide-react'
 import { Capacitor } from '@capacitor/core'
 import { NativeToolLayout } from './tools/shared/NativeToolLayout'
 import { BrandLogo } from './Logo'
@@ -7,16 +7,16 @@ import { BRAND } from '../config/brand'
 export default function Thanks() {
   const isNative = Capacitor.isNativePlatform()
 
-  const links = [
-    { name: 'pdf-lib', url: 'https://github.com/Hopding/pdf-lib', desc: 'Core document engine for local manipulation.' },
-    { name: 'PDF.js', url: 'https://github.com/mozilla/pdf.js', desc: 'High-performance PDF rendering and parsing.' },
-    { name: 'Tesseract.js', url: 'https://github.com/naptha/tesseract.js', desc: 'Fully localized OCR engine for image-to-text conversion.' },
-    { name: 'JSZip', url: 'https://github.com/Stuk/jszip', desc: 'Local file compression and bundling.' },
-    { name: 'Lucide', url: 'https://github.com/lucide-icons/lucide', desc: 'Beautifully crafted open-source icons.' },
-    { name: 'Capacitor', url: 'https://github.com/ionic-team/capacitor', desc: 'Native bridge for cross-platform mobile apps.' },
-    { name: 'OpenCode', url: 'https://github.com/opencode-ai/opencode', desc: 'Open-source AI coding assistant for the terminal.' },
-    { name: 'Termux', url: 'https://github.com/termux/termux-app', desc: 'Mobile terminal for on-the-go development.' },
-    { name: 'Gemini CLI', url: 'https://github.com/google-gemini/gemini-cli', desc: 'AI assistance for architectural design.' },
+  const credits = [
+    { name: 'pdf-lib', desc: 'Core document engine for local manipulation.' },
+    { name: 'PDF.js', desc: 'High-performance PDF rendering and parsing.' },
+    { name: 'Tesseract.js', desc: 'Fully localized OCR engine for image-to-text conversion.' },
+    { name: 'JSZip', desc: 'Local file compression and bundling.' },
+    { name: 'Lucide', desc: 'Beautifully crafted open-source icons.' },
+    { name: 'Capacitor', desc: 'Native bridge for cross-platform mobile apps.' },
+    { name: 'OpenCode', desc: 'Open-source AI coding assistant for the terminal.' },
+    { name: 'Termux', desc: 'Mobile terminal for on-the-go development.' },
+    { name: 'Gemini CLI', desc: 'AI assistance for architectural design.' },
   ]
 
   const content = (
@@ -29,7 +29,7 @@ export default function Thanks() {
           The <span className="text-blue-500">Supporters.</span>
         </h2>
         <p className="text-base md:text-lg text-gray-500 dark:text-zinc-400 leading-relaxed font-medium max-w-xl mx-auto px-4">
-          {BRAND.name} is a self-funded labor of love. These are the individuals and tools that keep the engine running.
+          Privacy tools shouldn't depend on uploading your files to someone else's server. {BRAND.name} proves that a full document engine can run entirely on your device — and these are the open-source projects and people that make it possible.
         </p>
       </section>
 
@@ -46,38 +46,34 @@ export default function Thanks() {
           
           <div className="flex-1 text-center md:text-left relative z-10">
             <h3 className="text-3xl font-semibold tracking-tighter mb-2">Hall of Fame</h3>
-            <p className="text-zinc-400 text-sm font-medium leading-relaxed max-w-lg mb-8 mx-auto md:mx-0">
-              The heroes who fuel the engine. Your support ensures {BRAND.name} stays free and private forever. Sponsors receive a permanent shout-out here.
+            <p className="text-zinc-400 text-sm font-medium leading-relaxed max-w-lg mb-3 mx-auto md:mx-0">
+              {BRAND.name} is a self-funded labor of love — free, ad-free, and private. It stays that way because people believe private document tools are worth building.
             </p>
-            <a href={BRAND.repositoryUrl} target="_blank" className="inline-flex items-center gap-3 px-8 py-3.5 bg-white text-blue-600 rounded-lg font-semibold uppercase tracking-widest text-[10px] hover:scale-105 transition-transform shadow-sm">
-              <GHIcon size={14} /> View Source Code
-            </a>
+            <p className="text-zinc-400 text-sm font-medium leading-relaxed max-w-lg mb-8 mx-auto md:mx-0">
+              What we need: share {BRAND.name} with someone who values privacy, report bugs you find, and consider supporting the project. Supporters earn a permanent shout-out here.
+            </p>
           </div>
         </div>
 
         {/* Technologies Grid - High Density */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
-          {links.map((link) => (
-            <a 
-              key={link.name} 
-              href={link.url} 
-              target="_blank" 
-              rel="noopener noreferrer"
+          {credits.map((credit) => (
+            <div 
+              key={credit.name} 
               className="group p-5 bg-white dark:bg-zinc-900 rounded-xl border border-gray-100 dark:border-white/5 hover:border-blue-500 transition-all shadow-sm flex items-center justify-between"
             >
               <div className="flex items-center gap-4 min-w-0">
                 <div className="w-10 h-10 bg-gray-50 dark:bg-black rounded-xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors text-gray-400 shrink-0 border border-transparent dark:border-white/5">
-                  <GHIcon size={18} />
+                  <Package size={18} />
                 </div>
                 <div className="min-w-0">
                   <h3 className="font-semibold text-xs tracking-widest uppercase dark:text-white mb-0.5">
-                    {link.name}
+                    {credit.name}
                   </h3>
-                  <p className="text-[9px] text-gray-500 dark:text-zinc-500 font-bold uppercase tracking-tight truncate">{link.desc}</p>
+                  <p className="text-[9px] text-gray-500 dark:text-zinc-500 font-bold uppercase tracking-tight truncate">{credit.desc}</p>
                 </div>
               </div>
-              <ChevronRight size={14} className="text-gray-300 group-hover:text-blue-500 group-hover:translate-x-1 transition-all" />
-            </a>
+            </div>
           ))}
         </div>
       </div>

@@ -8,11 +8,9 @@ import {
   Heart as HeartIcon, 
   Code as CodeIcon, 
   Cpu as CpuIcon, 
-  Github as GHIcon, 
   Shield as ShieldIcon, 
   ChevronDown as ChevronDownIcon,
   ServerOff as ServerOffIcon,
-  ExternalLink as ExternalLinkIcon,
   ChevronRight as ChevronRightIcon,
   Sparkles as SparklesIcon,
   HardDrive as DiskIcon,
@@ -81,15 +79,15 @@ const AboutWeb = () => {
               <HeartIcon size={32} fill="currentColor" />
            </div>
            <div className="flex-1 text-center md:text-left relative z-10">
-              <h3 className="text-3xl font-semibold tracking-tighter mb-3 leading-tight">Fuel the Engine.</h3>
+              <h3 className="text-3xl font-semibold tracking-tighter mb-3 leading-tight">Why This Is Needed.</h3>
+              <p className="text-blue-100 font-medium text-base mb-3 max-w-xl leading-relaxed">
+                 Every day, sensitive documents — IDs, contracts, medical records — get uploaded to anonymous servers just to merge or compress a file. {BRAND.name} exists to end that trade-off: professional document tools that never let your files leave your device.
+              </p>
               <p className="text-blue-100 font-medium text-base mb-6 max-w-xl leading-relaxed">
-                 {BRAND.name} is self-funded and ad-free. Your support ensures the project stays alive and free for everyone.
+                 What we need to keep it that way: share {BRAND.name} with someone who values privacy, and consider supporting the project — every bit keeps the engine running.
               </p>
               <div className="flex flex-wrap justify-center md:justify-start gap-3">
-                 <a href={BRAND.repositoryUrl} target="_blank" className="px-8 py-3.5 bg-white text-blue-600 rounded-lg font-semibold uppercase tracking-widest text-[10px] hover:scale-105 transition-transform shadow-sm flex items-center gap-2">
-                    <GHIcon size={14} /> Source Code
-                 </a>
-                 <button onClick={() => navigate('/thanks')} className="px-8 py-3.5 bg-blue-600 text-white border border-blue-400/50 rounded-lg font-semibold uppercase tracking-widest text-[10px] hover:bg-blue-700 transition-colors flex items-center gap-2">
+                 <button onClick={() => navigate('/thanks')} className="px-8 py-3.5 bg-white text-blue-600 rounded-lg font-semibold uppercase tracking-widest text-[10px] hover:scale-105 transition-transform shadow-sm flex items-center gap-2">
                     <SparklesIcon size={14} /> Hall of Fame
                  </button>
               </div>
@@ -152,9 +150,6 @@ const AboutWeb = () => {
       {/* 4. Final Footer Links - Condensed */}
       <section className="max-w-4xl mx-auto px-6 text-center border-t border-gray-100 dark:border-zinc-900 pt-16">
         <div className="flex flex-wrap justify-center gap-8 mb-12">
-           <a href={BRAND.repositoryUrl} target="_blank" className="flex items-center gap-2.5 text-[10px] font-semibold uppercase tracking-widest text-gray-400 hover:text-blue-500 transition-colors group">
-              <GHIcon size={16} /> Audit Source <ExternalLinkIcon size={12} className="opacity-40 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-           </a>
            <button onClick={() => navigate('/thanks')} className="flex items-center gap-2.5 text-[10px] font-semibold uppercase tracking-widest text-gray-400 hover:text-blue-500 transition-colors group">
               <SparklesIcon size={16} /> Credits <ChevronRightIcon size={12} className="opacity-40 group-hover:translate-x-1 transition-transform" />
            </button>
@@ -187,7 +182,7 @@ const AboutAPK = () => {
           <p className="text-[9px] font-semibold uppercase tracking-widest text-blue-500">v1.0.9 Stable • Absolute Privacy</p>
         </div>
 
-        {/* 2. Fuel the Engine (Prominent Support - MOVED TO TOP) */}
+        {/* 2. Why This Is Needed (Prominent Support - MOVED TO TOP) */}
         <div className="bg-blue-500 text-white rounded-xl p-6 relative overflow-hidden shadow-sm shadow-blue-500/20">
            <div className="absolute top-0 right-0 p-6 opacity-10">
               <HeartIcon size={100} fill="currentColor" />
@@ -197,16 +192,16 @@ const AboutAPK = () => {
                  <div className="p-2 bg-white/20 rounded-xl backdrop-blur-md">
                     <HeartIcon size={20} fill="currentColor" />
                  </div>
-                 <h3 className="text-lg font-semibold uppercase tracking-tight">Fuel the Engine</h3>
+                 <h3 className="text-lg font-semibold uppercase tracking-tight">Why This Is Needed</h3>
               </div>
+              <p className="text-sm font-medium text-blue-100 leading-relaxed mb-3">
+                 Sensitive documents shouldn't have to be uploaded to anonymous servers just to merge or compress a file. {BRAND.name} keeps every operation on your device — nothing leaves your hands.
+              </p>
               <p className="text-sm font-medium text-blue-100 leading-relaxed mb-6">
-                 We are 100% self-funded. Your support ensures {BRAND.name} stays free and open for everyone.
+                 What we need: share {BRAND.name} with someone who values privacy, and consider supporting the project to keep it free.
               </p>
               <div className="grid grid-cols-2 gap-3">
-                 <a href={BRAND.repositoryUrl} target="_blank" className="flex items-center justify-center gap-2 py-3 bg-white text-blue-600 rounded-xl font-semibold uppercase text-[9px] tracking-widest shadow-sm active:scale-95 transition-transform">
-                    Source Code
-                 </a>
-                 <button onClick={() => navigate('/thanks')} className="flex items-center justify-center gap-2 py-3 bg-blue-600 text-white border border-blue-400/50 rounded-xl font-semibold uppercase text-[9px] tracking-widest active:scale-95 transition-transform">
+                 <button onClick={() => navigate('/thanks')} className="flex items-center justify-center gap-2 py-3 bg-white text-blue-600 rounded-xl font-semibold uppercase text-[9px] tracking-widest shadow-sm active:scale-95 transition-transform">
                     Hall of Fame
                  </button>
               </div>
@@ -244,19 +239,6 @@ const AboutAPK = () => {
 
         {/* 4. Action Tiles */}
         <div className="grid grid-cols-1 gap-2 pt-2">
-          <a href={BRAND.repositoryUrl} target="_blank" className="flex items-center justify-between p-5 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-white/5 rounded-xl active:scale-[0.98] transition-all">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 bg-zinc-100 dark:bg-black rounded-xl flex items-center justify-center">
-                   <GHIcon size={20} className="text-black dark:text-white" />
-                </div>
-                <div>
-                   <h4 className="font-bold text-sm dark:text-white">Source Code</h4>
-                   <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wide">AGPL v3 License</p>
-                </div>
-              </div>
-              <ExternalLinkIcon size={16} className="text-gray-300" />
-          </a>
-          
           <button onClick={() => navigate('/thanks')} className="flex items-center justify-between p-5 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-white/5 rounded-xl active:scale-[0.98] transition-all">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 rounded-xl flex items-center justify-center">
