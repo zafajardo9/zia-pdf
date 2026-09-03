@@ -19,6 +19,7 @@
 | **OCR Image → Text** | Upload a photo/scan, get copyable or downloadable text | `tesseract.js` (bundled in `/public`) | 🟢 |
 | **Searchable PDF (OCR)** | Turn scanned PDFs into real PDFs with an invisible text layer | tesseract.js + pdf-lib text drawing | 🔴 |
 | **Form Filler** | Fill AcroForm fields (text, checkbox, dropdown), flatten result | pdf-lib AcroForm API | 🟡 |
+| **✅ PDF Appearance** | Brighten / darken / invert / sepia / contrast / grayscale filters | pdfjs + pdf-lib (installed) | 🟡 |
 
 ## 2. Privacy tools — fits the brand story (Metadata tool, auto-wipe)
 
