@@ -24,7 +24,7 @@
 
 | Tool | What it does | Dep | Effort |
 |---|---|---|---|
-| **EXIF Remover** | Strip GPS/camera/serial metadata from photos | Canvas re-encode or `exifr` (read) | 🟢 |
+| **✅ EXIF Remover** | Strip GPS/camera/serial metadata from photos | Pure byte-surgery (no new dep) | 🟢 |
 | **Redact PDF** | Black out regions AND remove underlying content stream — real redaction | pdf-lib | 🟡 |
 | **File Hasher** | SHA-256 / MD5 checksums to verify downloads | Web Crypto API | 🟢 |
 | **Password Generator** | Strong passphrase/password generation | Pure JS | 🟢 |
