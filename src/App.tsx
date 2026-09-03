@@ -13,7 +13,7 @@ import {
   Layers, Scissors, Zap, Smartphone as SmartphoneIcon, Monitor as MonitorIcon, Lock, Unlock, 
   RotateCw, Type, Hash, Tags, FileText, ArrowUpDown, PenTool, 
   Wrench, ImagePlus, FileImage, Palette, X, ChevronDown,
-  Crop, Scaling, FileMinus2, Bookmark, AppWindow, Images
+  Crop, Scaling, FileMinus2, Bookmark, AppWindow, Images, FileArchive
 } from 'lucide-react'
 import { HashRouter, Routes, Route, useNavigate } from 'react-router-dom'
 import { Toaster, toast } from 'sonner'
@@ -61,6 +61,7 @@ import RemovePagesTool from './components/tools/RemovePagesTool'
 import BookmarksTool from './components/tools/BookmarksTool'
 import ViewerPrefsTool from './components/tools/ViewerPrefsTool'
 import ImageConverterTool from './components/tools/ImageConverterTool'
+import ZipTool from './components/tools/ZipTool'
 
 const tools: Tool[] = [
   { title: 'Merge PDF', desc: 'Combine multiple PDF files into one document.', icon: Layers, implemented: true, path: '/merge', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
@@ -86,6 +87,7 @@ const tools: Tool[] = [
   { title: 'Remove Pages', desc: 'Delete specific pages from your document.', icon: FileMinus2, implemented: true, path: '/remove-pages', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'Bookmarks', desc: 'Add a clickable table of contents to your PDF.', icon: Bookmark, implemented: true, path: '/bookmarks', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'Viewer Preferences', desc: 'Control how your PDF opens — layout, mode, zoom.', icon: AppWindow, implemented: true, path: '/viewer-preferences', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
+  { title: 'ZIP Tool', desc: 'Compress files into ZIP archives or extract their contents.', icon: FileArchive, implemented: true, path: '/zip', category: 'Convert', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
 ]
 
 export const IS_OCR_DISABLED = import.meta.env.VITE_DISABLE_OCR === 'true'
@@ -392,6 +394,7 @@ function App() {
                 <Route path="/remove-pages" element={<RemovePagesTool />} />
                 <Route path="/bookmarks" element={<BookmarksTool />} />
                 <Route path="/viewer-preferences" element={<ViewerPrefsTool />} />
+                <Route path="/zip" element={<ZipTool />} />
                 <Route path="/about" element={<About viewMode={viewMode} />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />
                 <Route path="/settings" element={<SettingsView theme={theme} setTheme={setTheme} />} />
