@@ -12,6 +12,7 @@
     "prebuild": "npm run brand:sync && npm run tesseract:sync",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "test": "vitest run",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -39,17 +40,23 @@
     "tesseract.js": "^7.0.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.3",
     "@types/react": "^18.3.10",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^8.8.0",
     "@typescript-eslint/parser": "^8.8.0",
     "@vitejs/plugin-react": "^4.3.2",
     "autoprefixer": "^10.4.20",
+    "fake-indexeddb": "^6.2.5",
+    "jsdom": "^25.0.1",
     "postcss": "^8.4.47",
+    "react-grab": "^0.2.0",
     "sharp": "^0.35.3",
     "tailwindcss": "^3.4.13",
     "typescript": "^5.6.2",
     "vite": "^5.4.8",
-    "vite-plugin-pwa": "^1.2.0"
+    "vite-plugin-pwa": "^1.2.0",
+    "vitest": "^2.1.9"
   }
 }

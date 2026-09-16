@@ -13,9 +13,9 @@ import {
   Layers, Scissors, Zap, Smartphone as SmartphoneIcon, Monitor as MonitorIcon, Lock, Unlock, 
   RotateCw, Type, Hash, Tags, FileText, ArrowUpDown, PenTool, 
   Wrench, ImagePlus, FileImage, Palette, X, ChevronDown,
-  Crop, Scaling, FileMinus2, Bookmark, AppWindow, Images, FileArchive, Eraser, FileSearch, Wand2
+  Crop, Scaling, FileMinus2, Bookmark, AppWindow, Images, FileArchive, Eraser, FileSearch, Wand2, FilePenLine
 } from 'lucide-react'
-import { HashRouter, Routes, Route, useNavigate } from 'react-router-dom'
+import { HashRouter, Navigate, Routes, Route, useNavigate } from 'react-router-dom'
 import { Toaster, toast } from 'sonner'
 import { Capacitor } from '@capacitor/core'
 import { Filesystem } from '@capacitor/filesystem'
@@ -47,11 +47,10 @@ import PdfToImageTool from './components/tools/PdfToImageTool'
 import RotateTool from './components/tools/RotateTool'
 import PdfToTextTool from './components/tools/PdfToTextTool'
 import RearrangeTool from './components/tools/RearrangeTool'
-import WatermarkTool from './components/tools/WatermarkTool'
 import PageNumberTool from './components/tools/PageNumberTool'
 import MetadataTool from './components/tools/MetadataTool'
 import ImageToPdfTool from './components/tools/ImageToPdfTool'
-import SignatureTool from './components/tools/SignatureTool'
+import PdfEditorTool from './components/editor/PdfEditorTool'
 import RepairTool from './components/tools/RepairTool'
 import ExtractImagesTool from './components/tools/ExtractImagesTool'
 import GrayscaleTool from './components/tools/GrayscaleTool'
@@ -67,6 +66,7 @@ import PdfInspectorTool from './components/tools/PdfInspectorTool'
 import AppearanceTool from './components/tools/AppearanceTool'
 
 const tools: Tool[] = [
+  { title: 'PDF Editor', desc: 'Add text, images, and signatures in one visual workspace.', icon: FilePenLine, implemented: true, path: '/editor', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'Merge PDF', desc: 'Combine multiple PDF files into one document.', icon: Layers, implemented: true, path: '/merge', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'Split PDF', desc: 'Visually extract specific pages or ranges.', icon: Scissors, implemented: true, path: '/split', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'Compress PDF', desc: 'Optimize your file size for easier sharing.', icon: Zap, implemented: true, path: '/compress', category: 'Optimize', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
@@ -75,9 +75,9 @@ const tools: Tool[] = [
   { title: 'Rotate PDF', desc: 'Fix page orientation permanently.', icon: RotateCw, implemented: true, path: '/rotate-pdf', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'Rearrange PDF', desc: 'Drag and drop pages to reorder them.', icon: ArrowUpDown, implemented: true, path: '/rearrange-pdf', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'Page Numbers', desc: 'Add numbering to your documents automatically.', icon: Hash, implemented: true, path: '/page-numbers', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
-  { title: 'Watermark', desc: 'Overlay custom text for branding or security.', icon: Type, implemented: true, path: '/watermark', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
+  { title: 'Watermark', desc: 'Overlay custom text for branding or security.', icon: Type, implemented: true, path: '/editor?mode=watermark', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'Metadata', desc: 'Edit document properties for better privacy.', icon: Tags, implemented: true, path: '/metadata', category: 'Secure', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
-  { title: 'Signature', desc: 'Draw or upload your signature, then place it anywhere on the document.', icon: PenTool, implemented: true, path: '/signature', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
+  { title: 'Signature', desc: 'Draw or upload your signature, then place it anywhere on the document.', icon: PenTool, implemented: true, path: '/editor?mode=signature', category: 'Edit', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'Grayscale', desc: 'Convert all document pages to black and white.', icon: Palette, implemented: true, path: '/grayscale', category: 'Optimize', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'PDF to Image', desc: 'Convert document pages into high-quality images.', icon: FileImage, implemented: true, path: '/pdf-to-image', category: 'Convert', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
   { title: 'Image to PDF', desc: 'Convert JPG, PNG, and WebP into a professional PDF.', icon: ImagePlus, implemented: true, path: '/image-to-pdf', category: 'Convert', color: 'text-accent', bg: 'bg-[var(--accent-soft)]' },
@@ -386,12 +386,13 @@ function App() {
                 <Route path="/rotate-pdf" element={<RotateTool />} />
                 {!IS_OCR_DISABLED && <Route path="/pdf-to-text" element={<PdfToTextTool />} />}
                 <Route path="/rearrange-pdf" element={<RearrangeTool />} />
-                <Route path="/watermark" element={<WatermarkTool />} />
+                <Route path="/editor" element={<PdfEditorTool />} />
+                <Route path="/watermark" element={<Navigate replace to="/editor?mode=watermark" />} />
                 <Route path="/page-numbers" element={<PageNumberTool />} />
                 <Route path="/metadata" element={<MetadataTool />} />
                 <Route path="/image-to-pdf" element={<ImageToPdfTool />} />
                 <Route path="/image-converter" element={<ImageConverterTool />} />
-                <Route path="/signature" element={<SignatureTool />} />
+                <Route path="/signature" element={<Navigate replace to="/editor?mode=signature" />} />
                 <Route path="/repair" element={<RepairTool />} />
                 <Route path="/extract-images" element={<ExtractImagesTool />} />
                 <Route path="/grayscale" element={<GrayscaleTool />} />
@@ -411,16 +412,32 @@ function App() {
               </Routes>
             </Suspense>
 
-            {/* Chameleon Toggle (Dev Only) */}
+            {/* Preview mode switch (dev only) */}
             {import.meta.env.DEV && (
-              <div className="fixed bottom-24 right-6 z-[100] flex flex-col gap-2">
+              <div
+                role="group"
+                aria-label="Preview mode"
+                className="fixed bottom-24 right-4 z-[120] flex items-center gap-0.5 rounded-full border border-line bg-surface p-0.5 opacity-60 shadow-ambient backdrop-blur-md transition-opacity duration-200 focus-within:opacity-100 hover:opacity-100 sm:right-6"
+              >
                 <button
-                  onClick={() => setViewMode(prev => prev === 'web' ? 'android' : 'web')}
-                  className="bg-gray-900 dark:bg-zinc-800 text-white p-4 rounded-xl shadow-ambient hover:bg-blue-500 transition-all duration-300 flex items-center gap-3 border border-white/10 group active:scale-95"
-                  title="Toggle Chameleon Mode"
+                  type="button"
+                  onClick={() => setViewMode('web')}
+                  aria-pressed={viewMode === 'web'}
+                  aria-label="Preview web layout"
+                  title="Web preview"
+                  className={`grid h-8 w-8 place-items-center rounded-full transition active:scale-90 ${viewMode === 'web' ? 'bg-accent text-white' : 'text-muted hover:bg-hover hover:text-ink'}`}
                 >
-                  {viewMode === 'web' ? <SmartphoneIcon size={20} /> : <MonitorIcon size={20} />}
-                  <span className="text-xs font-semibold uppercase tracking-tighter">{viewMode}</span>
+                  <MonitorIcon size={15} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('android')}
+                  aria-pressed={viewMode === 'android'}
+                  aria-label="Preview Android layout"
+                  title="Android preview"
+                  className={`grid h-8 w-8 place-items-center rounded-full transition active:scale-90 ${viewMode === 'android' ? 'bg-accent text-white' : 'text-muted hover:bg-hover hover:text-ink'}`}
+                >
+                  <SmartphoneIcon size={15} />
                 </button>
               </div>
             )}

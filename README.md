@@ -17,6 +17,7 @@
 ## Features
 
 ### Modify
+- **Visual PDF Editor** — Add, position, resize, rotate, and layer text, images, and signatures with local draft recovery.
 - **Merge** — Combine multiple PDFs into a single file.
 - **Split** — Extract specific pages or split by page ranges.
 - **Rotate** — Rotate individual or all pages in 90° increments.

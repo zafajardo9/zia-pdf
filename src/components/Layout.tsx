@@ -17,7 +17,8 @@ import {
   LayoutGrid as LayoutGridIcon, 
   Settings as SettingsIcon,
   Github as GHIcon,
-  Download
+  Download,
+  X as XIcon
 } from 'lucide-react'
 import { Capacitor } from '@capacitor/core'
 import { Theme, Tool, ToolCategory, ViewMode } from '../types'
@@ -47,9 +48,9 @@ export default function Layout({ children, theme, toggleTheme, tools, onFileDrop
   const location = useLocation()
   const [isDragging, setIsDragging] = useState(false)
   const [showHistory, setShowHistory] = useState(false)
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [showTools, setShowTools] = useState(false)
   const [activity, setActivity] = useState<ActivityEntry[]>([])
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const toolsDialogRef = useRef<HTMLDivElement>(null)
   const isNative = Capacitor.isNativePlatform()
   const showMobileNav = isNative || viewMode === 'android'
   
@@ -62,14 +63,19 @@ export default function Layout({ children, theme, toggleTheme, tools, onFileDrop
   }, [showHistory])
 
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setIsDropdownOpen(false)
-      }
+    if (!showTools) return
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setShowTools(false)
     }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    document.addEventListener('keydown', handleKeyDown)
+    toolsDialogRef.current?.focus()
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [showTools])
 
   useEffect(() => {
     // Disable global drop on mobile to prevent accidental triggers/bugs
@@ -103,9 +109,9 @@ export default function Layout({ children, theme, toggleTheme, tools, onFileDrop
     }
   }, [onFileDrop])
 
-  const activeTool = tools.find(t => {
-    const pathPart = t.title.split(' ')[0].toLowerCase()
-    return location.pathname.includes(`/${pathPart}`)
+  const activeTool = tools.find((tool) => {
+    const toolPath = tool.path?.split('?')[0]
+    return toolPath && location.pathname === toolPath
   })
 
   const isHome = location.pathname === '/'
@@ -116,6 +122,15 @@ export default function Layout({ children, theme, toggleTheme, tools, onFileDrop
     location.pathname.endsWith('/settings')
 
   const shouldShowNav = showMobileNav && isMainView && !activeTool
+
+  const implementedTools = tools.filter((tool) => tool.implemented)
+  const groupedTools = Object.entries(
+    implementedTools.reduce((acc, tool) => {
+      if (!acc[tool.category]) acc[tool.category] = []
+      acc[tool.category].push(tool)
+      return acc
+    }, {} as Record<string, Tool[]>)
+  ) as [ToolCategory, Tool[]][]
 
   return (
     <div className="flex min-h-screen flex-col bg-canvas text-ink">
@@ -141,34 +156,11 @@ export default function Layout({ children, theme, toggleTheme, tools, onFileDrop
               <span className="hidden text-base font-semibold tracking-tight sm:block">{BRAND.name}</span>
             </Link>
             <div className="mx-1 h-5 w-px shrink-0 bg-line md:mx-2" />
-            <div className="relative min-w-0" ref={dropdownRef}>
-              <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} aria-expanded={isDropdownOpen} className={`flex min-w-0 items-center gap-2 rounded-ui px-2 py-1.5 text-xs font-semibold md:px-3 ${isDropdownOpen ? 'bg-accent text-white' : 'text-muted hover:bg-hover hover:text-ink'}`}>
+            <div className="min-w-0">
+              <button onClick={() => setShowTools(true)} aria-haspopup="dialog" aria-expanded={showTools} className={`flex min-w-0 items-center gap-2 rounded-ui px-2 py-1.5 text-xs font-semibold md:px-3 ${showTools ? 'bg-accent text-white' : 'text-muted hover:bg-hover hover:text-ink'}`}>
                 <span className="truncate">{isHome ? 'All Tools' : activeTool?.title || 'Tool'}</span>
-                <ChevronDownIcon size={14} className={`transition-transform duration-300 shrink-0 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                <ChevronDownIcon size={14} className={`transition-transform duration-300 shrink-0 ${showTools ? 'rotate-180' : ''}`} />
               </button>
-              {isDropdownOpen && (
-                <div className="absolute left-0 top-full mt-2 max-h-[80vh] w-72 overflow-y-auto rounded-panel border border-line bg-elevated py-3 shadow-ambient scrollbar-hide md:w-80">
-                  {Object.entries(tools.filter(t => t.implemented).reduce((acc, tool) => { if (!acc[tool.category]) acc[tool.category] = []; acc[tool.category].push(tool); return acc }, {} as Record<string, Tool[]>)).map(([category, categoryTools]) => {
-                    const colors = categoryColors[category as ToolCategory]
-                    return (
-                      <div key={category} className="mb-4">
-                        <div className="px-6 py-2"><span className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${colors.text} opacity-60`}>{category}</span></div>
-                        <div className="grid grid-cols-1 gap-1 px-2">
-                          {categoryTools.map((tool, i) => {
-                            const Icon = tool.icon; const isActive = activeTool?.title === tool.title && !isHome
-                            return (
-                              <button key={i} onClick={() => { navigate(tool.path || '/'); setIsDropdownOpen(false); }} className={`flex items-center gap-4 p-3 rounded-lg transition-all text-left group ${isActive ? `${colors.bg} ${colors.text}` : `hover:bg-gray-50 dark:hover:bg-zinc-800 text-gray-500 dark:text-gray-400`}`}>
-                                <div className={`p-2 rounded-lg transition-colors ${isActive ? 'bg-white dark:bg-zinc-800' : `${colors.iconBg} ${colors.text} opacity-70 group-hover:opacity-100`}`}><Icon size={18} /></div>
-                                <div className="flex-1 min-w-0"><p className="text-xs font-semibold uppercase tracking-tight">{tool.title}</p><p className="text-[10px] opacity-60 truncate">{tool.desc}</p></div>
-                              </button>
-                            )
-                          })}
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              )}
             </div>
           </div>
           <div className="flex items-center gap-1 md:gap-3 shrink-0">
@@ -316,6 +308,73 @@ export default function Layout({ children, theme, toggleTheme, tools, onFileDrop
             <span className="text-[10px] font-bold">Settings</span>
           </Link>
         </nav>
+      )}
+
+      {/* All Tools Dialog */}
+      {showTools && (
+        <div
+          onClick={() => setShowTools(false)}
+          className="fixed inset-0 z-[200] flex items-end justify-center bg-black/30 backdrop-blur-sm motion-safe:animate-fade-in dark:bg-black/60 sm:items-center sm:p-6"
+        >
+          <div
+            ref={toolsDialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="all-tools-dialog-title"
+            tabIndex={-1}
+            onClick={(event) => event.stopPropagation()}
+            className="flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-t-panel border border-line bg-elevated pb-[env(safe-area-inset-bottom)] shadow-ambient outline-none motion-safe:animate-dialog-in sm:max-h-[85vh] sm:rounded-panel sm:pb-0"
+          >
+            <header className="flex shrink-0 items-center justify-between gap-4 border-b border-line px-5 py-4">
+              <div className="min-w-0">
+                <p className="system-label">PDF Toolkit</p>
+                <h2 id="all-tools-dialog-title" className="truncate text-base font-semibold">All tools</h2>
+              </div>
+              <button onClick={() => setShowTools(false)} aria-label="Close tool list" className="rounded-ui p-2 text-muted transition-colors hover:bg-hover hover:text-ink"><XIcon size={20} /></button>
+            </header>
+
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-5 sm:py-5">
+              {groupedTools.map(([category, categoryTools]) => {
+                const colors = categoryColors[category]
+                return (
+                  <section key={category} className="mb-6 last:mb-0">
+                    <div className="mb-2 flex items-center gap-3 px-1">
+                      <span className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${colors.text}`}>{category}</span>
+                      <span className="h-px flex-1 bg-line" />
+                      <span className="text-[10px] font-semibold text-muted">{categoryTools.length}</span>
+                    </div>
+                    <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2 lg:grid-cols-3">
+                      {categoryTools.map((tool) => {
+                        const Icon = tool.icon
+                        const isActive = activeTool?.title === tool.title && !isHome
+                        return (
+                          <button
+                            key={tool.title}
+                            onClick={() => { navigate(tool.path || '/'); setShowTools(false) }}
+                            aria-current={isActive ? 'page' : undefined}
+                            className={`flex items-start gap-3 rounded-ui p-3 text-left transition-colors ${isActive ? `${colors.bg} ${colors.text}` : 'text-muted hover:bg-hover hover:text-ink'}`}
+                          >
+                            <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-ui ${isActive ? 'bg-canvas' : `${colors.iconBg} ${colors.text}`}`}><Icon size={18} /></span>
+                            <span className="min-w-0 flex-1">
+                              <span className="block truncate text-xs font-semibold uppercase tracking-tight">{tool.title}</span>
+                              <span className="mt-0.5 block truncate text-[10px] opacity-70">{tool.desc}</span>
+                            </span>
+                            {isActive && <CheckCircleIcon size={16} className="mt-2 shrink-0" />}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </section>
+                )
+              })}
+            </div>
+
+            <footer className="flex shrink-0 items-center justify-between gap-3 border-t border-line px-5 py-3 text-[10px] text-muted">
+              <span>{implementedTools.length} tools, all running in your browser</span>
+              <span className="hidden items-center gap-1.5 sm:flex">Press <kbd className="rounded border border-line px-1.5 py-0.5 font-semibold text-ink">Esc</kbd> to close</span>
+            </footer>
+          </div>
+        </div>
       )}
 
       {/* Sidebar History Drawer */}
