@@ -90,7 +90,7 @@ export default function BookmarksTool() {
     <button
       onClick={addBookmarks}
       disabled={!hasValid || isProcessing}
-      className="w-full bg-blue-500 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:p-6 md:rounded-xl md:text-xl flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20"
+      className="w-full bg-blue-500 text-white font-medium transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:text-base flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20"
     >
       {isProcessing ? <Loader2 className="animate-spin" /> : <Bookmark size={18} />} Add Bookmarks
     </button>
@@ -130,7 +130,7 @@ export default function BookmarksTool() {
               <div className="space-y-6">
                 <div>
                   <div className="flex items-center justify-between px-1 mb-3">
-                    <span className="text-[10px] font-semibold uppercase tracking-widest text-gray-400">Bookmarks</span>
+                    <span className="text-[10px] font-medium text-gray-400">Bookmarks</span>
                     <span className="text-[10px] text-gray-400">{pdfData.pageCount} pages</span>
                   </div>
                   <div className="space-y-3">
@@ -161,7 +161,7 @@ export default function BookmarksTool() {
                   </div>
                   <button
                     onClick={() => setBookmarks(prev => [...prev, { id: uid(), title: '', page: '' }])}
-                    className="mt-3 w-full border-2 border-dashed border-gray-200 dark:border-zinc-700 rounded-xl py-3 text-xs font-semibold uppercase tracking-widest text-gray-400 hover:border-blue-300 hover:text-blue-500 transition-all flex items-center justify-center gap-2"
+                    className="mt-3 w-full border-2 border-dashed border-gray-200 dark:border-zinc-700 rounded-xl py-3 text-xs font-medium text-gray-400 hover:border-blue-300 hover:text-blue-500 transition-all flex items-center justify-center gap-2"
                   >
                     <Plus size={14} /> Add Bookmark
                   </button>
@@ -169,7 +169,7 @@ export default function BookmarksTool() {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3 px-1">Output Filename</label>
+                  <label className="block text-[10px] font-medium text-gray-400 mb-3 px-1">Output Filename</label>
                   <input
                     type="text"
                     value={customFileName}

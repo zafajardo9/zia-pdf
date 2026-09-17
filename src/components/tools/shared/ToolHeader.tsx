@@ -13,7 +13,7 @@ export default function ToolHeader({ title, highlight, description }: ToolHeader
   const isNative = Capacitor.isNativePlatform()
 
   return (
-    <div className="relative border-b border-line pb-6 text-left md:pb-8">
+    <div className="relative border-b border-line-soft pb-6 text-left md:pb-8">
       {isNative && (
         <button 
           onClick={() => navigate('/')}
@@ -24,10 +24,10 @@ export default function ToolHeader({ title, highlight, description }: ToolHeader
         </button>
       )}
       <p className="system-label mb-2">Local PDF tool</p>
-      <h2 className="mb-2 text-2xl font-semibold tracking-[-0.025em] md:text-3xl">
+      <h2 className="type-headline-lg mb-3">
         {title} {highlight && <span className="text-accent">{highlight}.</span>}
       </h2>
-      <p className="max-w-2xl text-sm leading-relaxed text-muted">
+      <p className="type-body-md max-w-2xl text-muted">
         {description}
       </p>
     </div>

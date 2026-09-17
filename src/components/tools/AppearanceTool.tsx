@@ -173,7 +173,7 @@ export default function AppearanceTool() {
   }
 
   const ActionButton = () => (
-    <button onClick={applyFilter} disabled={isProcessing} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 ${isNative ? 'py-4 rounded-lg text-sm' : 'p-6 rounded-xl text-xl'}`}>
+    <button onClick={applyFilter} disabled={isProcessing} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-medium transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 ${isNative ? 'py-4 rounded-lg text-sm' : 'p-6 rounded-xl text-xl'}`}>
       {isProcessing ? <><Loader2 className="animate-spin" /> {progress}%</> : <><Wand2 size={18} /> Apply {FILTERS.find(f => f.value === filter)?.label} <ArrowRight size={18} /></>}
     </button>
   )
@@ -209,7 +209,7 @@ export default function AppearanceTool() {
                 <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
                   {FILTERS.map(f => (
                     <button key={f.value} onClick={() => setFilter(f.value)} className={`p-4 rounded-lg border-2 transition-all flex flex-col items-start text-left ${filter === f.value ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-900/10' : 'border-gray-100 dark:border-white/5 hover:border-gray-200 dark:hover:border-zinc-700'}`}>
-                      <span className={`font-semibold uppercase text-[10px] tracking-widest ${filter === f.value ? 'text-blue-500' : 'text-gray-700 dark:text-zinc-300'}`}>{f.label}</span>
+                      <span className={`font-medium text-[10px] ${filter === f.value ? 'text-blue-500' : 'text-gray-700 dark:text-zinc-300'}`}>{f.label}</span>
                       <span className="text-[9px] text-gray-400 mt-1">{f.hint}</span>
                     </button>
                   ))}
@@ -218,11 +218,11 @@ export default function AppearanceTool() {
                 {previewUrl && !isProcessing && (
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1.5">
-                      <p className="text-[9px] font-bold uppercase tracking-widest text-gray-400 text-center">Original</p>
+                      <p className="text-[9px] font-medium text-gray-400 text-center">Original</p>
                       {pdfData.thumbnail && <img src={pdfData.thumbnail} alt="Original page" className="w-full rounded-lg border border-gray-100 dark:border-white/5" />}
                     </div>
                     <div className="space-y-1.5">
-                      <p className="text-[9px] font-bold uppercase tracking-widest text-blue-500 text-center">{FILTERS.find(f => f.value === filter)?.label}</p>
+                      <p className="text-[9px] font-medium text-blue-500 text-center">{FILTERS.find(f => f.value === filter)?.label}</p>
                       <img src={previewUrl} alt="Filtered preview" className="w-full rounded-lg border border-blue-100 dark:border-blue-900/30" />
                     </div>
                   </div>
@@ -240,7 +240,7 @@ export default function AppearanceTool() {
                 {!isProcessing && (
                   <>
                     <div className="p-4 bg-amber-50 dark:bg-amber-900/10 rounded-xl border border-amber-100 dark:border-amber-900/20">
-                      <p className="text-[10px] text-amber-700 dark:text-amber-400 font-bold uppercase tracking-widest text-center leading-relaxed">Note: Filters rasterize pages — text remains visible but is no longer selectable.</p>
+                      <p className="text-[10px] text-amber-700 dark:text-amber-400 font-medium text-center leading-relaxed">Note: Filters rasterize pages — text remains visible but is no longer selectable.</p>
                     </div>
                     <div><label className="block text-[10px] font-semibold uppercase text-gray-400 mb-3 tracking-widest px-1">Output Filename</label><input type="text" value={customFileName} onChange={(e) => setCustomFileName(e.target.value)} className="w-full bg-gray-50 dark:bg-black rounded-xl px-4 py-3 border border-transparent focus:border-blue-500 outline-none font-bold text-sm dark:text-white" /></div>
                   </>

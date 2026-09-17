@@ -129,23 +129,23 @@ function QuickDropModal({ file, onClear, onBack }: { file: File, onClear: () => 
   }
 
   return (
-    <div className="fixed inset-0 z-[600] flex items-end justify-center bg-black/55 p-0 backdrop-blur-sm sm:items-center sm:p-6" role="dialog" aria-modal="true" aria-labelledby="quick-drop-title">
-      <div className="w-full max-w-md overflow-hidden rounded-t-panel border border-line bg-elevated shadow-ambient sm:rounded-panel">
+    <div className="fixed inset-0 z-[600] flex items-end justify-center bg-[#0a2540]/45 p-0 backdrop-blur-[2px] sm:items-center sm:p-6" role="dialog" aria-modal="true" aria-labelledby="quick-drop-title">
+      <div className="w-full max-w-md overflow-hidden rounded-t-panel border border-line-soft bg-elevated shadow-menu sm:rounded-panel">
         
         {/* Header */}
         <div className="p-6 pb-2">
           <div className="flex items-center justify-between mb-6">
              <div className="flex items-center gap-3">
                 {onBack && (
-                  <button onClick={onBack} className="p-2 -ml-2 text-gray-400 hover:text-blue-500 transition-colors">
+                  <button onClick={onBack} aria-label="Back" className="-ml-2 rounded-ui p-2 text-muted transition-colors hover:bg-hover hover:text-accent">
                     <ChevronDown className="rotate-90" size={20} />
                   </button>
                 )}
-                <div className="w-10 h-10 bg-blue-500 text-white rounded-xl flex items-center justify-center shadow-sm shadow-blue-500/20">
+                <div className="flex h-10 w-10 items-center justify-center rounded-ui bg-[var(--accent-soft)] text-accent">
                    <FileText size={20} />
                 </div>
                 <div className="min-w-0">
-                   <h3 id="quick-drop-title" className="mb-1 max-w-[200px] truncate text-base font-semibold leading-none text-ink">{file.name}</h3>
+                   <h3 id="quick-drop-title" className="mb-1 max-w-[200px] truncate text-base font-medium leading-none text-ink">{file.name}</h3>
                    <p className="system-label">{(file.size / (1024*1024)).toFixed(2)} MB · PDF document</p>
                 </div>
              </div>
@@ -161,12 +161,12 @@ function QuickDropModal({ file, onClear, onBack }: { file: File, onClear: () => 
                    <button
                      key={tool.title}
                      onClick={() => tool.path && handleAction(tool.path, tool.title)}
-                     className="group flex items-center gap-3 rounded-ui border border-line bg-surface p-3 text-left hover:border-accent/40 hover:bg-hover"
+                     className="group flex items-center gap-3 rounded-ui border border-line-soft bg-surface p-3 text-left hover:border-accent-outline hover:bg-hover"
                    >
-                     <div className={`p-2 rounded-xl ${tool.bg} ${tool.color} group-active:scale-110 transition-transform`}>
-                       <tool.icon size={18} strokeWidth={2.5} />
+                     <div className={`p-2 rounded-ui ${tool.bg} ${tool.color} group-active:scale-110 transition-transform`}>
+                       <tool.icon size={18} strokeWidth={1.8} />
                      </div>
-                     <span className="text-xs font-bold text-gray-900 dark:text-zinc-200">{tool.title}</span>
+                     <span className="text-xs font-medium text-ink">{tool.title}</span>
                    </button>
                  ))}
               </div>
@@ -175,7 +175,7 @@ function QuickDropModal({ file, onClear, onBack }: { file: File, onClear: () => 
            <div>
               <button 
                 onClick={() => setShowMore(!showMore)}
-                className="flex w-full items-center justify-between rounded-ui border border-line bg-surface p-3 text-xs font-semibold text-muted hover:bg-hover hover:text-accent"
+                className="flex w-full items-center justify-between rounded-ui border border-line-soft bg-surface p-3 text-xs font-medium text-muted hover:bg-hover hover:text-accent"
               >
                 <span>Full Tool Catalog</span>
                 <ChevronDown size={14} className={`transition-transform duration-300 ${showMore ? 'rotate-180' : ''}`} />
@@ -187,12 +187,12 @@ function QuickDropModal({ file, onClear, onBack }: { file: File, onClear: () => 
                      <button
                        key={tool.title}
                        onClick={() => tool.path && handleAction(tool.path, tool.title)}
-                       className="group flex items-center gap-3 rounded-ui border border-line bg-surface p-3 text-left hover:border-accent/40 hover:bg-hover"
+                       className="group flex items-center gap-3 rounded-ui border border-line-soft bg-surface p-3 text-left hover:border-accent-outline hover:bg-hover"
                      >
-                       <div className={`p-2 rounded-xl ${tool.bg} ${tool.color} group-active:scale-110 transition-transform`}>
-                         <tool.icon size={18} strokeWidth={2.5} />
+                       <div className={`p-2 rounded-ui ${tool.bg} ${tool.color} group-active:scale-110 transition-transform`}>
+                         <tool.icon size={18} strokeWidth={1.8} />
                        </div>
-                       <span className="text-xs font-bold text-gray-900 dark:text-zinc-200">{tool.title}</span>
+                       <span className="text-xs font-medium text-ink">{tool.title}</span>
                      </button>
                    ))}
                 </div>
@@ -339,7 +339,7 @@ function App() {
               richColors 
               duration={2000}
               toastOptions={{
-                className: 'dark:bg-zinc-900 dark:text-white dark:border-white/10 mt-12',
+                className: 'mt-12 border-line-soft bg-elevated text-ink',
                 style: { zIndex: 1000 }
               }}
             />
@@ -370,7 +370,7 @@ function App() {
               <Routes>
                 <Route path="/" element={
                   viewMode === 'web' ? (
-                    <WebView tools={activeTools} />
+                    <WebView tools={activeTools} onFileSelect={(file) => handleGlobalDrop([file] as any)} />
                   ) : (
                     <AndroidView toggleTheme={toggleTheme} theme={theme === 'system' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme} onFileSelect={(file) => handleGlobalDrop([file] as any)} />
                   )
@@ -417,7 +417,7 @@ function App() {
               <div
                 role="group"
                 aria-label="Preview mode"
-                className="fixed bottom-24 right-4 z-[120] flex items-center gap-0.5 rounded-full border border-line bg-surface p-0.5 opacity-60 shadow-ambient backdrop-blur-md transition-opacity duration-200 focus-within:opacity-100 hover:opacity-100 sm:right-6"
+                className="fixed bottom-24 right-4 z-[120] flex items-center gap-0.5 rounded-ui border border-line-soft bg-glass p-0.5 opacity-60 shadow-menu backdrop-blur-md transition-opacity duration-200 focus-within:opacity-100 hover:opacity-100 sm:right-6"
               >
                 <button
                   type="button"
@@ -425,7 +425,7 @@ function App() {
                   aria-pressed={viewMode === 'web'}
                   aria-label="Preview web layout"
                   title="Web preview"
-                  className={`grid h-8 w-8 place-items-center rounded-full transition active:scale-90 ${viewMode === 'web' ? 'bg-accent text-white' : 'text-muted hover:bg-hover hover:text-ink'}`}
+                  className={`grid h-8 w-8 place-items-center rounded-[3px] transition active:scale-90 ${viewMode === 'web' ? 'bg-accent text-white' : 'text-muted hover:bg-hover hover:text-ink'}`}
                 >
                   <MonitorIcon size={15} />
                 </button>
@@ -435,7 +435,7 @@ function App() {
                   aria-pressed={viewMode === 'android'}
                   aria-label="Preview Android layout"
                   title="Android preview"
-                  className={`grid h-8 w-8 place-items-center rounded-full transition active:scale-90 ${viewMode === 'android' ? 'bg-accent text-white' : 'text-muted hover:bg-hover hover:text-ink'}`}
+                  className={`grid h-8 w-8 place-items-center rounded-[3px] transition active:scale-90 ${viewMode === 'android' ? 'bg-accent text-white' : 'text-muted hover:bg-hover hover:text-ink'}`}
                 >
                   <SmartphoneIcon size={15} />
                 </button>

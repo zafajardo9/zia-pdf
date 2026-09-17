@@ -132,7 +132,7 @@ export default function CropTool() {
     <button
       onClick={cropPdf}
       disabled={isProcessing}
-      className="w-full bg-blue-500 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:p-6 md:rounded-xl md:text-xl flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20"
+      className="w-full bg-blue-500 text-white font-medium transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:text-base flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20"
     >
       {isProcessing ? <Loader2 className="animate-spin" /> : <Crop size={18} />} Crop Pages
     </button>
@@ -171,13 +171,13 @@ export default function CropTool() {
             {!downloadUrl ? (
               <div className="space-y-6">
                 <div>
-                  <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3 px-1">Preset</label>
+                  <label className="block text-[10px] font-medium text-gray-400 mb-3 px-1">Preset</label>
                   <div className="flex flex-wrap gap-2">
                     {(Object.keys(PRESETS) as Preset[]).map(p => (
                       <button
                         key={p}
                         onClick={() => applyPreset(p)}
-                        className={`px-4 py-2 rounded-ui text-xs font-semibold uppercase tracking-widest transition-all ${preset === p ? 'bg-blue-500 text-white' : 'bg-gray-50 dark:bg-black text-gray-500 dark:text-gray-400 border border-gray-100 dark:border-zinc-800 hover:border-blue-300'}`}
+                        className={`px-4 py-2 rounded-ui text-xs font-medium transition-all ${preset === p ? 'bg-blue-500 text-white' : 'bg-gray-50 dark:bg-black text-gray-500 dark:text-gray-400 border border-gray-100 dark:border-zinc-800 hover:border-blue-300'}`}
                       >
                         {p}
                       </button>
@@ -188,7 +188,7 @@ export default function CropTool() {
                 {preview && (
                   <div>
                     <div className="flex items-center justify-between px-1 mb-3">
-                      <span className="text-[10px] font-semibold uppercase tracking-widest text-gray-400">Preview</span>
+                      <span className="text-[10px] font-medium text-gray-400">Preview</span>
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => setPreviewPage(p => Math.max(1, p - 1))}
@@ -229,7 +229,7 @@ export default function CropTool() {
                   {(['top', 'bottom', 'left', 'right'] as Side[]).map(side => (
                     <div key={side}>
                       <div className="flex items-center justify-between mb-2">
-                        <label className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 px-1">{side} margin</label>
+                        <label className="text-[10px] font-medium text-gray-400 px-1">{side} margin</label>
                         <span className="text-[10px] font-bold text-gray-400">{margins[side]} pt</span>
                       </div>
                       <input
@@ -247,13 +247,13 @@ export default function CropTool() {
 
                 {preview && resultW !== null && resultH !== null && (
                   <div className="flex items-center justify-between rounded-ui bg-gray-50 dark:bg-black border border-gray-100 dark:border-zinc-800 px-4 py-3">
-                    <span className="text-[10px] font-semibold uppercase tracking-widest text-gray-400">Result</span>
+                    <span className="text-[10px] font-medium text-gray-400">Result</span>
                     <span className="text-xs font-bold text-gray-900 dark:text-white">{resultW} × {resultH} pt</span>
                   </div>
                 )}
 
                 <div>
-                  <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3 px-1">Output Filename</label>
+                  <label className="block text-[10px] font-medium text-gray-400 mb-3 px-1">Output Filename</label>
                   <input
                     type="text"
                     value={customFileName}

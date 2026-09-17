@@ -104,7 +104,7 @@ export default function WatermarkTool() {
   }
 
   const ActionButton = () => (
-    <button onClick={applyWatermark} disabled={isProcessing || !text} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:p-6 md:rounded-xl md:text-xl flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20`}>
+    <button onClick={applyWatermark} disabled={isProcessing || !text} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-medium transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:text-base flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20`}>
       {isProcessing ? <Loader2 className="animate-spin" /> : <Type size={20} />} Apply Watermark
     </button>
   )
@@ -133,7 +133,7 @@ export default function WatermarkTool() {
             {/* Live Preview */}
             <div className="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-gray-100 dark:border-white/5 shadow-sm overflow-hidden flex flex-col items-center">
                <div className="flex justify-between items-center w-full mb-4 px-2">
-                  <h4 className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 flex items-center gap-2"><Eye size={12}/> Live Preview</h4>
+                  <h4 className="text-[10px] font-medium text-gray-400 flex items-center gap-2"><Eye size={12}/> Live Preview</h4>
                </div>
                <div className="relative aspect-[3/4] w-full max-w-[300px] bg-white border border-gray-100 dark:border-zinc-800 rounded-xl overflow-hidden shadow-inner">
                   {pdfData.thumbnail ? (

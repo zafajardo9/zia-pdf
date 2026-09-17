@@ -30,194 +30,491 @@
   font-style: normal;
 }
 
+/* ------------------------------------------------------------------
+   Design tokens — see DESIGN.md (stripe.com design system)
+   Light canvas is white, one indigo accent, pale neutral borders.
+   ------------------------------------------------------------------ */
 :root {
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   color-scheme: light;
-  --bg-primary: #f6f7f9;
+
+  /* Type — DESIGN.md asks for sohne-var with SF Pro Display; the bundled
+     Plus Jakarta Sans keeps the same light geometric tone offline/on Android. */
+  --font-sans: 'sohne-var', 'SF Pro Display', 'SF Pro Text', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+
+  /* Surfaces */
+  --bg-primary: #ffffff;
   --bg-secondary: #ffffff;
   --bg-elevated: #ffffff;
-  --bg-hover: #f0f2f5;
-  --fg-primary: #101114;
-  --fg-muted: #686d76;
-  --border: #dde0e5;
-  --accent: #0969da;
-  --accent-hover: #0759bc;
-  --accent-soft: #eaf3ff;
-  --focus: rgba(9, 105, 218, 0.24);
-  --success: #17803d;
+  --bg-hover: #f6f9fc;
+  --bg-subtle: #f6f9fc;
+  --bg-inverse: #0a2540;
+  /* Neutral stage behind document sheets: light in light themes, canvas in dark. */
+  --bg-viewer: #f6f9fc;
+  /* Translucent surface for frosted, always-visible bars (headers, action bars). */
+  --bg-glass: rgba(255, 255, 255, 0.72);
+
+  /* Text */
+  --fg-primary: #0a2540;
+  --fg-muted: #66758f;
+  --fg-subtle: #8794a8;
+  --fg-inverse: #ffffff;
+
+  /* Lines */
+  --border: #d9d9e3;
+  --border-soft: #e8eaf0;
+
+  /* Brand */
+  --accent: #533afd;
+  --accent-hover: #4326e8;
+  --accent-strong: #3720c9;
+  --accent-outline: #b9b9f9;
+  --accent-soft: #f2efff;
+  --accent-soft-strong: #e4deff;
+  --focus: rgba(83, 58, 253, 0.22);
+
+  /* Semantic */
+  --success: #1f8a4c;
+  --success-soft: #e9f7ef;
   --warning: #a15c00;
-  --danger: #cf222e;
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --shadow-ambient: 0 12px 38px rgba(22, 27, 34, 0.07);
+  --warning-soft: #fff5e6;
+  --danger: #df1b41;
+  --danger-soft: #fdecef;
+  --tertiary: #81b81a;
+
+  /* rgb channels — used by Tailwind aliases that need an alpha modifier */
+  --accent-rgb: 83 58 253;
+  --accent-hover-rgb: 67 38 232;
+  --success-rgb: 31 138 76;
+  --warning-rgb: 161 92 0;
+  --danger-rgb: 223 27 65;
+  --navy-rgb: 10 37 64;
+  --navy-deep-rgb: 6 24 41;
+  --ink-rgb: 10 37 64;
+  --muted-rgb: 102 117 143;
+  --subtle-rgb: 135 148 168;
+  --border-rgb: 217 217 227;
+  /* `black` follows the canvas so legacy `dark:bg-black` insets stay navy. */
+  --black-rgb: 0 0 0;
+
+  /* Fixed navy accents used by inverted/overlay panels in every theme */
+  --navy-raised: #12365a;
+  --navy-line: #22496f;
+  --navy-tint: #8fa7c0;
+  --navy-tint-dim: #7d97b3;
+  --navy-tint-soft: #6b86a3;
+  --navy-tint-bright: #e6edf5;
+
+  /* Shape — restrained: 4px controls, 6px cards, 8px panels */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  /* Elevation — soft, single-layer only */
+  --shadow-card: 0 20.187px 40.374px -20.187px rgba(0, 0, 0, 0.1);
+  --shadow-soft: 0 15px 35px 0 rgba(23, 23, 23, 0.08);
+  --shadow-ambient: 0 20.187px 40.374px -20.187px rgba(0, 0, 0, 0.1);
+  --shadow-menu: 0 14px 34px -10px rgba(10, 37, 64, 0.18), 0 2px 8px -2px rgba(10, 37, 64, 0.06);
+
   --shell-height: 64px;
 }
 
+/* Dark sibling of the same system: deep navy canvas, indigo stays the accent. */
 .dark {
   color-scheme: dark;
-  --bg-primary: #0b0d10;
-  --bg-secondary: #12151a;
-  --bg-elevated: #171a20;
-  --bg-hover: #1d2128;
-  --fg-primary: #f3f5f7;
-  --fg-muted: #9aa1ab;
-  --border: #292e36;
-  --accent: #58a6ff;
-  --accent-hover: #79b8ff;
-  --accent-soft: rgba(56, 139, 253, 0.14);
-  --focus: rgba(88, 166, 255, 0.26);
-  --success: #3fb950;
-  --warning: #d29922;
-  --danger: #f85149;
-  --shadow-ambient: 0 16px 44px rgba(0, 0, 0, 0.26);
+
+  --bg-primary: #061829;
+  --bg-secondary: #0a2540;
+  --bg-elevated: #0e2d4e;
+  --bg-hover: #12365a;
+  --bg-subtle: #0e2d4e;
+  --bg-inverse: #ffffff;
+  --bg-viewer: #061829;
+  --bg-glass: rgba(10, 37, 64, 0.78);
+
+  --fg-primary: #e8eef7;
+  --fg-muted: #93a8c2;
+  --fg-subtle: #74899f;
+  --fg-inverse: #0a2540;
+
+  --border: #1d4269;
+  --border-soft: #16375a;
+
+  --accent: #7a68ff;
+  --accent-hover: #8f80ff;
+  --accent-strong: #6a55f0;
+  --accent-outline: #3b3a8f;
+  --accent-soft: rgba(122, 104, 255, 0.14);
+  --accent-soft-strong: rgba(122, 104, 255, 0.24);
+  --focus: rgba(122, 104, 255, 0.32);
+
+  --success: #46b877;
+  --success-soft: rgba(70, 184, 119, 0.14);
+  --warning: #e0a33a;
+  --warning-soft: rgba(224, 163, 58, 0.14);
+  --danger: #ff6b85;
+  --danger-soft: rgba(255, 107, 133, 0.14);
+  --tertiary: #a8d84f;
+
+  --accent-rgb: 122 104 255;
+  --accent-hover-rgb: 143 128 255;
+  --success-rgb: 70 184 119;
+  --warning-rgb: 224 163 58;
+  --danger-rgb: 255 107 133;
+  --navy-rgb: 10 37 64;
+  --ink-rgb: 232 238 247;
+  --muted-rgb: 147 168 194;
+  --subtle-rgb: 116 137 159;
+  --border-rgb: 29 66 105;
+  --black-rgb: 6 24 41;
+
+  --shadow-card: 0 20.187px 40.374px -20.187px rgba(0, 0, 0, 0.5);
+  --shadow-soft: 0 15px 35px 0 rgba(0, 0, 0, 0.42);
+  --shadow-ambient: 0 20.187px 40.374px -20.187px rgba(0, 0, 0, 0.5);
+  --shadow-menu: 0 16px 36px -12px rgba(0, 0, 0, 0.6), 0 2px 8px -2px rgba(0, 0, 0, 0.4);
 }
 
-html, body {
-  background: var(--bg-primary);
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
+@layer base {
+  html, body {
+    background: var(--bg-primary);
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg-primary);
+    color: var(--fg-primary);
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    transition: background-color 180ms ease, color 180ms ease;
+    overflow-x: hidden;
+  }
+
+  /* Headlines stay light and tightly tracked. Utilities can still opt into weight. */
+  h1, h2, h3, h4 {
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  button, a, input, select, textarea {
+    transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease, opacity 140ms ease, transform 140ms ease;
+  }
+
+  :where(button, a, input, select, textarea):focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  input[type='range'],
+  input[type='checkbox'],
+  input[type='radio'] {
+    accent-color: var(--accent);
+  }
+
+  ::selection {
+    color: #ffffff;
+    background: var(--accent);
+  }
+
+  /* Global seamless theme transition - target only background and text colors */
+  .theme-transition {
+    transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+  }
 }
 
-body {
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-  background: var(--bg-primary);
-  color: var(--fg-primary);
-  font-size: 14px;
-  line-height: 1.5;
-  transition: background-color 180ms ease, color 180ms ease;
-  overflow-x: hidden;
+@layer components {
+  /* ---------------- Typography scale (DESIGN.md) ---------------- */
+  .type-display {
+    font-size: clamp(2.25rem, 4.6vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-weight: 300;
+  }
+
+  .type-headline-lg {
+    font-size: clamp(1.7rem, 2.6vw, 2rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-weight: 300;
+  }
+
+  .type-headline-md {
+    font-size: 1.24rem;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    font-weight: 300;
+  }
+
+  .type-body-lg {
+    font-size: 1rem;
+    line-height: 1.39;
+    font-weight: 300;
+  }
+
+  .type-body-md {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  .type-label-md {
+    font-size: 0.875rem;
+    line-height: 1.43;
+    font-weight: 400;
+  }
+
+  .type-label-sm {
+    font-size: 0.75rem;
+    line-height: 1.33;
+    font-weight: 400;
+  }
+
+  /* ---------------- Primitives ---------------- */
+  .system-surface {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    box-shadow: none;
+  }
+
+  .system-card {
+    background: var(--bg-secondary);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+  }
+
+  .system-label {
+    color: var(--fg-muted);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .system-button-primary {
+    min-height: 48px;
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: #ffffff;
+    border: 1px solid transparent;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    box-shadow: none;
+  }
+
+  .system-button-primary:hover:not(:disabled) {
+    background: var(--accent-hover);
+  }
+
+  .system-button-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* Pale indigo outline button from DESIGN.md */
+  .system-button-secondary {
+    min-height: 48px;
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-secondary);
+    color: var(--accent);
+    border: 1px solid var(--accent-outline);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    box-shadow: none;
+  }
+
+  .system-button-secondary:hover:not(:disabled) {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+  }
+
+  .system-button-secondary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .system-button-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    border-radius: 0;
+    color: var(--accent);
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .system-button-link:hover {
+    color: var(--accent-hover);
+  }
+
+  /* ---------------- Hero ribbon (decorative, hero only) ---------------- */
+  .hero-ribbon {
+    position: absolute;
+    top: -1.5rem;
+    right: -15rem;
+    width: 50rem;
+    height: 24rem;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+    -webkit-mask-image: radial-gradient(56% 62% at 56% 44%, #000 26%, transparent 94%);
+    mask-image: radial-gradient(56% 62% at 56% 44%, #000 26%, transparent 94%);
+  }
+
+  .hero-ribbon__band {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(16px);
+    opacity: 0.72;
+    mix-blend-mode: multiply;
+    transform: rotate(-13deg);
+  }
+
+  .hero-ribbon__band--1 {
+    top: 4%;
+    left: -6%;
+    width: 112%;
+    height: 42px;
+    background: linear-gradient(90deg, rgba(83, 58, 253, 0) 0%, #533afd 34%, #7d5cff 58%, rgba(83, 58, 253, 0) 100%);
+  }
+
+  .hero-ribbon__band--2 {
+    top: 20%;
+    left: -10%;
+    width: 118%;
+    height: 34px;
+    background: linear-gradient(90deg, rgba(255, 130, 61, 0) 0%, #ff823d 38%, #ffb45c 56%, rgba(255, 180, 92, 0) 100%);
+  }
+
+  .hero-ribbon__band--3 {
+    top: 35%;
+    left: -4%;
+    width: 108%;
+    height: 46px;
+    background: linear-gradient(90deg, rgba(240, 120, 210, 0) 0%, #f078d2 36%, #b98cff 58%, rgba(185, 140, 255, 0) 100%);
+  }
+
+  .hero-ribbon__band--4 {
+    top: 52%;
+    left: -8%;
+    width: 114%;
+    height: 32px;
+    background: linear-gradient(90deg, rgba(92, 214, 255, 0) 0%, #5cd6ff 40%, #4fb3ff 58%, rgba(79, 179, 255, 0) 100%);
+  }
+
+  .hero-ribbon__band--5 {
+    top: 66%;
+    left: -2%;
+    width: 106%;
+    height: 38px;
+    background: linear-gradient(90deg, rgba(129, 184, 26, 0) 0%, #81b81a 40%, #a8d84f 58%, rgba(168, 216, 79, 0) 100%);
+  }
+
+  .dark .hero-ribbon__band {
+    mix-blend-mode: screen;
+    opacity: 0.3;
+  }
+
+  /* Keep the ribbon clear of hero copy on narrow screens. */
+  @media (max-width: 767px) {
+    .hero-ribbon {
+      top: -4rem;
+      right: -16rem;
+      width: 34rem;
+      height: 15rem;
+      opacity: 0.85;
+    }
+  }
+
+  /* ---------------- Shared look for existing PDF workflows ---------------- */
+  .tool-workspace {
+    color: var(--fg-primary);
+  }
+
+  .tool-workspace :where(input:not([type='range']), select, textarea) {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius-sm) !important;
+    color: var(--fg-primary) !important;
+    box-shadow: none !important;
+  }
+
+  .tool-workspace :where(input:not([type='range']), select, textarea):focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px var(--focus) !important;
+  }
+
+  /* Collapse legacy oversized radii and elevation onto the token scale. */
+  .tool-workspace :where(
+    .rounded-\[2\.5rem\],
+    .rounded-\[2\.25rem\],
+    .rounded-\[2rem\],
+    .rounded-3xl,
+    .rounded-2xl,
+    .rounded-xl
+  ) {
+    border-radius: var(--radius-lg) !important;
+  }
+
+  .tool-workspace :where(.shadow-2xl, .shadow-xl, .shadow-lg) {
+    box-shadow: var(--shadow-card) !important;
+  }
+
+  .tool-workspace :where(.border-4, .border-2) {
+    border-width: 1px !important;
+  }
+
+  .tool-workspace :where(.font-black, .font-extrabold) {
+    font-weight: 500 !important;
+  }
+
+  .tool-workspace :where(.uppercase) {
+    letter-spacing: 0.08em !important;
+  }
 }
 
-/* Global seamless theme transition - target only background and text colors */
-.theme-transition {
-  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
-}
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 
-button, a, input, select, textarea {
-  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease, opacity 140ms ease, transform 140ms ease;
-}
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 
-:where(button, a, input, select, textarea):focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
 
-::selection {
-  color: white;
-  background: var(--accent);
-}
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 
-/* Shared visual migration layer for existing PDF workflows. */
-.tool-workspace {
-  color: var(--fg-primary);
-}
-
-.tool-workspace :where(input:not([type='range']), select, textarea) {
-  background: var(--bg-primary) !important;
-  border: 1px solid var(--border) !important;
-  border-radius: var(--radius-sm) !important;
-  color: var(--fg-primary) !important;
-  box-shadow: none !important;
-}
-
-.tool-workspace :where(input:not([type='range']), select, textarea):focus {
-  border-color: var(--accent) !important;
-  box-shadow: 0 0 0 3px var(--focus) !important;
-}
-
-.tool-workspace :where(.rounded-\[2\.5rem\], .rounded-\[2\.25rem\], .rounded-\[2rem\], .rounded-3xl) {
-  border-radius: var(--radius-md) !important;
-}
-
-.tool-workspace :where(.shadow-2xl, .shadow-xl, .shadow-lg) {
-  box-shadow: var(--shadow-ambient) !important;
-}
-
-.tool-workspace :where(.border-4) {
-  border-width: 1px !important;
-}
-
-.tool-workspace :where(.font-black) {
-  font-weight: 600 !important;
-}
-
-.tool-workspace :where(.uppercase) {
-  letter-spacing: .08em !important;
-}
-
-.tool-workspace :where(.bg-rose-500) {
-  background-color: var(--accent) !important;
-}
-
-.tool-workspace :where(.text-rose-500, .text-rose-600) {
-  color: var(--accent) !important;
-}
-
-.tool-workspace :where(.border-rose-500) {
-  border-color: var(--accent) !important;
-}
-
-.tool-workspace :where(.bg-rose-50) {
-  background-color: var(--accent-soft) !important;
-}
-
-.tool-workspace :where(.hover\:bg-rose-50:hover) {
-  background-color: var(--accent-soft) !important;
-}
-
-.system-surface {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-}
-
-.system-label {
-  color: var(--fg-muted);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-.system-button-primary {
-  min-height: 44px;
-  padding: 10px 16px;
-  border-radius: var(--radius-sm);
-  background: var(--accent);
-  color: white;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.system-button-primary:hover {
-  background: var(--accent-hover);
-}
-
-.system-button-primary:disabled {
-  opacity: .4;
-  cursor: not-allowed;
-}
-
-.pt-safe {
-  padding-top: env(safe-area-inset-top);
-}
-
-.pb-safe {
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-.mt-safe {
-  margin-top: env(safe-area-inset-top);
+  .mt-safe {
+    margin-top: env(safe-area-inset-top);
+  }
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
-}
-
-::-webkit-scrollbar-track {
+}::-webkit-scrollbar-track {
   @apply bg-transparent;
 }
 
@@ -237,4 +534,56 @@ button, a, input, select, textarea {
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
+}
+
+/* ------------------------------------------------------------------
+   Legacy normalization
+   Older screens still carry expressive Tailwind utilities (900 weights,
+   24px radii, stacked shadows). These rules land them on the token scale
+   without editing every file. They are unlayered so they win by source
+   order, and they intentionally come last.
+   ------------------------------------------------------------------ */
+
+/* DESIGN.md: type stays light. Every emphasis utility lands on one weight. */
+.font-semibold,
+.font-bold,
+.font-extrabold,
+.font-black {
+  font-weight: 500;
+}
+
+/* Wide uppercase tracking is quietened to a single eyebrow rhythm. */
+.tracking-widest {
+  letter-spacing: 0.08em;
+}
+
+.tracking-wider {
+  letter-spacing: 0.05em;
+}
+
+/* Radii above the documented ceiling collapse onto the scale. */
+.rounded-2xl,
+.rounded-\[1\.25rem\],
+.rounded-\[1\.5rem\] {
+  border-radius: var(--radius-lg);
+}
+
+.rounded-3xl,
+.rounded-\[2rem\],
+.rounded-\[2\.25rem\],
+.rounded-\[2\.5rem\] {
+  border-radius: var(--radius-xl);
+}
+
+/* One soft elevation instead of stacked legacy shadows. */
+.shadow-sm,
+.shadow-md,
+.shadow-lg,
+.shadow-xl,
+.shadow-2xl {
+  box-shadow: var(--shadow-card);
+}
+
+.shadow-inner {
+  box-shadow: none;
 }

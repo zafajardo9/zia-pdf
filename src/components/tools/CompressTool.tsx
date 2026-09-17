@@ -233,7 +233,7 @@ export default function CompressTool() {
     <button 
       onClick={startBatchCompression}
       disabled={isProcessing || files.filter(f => !f.isLocked).length === 0}
-      className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 py-4 rounded-lg text-sm md:p-6 md:rounded-xl md:text-xl`}
+      className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-medium transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 py-4 rounded-lg text-sm md:text-base`}
     >
       {isProcessing ? <><Loader2 className="animate-spin" /> {globalProgress}%</> : <>Compress {files.length > 1 ? `${files.length} Files` : 'PDF'} <ArrowRight size={18} /></>}
     </button>
@@ -272,7 +272,7 @@ export default function CompressTool() {
               </div>
             ))}
             <button onClick={() => fileInputRef.current?.click()} className="border-2 border-dashed border-gray-100 dark:border-zinc-800 rounded-[1.5rem] p-4 text-gray-400 flex flex-col items-center justify-center gap-1 hover:border-blue-500 hover:text-blue-500 transition-all">
-              <Plus size={20} /><span className="text-[10px] font-semibold uppercase tracking-widest">Add More</span>
+              <Plus size={20} /><span className="text-[10px] font-medium">Add More</span>
             </button>
           </div>
 
@@ -296,7 +296,7 @@ export default function CompressTool() {
                  <div className="w-8 h-8 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center">
                    <Zap size={16} />
                  </div>
-                 <h5 className="text-xs font-semibold uppercase tracking-widest dark:text-white">Strategy Details</h5>
+                 <h5 className="text-xs font-medium dark:text-white">Strategy Details</h5>
                </div>
                <p className="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed">
                  {quality === 'high' && (

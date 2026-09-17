@@ -107,7 +107,7 @@ export default function RemovePagesTool() {
     <button
       onClick={removePages}
       disabled={removing.size === 0 || isProcessing}
-      className="w-full bg-blue-500 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:p-6 md:rounded-xl md:text-xl flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20"
+      className="w-full bg-blue-500 text-white font-medium transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:text-base flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20"
     >
       {isProcessing ? <Loader2 className="animate-spin" /> : <FileMinus2 size={18} />} Remove {removing.size} Page{removing.size === 1 ? '' : 's'}
     </button>
@@ -146,8 +146,8 @@ export default function RemovePagesTool() {
             {!downloadUrl ? (
               <div className="space-y-6">
                 <div className="flex items-center justify-between px-1">
-                  <span className="text-[10px] font-semibold uppercase tracking-widest text-gray-400">Select pages to remove</span>
-                  <span className={`text-[10px] font-bold uppercase tracking-widest ${removing.size > 0 ? 'text-rose-500' : 'text-gray-400'}`}>{pdfData.pageCount} pages • {removing.size} marked</span>
+                  <span className="text-[10px] font-medium text-gray-400">Select pages to remove</span>
+                  <span className={`text-[10px] font-medium ${removing.size > 0 ? 'text-rose-500' : 'text-gray-400'}`}>{pdfData.pageCount} pages • {removing.size} marked</span>
                 </div>
 
                 <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">
@@ -173,7 +173,7 @@ export default function RemovePagesTool() {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3 px-1">Output Filename</label>
+                  <label className="block text-[10px] font-medium text-gray-400 mb-3 px-1">Output Filename</label>
                   <input
                     type="text"
                     value={customFileName}

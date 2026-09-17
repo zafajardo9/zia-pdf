@@ -59,13 +59,13 @@ export default function AndroidHistoryView() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex flex-col text-left">
             <p className="system-label mb-1">On this device</p>
-            <h1 className="text-3xl font-semibold tracking-[-0.035em]">Activity</h1>
+            <h1 className="type-headline-lg">Activity</h1>
           </div>
           {history.length > 0 && (
             <button 
               onClick={handleClear}
               aria-label="Clear activity"
-              className="rounded-ui border border-line bg-surface p-2.5 text-muted hover:border-red-300 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/30"
+              className="rounded-ui border border-line bg-surface p-2 text-muted hover:bg-danger-soft hover:text-danger"
             >
               <Trash2Icon size={20} />
             </button>
@@ -73,7 +73,7 @@ export default function AndroidHistoryView() {
         </div>
 
         <div className="relative group">
-          <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-gray-400 group-focus-within:text-blue-500 transition-colors">
+          <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-muted group-focus-within:text-accent transition-colors">
             <SearchIcon size={18} />
           </div>
           <input 
@@ -86,7 +86,7 @@ export default function AndroidHistoryView() {
           {searchQuery && (
             <button 
               onClick={() => setSearchQuery('')}
-              className="absolute inset-y-0 right-4 flex items-center text-gray-400"
+              className="absolute inset-y-0 right-4 flex items-center text-muted hover:text-accent"
             >
               <XIcon size={16} />
             </button>
@@ -97,28 +97,28 @@ export default function AndroidHistoryView() {
       <main className="px-4 py-6 space-y-2">
         {filteredHistory.length === 0 ? (
           <div className="py-24 text-center flex flex-col items-center animate-in fade-in duration-700">
-            <div className="w-20 h-20 bg-gray-50 dark:bg-zinc-900 rounded-xl flex items-center justify-center text-gray-300 mb-6 border border-gray-100 dark:border-white/5">
+            <div className="w-20 h-20 rounded-xl2 flex items-center justify-center text-muted mb-6 border border-line-soft">
               <HistoryIcon size={32} strokeWidth={1.5} />
             </div>
-            <h3 className="text-xl font-semibold dark:text-white tracking-tight">Everything Clear</h3>
-            <p className="text-xs text-gray-500 dark:text-zinc-500 max-w-[200px] mt-2 font-medium leading-relaxed">Documents processed on this device will appear here temporarily.</p>
+            <h3 className="type-headline-md text-ink">Everything Clear</h3>
+            <p className="type-label-sm text-muted max-w-[200px] mt-2">Documents processed on this device will appear here temporarily.</p>
           </div>
         ) : (
           filteredHistory.map((item) => (
-            <div key={item.id} className="group flex items-center gap-4 rounded-panel border border-line bg-surface p-4 hover:border-accent/30">
-              <div className="w-12 h-12 bg-gray-50 dark:bg-zinc-800 text-gray-400 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 group-hover:text-blue-500 rounded-lg flex items-center justify-center shrink-0 transition-colors shadow-inner">
+            <div key={item.id} className="group flex items-center gap-4 rounded-panel border border-line-soft bg-surface p-4 hover:bg-hover">
+              <div className="w-12 h-12 bg-[var(--accent-soft)] text-accent rounded-xl2 flex items-center justify-center shrink-0 transition-colors">
                 <FileTextIcon size={22} />
               </div>
               <div className="flex-1 min-w-0 text-left">
-                <p className="text-xs font-semibold truncate dark:text-white mb-0.5">{item.name}</p>
+                <p className="type-label-md text-ink truncate mb-0.5">{item.name}</p>
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-1 text-[9px] text-gray-400 font-semibold uppercase tracking-tighter bg-gray-100 dark:bg-white/5 px-2 py-0.5 rounded-md">
+                  <div className="flex items-center gap-1 type-label-sm text-muted bg-hover px-2 py-0.5 rounded-ui">
                     {item.tool}
                   </div>
-                  <div className="flex items-center gap-1 text-[9px] text-gray-400 font-bold">
+                  <div className="flex items-center gap-1 type-label-sm text-muted">
                     <HardDriveIcon size={10} /> {formatSize(item.size)}
                   </div>
-                  <div className="flex items-center gap-1 text-[9px] text-gray-400 font-bold">
+                  <div className="flex items-center gap-1 type-label-sm text-muted">
                     <CalendarIcon size={10} /> {formatDate(item.timestamp)}
                   </div>
                 </div>
@@ -128,12 +128,12 @@ export default function AndroidHistoryView() {
                     <a 
                       href={item.resultUrl} 
                       download={item.name} 
-                      className="w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-sm shadow-blue-500/20 active:scale-90 transition-all"
+                      className="w-10 h-10 rounded-ui bg-[var(--accent-soft)] text-accent border border-accent-outline flex items-center justify-center hover:bg-accent-soft-strong active:scale-90 transition-all"
                     >
                       <DownloadIcon size={18} />
                     </a>
                  )}
-                 <ChevronRightIcon size={16} className="text-gray-200 dark:text-zinc-800" />
+                 <ChevronRightIcon size={16} className="text-muted" />
               </div>
             </div>
           ))
@@ -141,10 +141,10 @@ export default function AndroidHistoryView() {
 
         <div className="pt-12 flex flex-col items-center gap-3 pb-10 opacity-30">
            <div className="flex items-center gap-2">
-             <ShieldIcon size={14} className="text-emerald-500" />
-             <span className="text-[8px] font-semibold uppercase tracking-[0.2em] text-gray-500">Privacy Protocol</span>
+             <ShieldIcon size={14} className="text-tertiary" />
+             <span className="system-label">Privacy Protocol</span>
            </div>
-           <p className="text-[7px] font-medium text-gray-400 max-w-[200px] text-center">
+           <p className="type-label-sm text-muted max-w-[200px] text-center">
              Documents are processed locally in your private environment. Activity logs are stored on this device only.
            </p>
         </div>

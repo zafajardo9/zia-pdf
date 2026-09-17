@@ -35,7 +35,7 @@ export const NativeToolLayout = ({
   return (
     <div className="tool-workspace flex min-h-screen flex-col bg-canvas text-ink">
       {showNativeHeader && (
-        <header className="sticky top-0 z-30 flex items-center justify-between border-b border-line bg-surface/95 px-4 pb-1 pt-safe backdrop-blur-xl md:hidden">
+        <header className="sticky top-0 z-30 flex items-center justify-between border-b border-line-soft bg-glass px-4 pb-1 pt-safe backdrop-blur-xl backdrop-saturate-150 md:hidden">
           <div className="flex h-14 items-center gap-2">
             <button 
               onClick={onBack || (() => navigate(-1))}
@@ -44,7 +44,7 @@ export const NativeToolLayout = ({
             >
               <ArrowLeft size={20} />
             </button>
-            <h1 className="ml-1 text-base font-semibold tracking-tight">{title}</h1>
+            <h1 className="ml-1 text-base font-medium tracking-[-0.01em]">{title}</h1>
           </div>
           <div className="w-10" />
         </header>
@@ -61,7 +61,7 @@ export const NativeToolLayout = ({
       </main>
 
       {actions && (
-        <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-line bg-surface/95 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur-xl">
+        <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-line-soft bg-glass pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur-xl backdrop-saturate-150">
            <div className="mx-auto max-w-md px-4 pt-3">
              {actions}
            </div>

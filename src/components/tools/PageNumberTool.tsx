@@ -90,7 +90,7 @@ export default function PageNumberTool() {
   }
 
   const ActionButton = () => (
-    <button onClick={applyPageNumbers} disabled={isProcessing} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:p-6 md:rounded-xl md:text-xl flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20`}>
+    <button onClick={applyPageNumbers} disabled={isProcessing} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-medium transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:text-base flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20`}>
       {isProcessing ? <Loader2 className="animate-spin" /> : <Hash size={20} />} Add Page Numbers
     </button>
   )
@@ -127,7 +127,7 @@ export default function PageNumberTool() {
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-gray-100 dark:border-white/5 shadow-sm flex flex-col items-center">
                <div className="flex justify-between items-center w-full mb-4 px-2">
-                  <h4 className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 flex items-center gap-2"><Eye size={12}/> Live Preview</h4>
+                  <h4 className="text-[10px] font-medium text-gray-400 flex items-center gap-2"><Eye size={12}/> Live Preview</h4>
                </div>
                <div className="relative aspect-[3/4] w-full max-w-[300px] bg-white border border-gray-100 dark:border-zinc-800 rounded-xl overflow-hidden shadow-inner">
                   {pdfData.thumbnail ? (

@@ -2,3 +2,10 @@ node_modules/
 dist/
 .DS_Store
 *.log
+
+# Local agent/tooling artifacts (keep out of the repo)
+.agents/skills/react-grab/
+.claude/skills/react-grab/
+.continue/skills/react-grab/
+.cortex/skills/react-grab/
+.hermes/plans/

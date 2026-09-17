@@ -17,9 +17,9 @@ import { hapticImpact } from '../utils/haptics'
 const ToggleSwitch = ({ checked, onChange }: { checked: boolean, onChange: () => void }) => (
   <button 
     onClick={(e) => { e.stopPropagation(); onChange() }}
-    className={`w-12 h-7 rounded-full p-1 transition-all duration-300 ${checked ? 'bg-blue-500 shadow-sm shadow-blue-500/20' : 'bg-gray-200 dark:bg-zinc-700'}`}
+    className={`w-12 h-7 rounded-full p-1 transition-all duration-300 ${checked ? 'bg-accent' : 'bg-line-soft border border-line'}`}
   >
-    <div className={`w-5 h-5 bg-white rounded-full shadow-sm transition-transform duration-300 ${checked ? 'translate-x-5' : 'translate-x-0'}`} />
+    <div className={`w-5 h-5 bg-surface rounded-full shadow-card transition-transform duration-300 ${checked ? 'translate-x-5' : 'translate-x-0'}`} />
   </button>
 )
 
@@ -44,20 +44,20 @@ const SettingItem = ({
   return (
     <Container 
       onClick={onClick}
-      className={`w-full flex items-center justify-between p-4 px-5 transition-all text-left group ${onClick ? 'active:bg-gray-50 dark:active:bg-white/5 cursor-pointer' : 'cursor-default'}`}
+      className={`w-full flex items-center justify-between gap-4 border-b border-line-soft p-4 px-5 text-left transition-colors last:border-b-0 ${onClick ? 'active:bg-hover hover:bg-hover cursor-pointer' : 'cursor-default'}`}
     >
       <div className="flex items-center gap-4 flex-1 overflow-hidden">
-        <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-colors ${danger ? 'bg-red-50 dark:bg-red-900/20 text-red-500' : (iconColor || 'bg-gray-100 dark:bg-zinc-800 text-gray-500 group-hover:text-blue-500 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20')}`}>
-          <Icon size={18} strokeWidth={2.5} />
+        <div className={`w-10 h-10 rounded-ui flex items-center justify-center shrink-0 transition-colors ${danger ? 'bg-danger-soft text-danger' : (iconColor || 'bg-[var(--accent-soft)] text-accent')}`}>
+          <Icon size={18} strokeWidth={2} />
         </div>
         <div className="min-w-0 flex-1">
-          <h4 className={`text-[13px] font-semibold truncate mb-0.5 tracking-tight ${danger ? 'text-red-500' : 'text-gray-900 dark:text-white'}`}>{title}</h4>
-          {subtitle && <p className="text-[10px] text-gray-500 dark:text-zinc-500 font-bold uppercase tracking-tight truncate">{subtitle}</p>}
+          <h4 className={`type-label-md truncate ${danger ? 'text-danger' : 'text-ink'}`}>{title}</h4>
+          {subtitle && <p className="system-label mt-0.5 truncate">{subtitle}</p>}
         </div>
       </div>
       <div className="flex items-center gap-3 shrink-0 ml-3">
         {action}
-        {onClick && !action && <ChevronRight size={16} className="text-gray-300" />}
+        {onClick && !action && <ChevronRight size={16} className="text-muted" />}
       </div>
     </Container>
   )
@@ -65,8 +65,8 @@ const SettingItem = ({
 
 const SettingGroup = ({ title, children }: { title: string, children: React.ReactNode }) => (
   <div className="mb-6">
-    <h3 className="px-6 mb-2 text-[9px] font-semibold uppercase tracking-[0.3em] text-gray-400 dark:text-zinc-600">{title}</h3>
-    <div className="bg-white dark:bg-zinc-900 rounded-xl border border-gray-100 dark:border-white/5 divide-y divide-gray-50 dark:divide-white/5 shadow-sm overflow-hidden">
+    <h3 className="system-label px-6 mb-2">{title}</h3>
+    <div className="bg-surface rounded-panel border border-line-soft shadow-card overflow-hidden">
       {children}
     </div>
   </div>
@@ -111,18 +111,18 @@ export default function Settings({ theme, setTheme }: { theme: Theme, setTheme: 
         
         {/* Integrated Header */}
         <div className="flex items-center gap-4 px-2 mb-8 mt-2">
-           <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center shadow-sm shadow-blue-500/20 text-white shrink-0">
-              <Settings2 size={24} strokeWidth={2.5} />
+           <div className="w-11 h-11 rounded-ui flex items-center justify-center bg-[var(--accent-soft)] text-accent shrink-0">
+              <Settings2 size={20} strokeWidth={1.8} />
            </div>
            <div>
-              <h2 className="text-xl font-semibold dark:text-white tracking-tighter leading-none mb-1">Preferences</h2>
-              <p className="text-[9px] font-semibold text-gray-400 uppercase tracking-widest">Protocol v1.0.9 • Local</p>
+              <h2 className="type-headline-md text-ink mb-1">Preferences</h2>
+              <p className="system-label">Protocol v1.0.9 • Local</p>
            </div>
         </div>
 
         {/* Visual Interface */}
         <SettingGroup title="Interface">
-          <div className="p-2 grid grid-cols-3 gap-2">
+          <div className="p-2 grid grid-cols-3 gap-2 border-b border-line-soft">
             {[
               { id: 'light', icon: Sun, label: 'Light' },
               { id: 'dark', icon: Moon, label: 'Dark' },
@@ -134,10 +134,10 @@ export default function Settings({ theme, setTheme }: { theme: Theme, setTheme: 
                   setTheme(t.id as Theme)
                   hapticImpact()
                 }}
-                className={`flex flex-col items-center gap-2 py-3.5 rounded-[1.25rem] transition-all border border-transparent ${theme === t.id ? 'bg-zinc-950 dark:bg-white text-white dark:text-black shadow-sm scale-[1.02]' : 'bg-gray-50 dark:bg-black/40 text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-800'}`}
+                className={`flex flex-col items-center gap-2 py-3.5 rounded-ui transition-colors border ${theme === t.id ? 'bg-[var(--accent-soft)] text-accent border-accent-outline' : 'bg-surface text-muted border-line-soft hover:bg-hover'}`}
               >
-                <t.icon size={18} strokeWidth={2.5} />
-                <span className="text-[9px] font-semibold uppercase tracking-[0.1em]">{t.label}</span>
+                <t.icon size={18} strokeWidth={2} />
+                <span className="type-label-sm">{t.label}</span>
               </button>
             ))}
           </div>
@@ -158,9 +158,9 @@ export default function Settings({ theme, setTheme }: { theme: Theme, setTheme: 
             action={<ToggleSwitch checked={autoDownload} onChange={() => handleToggle('autoDownload', autoDownload, setAutoDownload)} />}
           />
           <div className="p-5 flex flex-col gap-3">
-            <div className="flex items-center gap-3 text-gray-900 dark:text-white">
-               <User size={16} className="text-blue-500" />
-               <span className="text-[11px] font-semibold uppercase tracking-tight">Default Author Metadata</span>
+            <div className="flex items-center gap-3 text-ink">
+               <User size={16} className="text-accent" />
+               <span className="type-label-sm">Default Author Metadata</span>
             </div>
             <input 
               type="text"
@@ -170,7 +170,7 @@ export default function Settings({ theme, setTheme }: { theme: Theme, setTheme: 
                 localStorage.setItem('defaultAuthor', e.target.value)
               }}
               placeholder="e.g. zafajardo9"
-              className="w-full bg-gray-100 dark:bg-black border border-transparent focus:border-blue-500 rounded-xl px-4 py-3.5 text-xs font-semibold outline-none transition-all placeholder:text-gray-400 dark:text-white"
+              className="w-full rounded-ui border border-line bg-surface text-ink px-4 py-3.5 text-sm outline-none transition-colors placeholder:text-muted focus:border-accent focus:ring-4 focus:ring-[var(--focus)]"
             />
           </div>
         </SettingGroup>
@@ -184,12 +184,12 @@ export default function Settings({ theme, setTheme }: { theme: Theme, setTheme: 
             action={<ToggleSwitch checked={autoWipe} onChange={() => handleToggle('autoWipe', autoWipe, setAutoWipe)} />}
           />
           {autoWipe && (
-            <div className="px-5 py-3 flex items-center justify-between bg-blue-50/50 dark:bg-blue-900/10 border-t border-blue-100/20 dark:border-blue-900/20 animate-in slide-in-from-top-2">
-               <span className="text-[9px] font-semibold text-blue-500 uppercase tracking-widest">Wipe Delay</span>
+            <div className="px-5 py-3 flex items-center justify-between bg-[var(--accent-soft)] border-t border-line-soft">
+               <span className="system-label text-accent">Wipe Delay</span>
                <select 
                 value={wipeTimer}
                 onChange={(e) => handleSelect('autoWipeTimer', e.target.value, setWipeTimer)}
-                className="bg-transparent text-[11px] font-semibold text-blue-600 outline-none cursor-pointer text-right"
+                className="bg-transparent text-xs font-medium text-accent outline-none cursor-pointer text-right focus:ring-4 focus:ring-[var(--focus)] rounded-ui"
                >
                   <option value="0">Immediately</option>
                   <option value="1">After 1 Minute</option>
@@ -201,18 +201,18 @@ export default function Settings({ theme, setTheme }: { theme: Theme, setTheme: 
           )}
           <div className="px-5 py-4 flex items-center justify-between">
              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 bg-gray-100 dark:bg-zinc-800 rounded-lg flex items-center justify-center text-gray-500">
+                <div className="w-10 h-10 rounded-ui flex items-center justify-center bg-[var(--accent-soft)] text-accent">
                   <ListFilter size={18} />
                 </div>
                 <div>
-                  <h4 className="text-[13px] font-semibold text-gray-900 dark:text-white leading-none">History Limit</h4>
-                  <p className="text-[10px] text-gray-500 font-bold uppercase tracking-tight mt-1">Files to keep</p>
+                  <h4 className="type-label-md text-ink">History Limit</h4>
+                  <p className="system-label mt-1">Files to keep</p>
                 </div>
              </div>
              <select 
               value={historyLimit}
               onChange={(e) => handleSelect('historyLimit', e.target.value, setHistoryLimit)}
-              className="bg-gray-100 dark:bg-black px-3 py-2 rounded-xl text-[11px] font-semibold text-gray-600 dark:text-gray-300 outline-none border border-transparent focus:border-blue-500 cursor-pointer"
+              className="rounded-ui border border-line bg-surface text-ink px-3 py-2 text-xs outline-none cursor-pointer focus:border-accent focus:ring-4 focus:ring-[var(--focus)]"
              >
                 <option value="5">5 Files</option>
                 <option value="10">10 Files</option>
@@ -254,8 +254,8 @@ export default function Settings({ theme, setTheme }: { theme: Theme, setTheme: 
 
         {/* Danger Zone - Moved to absolute bottom */}
         <div className="mt-12">
-           <h3 className="px-6 mb-2 text-[9px] font-semibold uppercase tracking-[0.3em] text-red-500">Danger Zone</h3>
-           <div className="bg-white dark:bg-zinc-900 rounded-xl border border-red-100 dark:border-red-900/20 divide-y divide-red-50 dark:divide-red-900/10 shadow-sm overflow-hidden mb-4">
+           <h3 className="system-label px-6 mb-2 text-danger">Danger Zone</h3>
+           <div className="bg-surface rounded-panel border border-danger-soft shadow-card overflow-hidden mb-4">
               <SettingItem 
                 icon={RotateCcw} 
                 title="Restore Defaults" 
@@ -277,7 +277,7 @@ export default function Settings({ theme, setTheme }: { theme: Theme, setTheme: 
                 }}
               />
            </div>
-           <p className="text-[8px] font-semibold uppercase text-center text-gray-300 dark:text-zinc-700 tracking-[0.5em] mt-10">Configuration Engine v1.0.9 Stable</p>
+           <p className="system-label text-center text-muted opacity-60 mt-10">Configuration Engine v1.0.9 Stable</p>
         </div>
 
       </div>

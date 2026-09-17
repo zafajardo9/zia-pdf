@@ -95,7 +95,7 @@ export default function ProtectTool() {
   }
 
   const ActionButton = () => (
-    <button onClick={protectPDF} disabled={isProcessing || !password || password !== confirmPassword} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 ${isNative ? 'py-4 rounded-lg text-sm' : 'p-6 rounded-xl text-xl'}`}>
+    <button onClick={protectPDF} disabled={isProcessing || !password || password !== confirmPassword} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-medium transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 ${isNative ? 'py-4 rounded-lg text-sm' : 'p-6 rounded-xl text-xl'}`}>
       {isProcessing ? <><Loader2 className="animate-spin" /> Securing...</> : <>Encrypt & Save <ArrowRight size={18} /></>}
     </button>
   )
@@ -118,7 +118,7 @@ export default function ProtectTool() {
             <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-6"><Lock size={32} /></div>
             <h3 className="text-2xl font-bold mb-2 dark:text-white">Protected File</h3>
             <input type="password" value={unlockPassword} onChange={(e) => setUnlockPassword(e.target.value)} placeholder="Current Password" className="w-full bg-gray-50 dark:bg-black rounded-lg px-6 py-4 border border-transparent focus:border-blue-500 outline-none font-bold text-center mb-4" />
-            <button onClick={handleUnlock} disabled={!unlockPassword || isProcessing} className="w-full bg-blue-500 text-white p-4 rounded-lg font-semibold uppercase tracking-widest text-xs">{isProcessing ? '...' : 'Unlock'}</button>
+            <button onClick={handleUnlock} disabled={!unlockPassword || isProcessing} className="w-full bg-blue-500 text-white p-4 rounded-lg font-medium text-xs">{isProcessing ? '...' : 'Unlock'}</button>
           </div>
         </div>
       ) : (

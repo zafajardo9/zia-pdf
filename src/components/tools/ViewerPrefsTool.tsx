@@ -109,7 +109,7 @@ export default function ViewerPrefsTool() {
     <button
       onClick={applyPrefs}
       disabled={isProcessing}
-      className="w-full bg-blue-500 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:p-6 md:rounded-xl md:text-xl flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20"
+      className="w-full bg-blue-500 text-white font-medium transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:text-base flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20"
     >
       {isProcessing ? <Loader2 className="animate-spin" /> : <AppWindow size={18} />} Apply Preferences
     </button>
@@ -148,21 +148,21 @@ export default function ViewerPrefsTool() {
             {!downloadUrl ? (
               <div className="space-y-6">
                 <div>
-                  <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3 px-1">Page Layout</label>
+                  <label className="block text-[10px] font-medium text-gray-400 mb-3 px-1">Page Layout</label>
                   <div className="flex flex-wrap gap-2">
                     {LAYOUT_OPTIONS.map(o => chip(o.label, layout === o.value, () => setLayout(o.value)))}
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3 px-1">Page Mode</label>
+                  <label className="block text-[10px] font-medium text-gray-400 mb-3 px-1">Page Mode</label>
                   <div className="flex flex-wrap gap-2">
                     {MODE_OPTIONS.map(o => chip(o.label, mode === o.value, () => setMode(o.value)))}
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3 px-1">Initial Zoom</label>
+                  <label className="block text-[10px] font-medium text-gray-400 mb-3 px-1">Initial Zoom</label>
                   <div className="flex flex-wrap gap-2">
                     {ZOOM_OPTIONS.map(o => chip(o.label, zoom === o.value, () => setZoom(o.value)))}
                   </div>
@@ -170,7 +170,7 @@ export default function ViewerPrefsTool() {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3 px-1">Output Filename</label>
+                  <label className="block text-[10px] font-medium text-gray-400 mb-3 px-1">Output Filename</label>
                   <input
                     type="text"
                     value={customFileName}

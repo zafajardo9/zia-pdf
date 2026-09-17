@@ -371,7 +371,7 @@ export default function SignatureTool() {
   }
 
   const ActionButton = () => (
-    <button onClick={saveSignedPdf} disabled={isProcessing || !signature || !preview} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 ${isNative ? 'py-4 rounded-lg text-sm' : 'p-6 rounded-xl text-xl'}`}>
+    <button onClick={saveSignedPdf} disabled={isProcessing || !signature || !preview} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-medium transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 ${isNative ? 'py-4 rounded-lg text-sm' : 'p-6 rounded-xl text-xl'}`}>
       {isProcessing ? <Loader2 className="animate-spin" /> : <>Sign & Save <ArrowRight size={18} /></>}
     </button>
   )
@@ -396,7 +396,7 @@ export default function SignatureTool() {
             <>
               <div>
                 <div className="flex items-center justify-between px-1 mb-3">
-                  <span className="text-[10px] font-semibold uppercase tracking-widest text-gray-400">Place on page</span>
+                  <span className="text-[10px] font-medium text-gray-400">Place on page</span>
                   {pdfData.pageCount > 1 && (
                     <div className="flex items-center gap-2">
                       <button
@@ -452,7 +452,7 @@ export default function SignatureTool() {
                     </div>
                   )}
                   {!signature && preview && (
-                    <div className="pointer-events-none absolute inset-x-0 bottom-3 text-center text-[10px] font-semibold uppercase tracking-widest text-gray-300">
+                    <div className="pointer-events-none absolute inset-x-0 bottom-3 text-center text-[10px] font-medium text-gray-300">
                       Draw or upload a signature below, then drag it where you want
                     </div>
                   )}
@@ -463,13 +463,13 @@ export default function SignatureTool() {
                 <div className="flex rounded-lg bg-gray-50 dark:bg-black p-1 border border-gray-100 dark:border-zinc-800">
                   <button
                     onClick={() => setTab('draw')}
-                    className={`flex flex-1 items-center justify-center gap-2 rounded-md py-2.5 text-[10px] font-semibold uppercase tracking-widest transition-all ${tab === 'draw' ? 'bg-white dark:bg-zinc-800 text-blue-500 shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
+                    className={`flex flex-1 items-center justify-center gap-2 rounded-md py-2.5 text-[10px] font-medium transition-all ${tab === 'draw' ? 'bg-white dark:bg-zinc-800 text-blue-500 shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
                   >
                     <PenLine size={14} /> Draw
                   </button>
                   <button
                     onClick={() => setTab('upload')}
-                    className={`flex flex-1 items-center justify-center gap-2 rounded-md py-2.5 text-[10px] font-semibold uppercase tracking-widest transition-all ${tab === 'upload' ? 'bg-white dark:bg-zinc-800 text-blue-500 shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
+                    className={`flex flex-1 items-center justify-center gap-2 rounded-md py-2.5 text-[10px] font-medium transition-all ${tab === 'upload' ? 'bg-white dark:bg-zinc-800 text-blue-500 shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
                   >
                     <ImageIcon size={14} /> Upload
                   </button>
@@ -488,7 +488,7 @@ export default function SignatureTool() {
                       />
                       {strokes.length === 0 && !isDrawing && (
                         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                          <span className="text-[10px] font-semibold uppercase tracking-widest text-gray-300">Sign here</span>
+                          <span className="text-[10px] font-medium text-gray-300">Sign here</span>
                         </div>
                       )}
                     </div>
@@ -519,7 +519,7 @@ export default function SignatureTool() {
                           onClick={() => setStrokes(s => s.slice(0, -1))}
                           disabled={!strokes.length}
                           aria-label="Undo last stroke"
-                          className="flex items-center gap-1.5 rounded-md border border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-black px-3 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-gray-500 hover:text-blue-500 disabled:opacity-30"
+                          className="flex items-center gap-1.5 rounded-md border border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-black px-3 py-1.5 text-[10px] font-medium text-gray-500 hover:text-blue-500 disabled:opacity-30"
                         >
                           <Undo2 size={13} /> Undo
                         </button>
@@ -527,7 +527,7 @@ export default function SignatureTool() {
                           onClick={() => setStrokes([])}
                           disabled={!strokes.length}
                           aria-label="Clear signature"
-                          className="flex items-center gap-1.5 rounded-md border border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-black px-3 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-gray-500 hover:text-red-500 disabled:opacity-30"
+                          className="flex items-center gap-1.5 rounded-md border border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-black px-3 py-1.5 text-[10px] font-medium text-gray-500 hover:text-red-500 disabled:opacity-30"
                         >
                           <Trash2 size={13} /> Clear
                         </button>
@@ -536,7 +536,7 @@ export default function SignatureTool() {
                     <button
                       onClick={commitDrawing}
                       disabled={!strokes.length}
-                      className="w-full rounded-lg bg-blue-500 p-3 text-xs font-semibold uppercase tracking-widest text-white transition-all hover:bg-blue-600 active:scale-95 disabled:opacity-40"
+                      className="w-full rounded-lg bg-blue-500 p-3 text-xs font-medium text-white transition-all hover:bg-blue-600 active:scale-95 disabled:opacity-40"
                     >
                       Use This Signature
                     </button>
@@ -547,20 +547,20 @@ export default function SignatureTool() {
                     className="w-full rounded-lg border-2 border-dashed border-gray-200 dark:border-zinc-700 p-8 text-center transition-all hover:border-blue-400 hover:bg-blue-50/50"
                   >
                     <ImageIcon size={24} className="mx-auto mb-2 text-blue-500" />
-                    <span className="text-[10px] font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400">Tap to upload a signature image</span>
+                    <span className="text-[10px] font-medium text-gray-500 dark:text-gray-400">Tap to upload a signature image</span>
                   </button>
                 )}
 
                 {signature && (
                   <div className="flex items-center gap-3 rounded-lg bg-gray-50 dark:bg-black p-3">
                     <img src={signature.url} alt="Current signature" className="h-12 max-w-[180px] object-contain" />
-                    <span className="text-[10px] font-semibold uppercase tracking-widest text-green-600">Ready — drag it on the page</span>
+                    <span className="text-[10px] font-medium text-green-600">Ready — drag it on the page</span>
                   </div>
                 )}
               </div>
 
               <div className="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-gray-100 dark:border-white/5 shadow-sm">
-                <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3 px-1">Output Filename</label>
+                <label className="block text-[10px] font-medium text-gray-400 mb-3 px-1">Output Filename</label>
                 <input 
                   type="text" 
                   value={customFileName} 

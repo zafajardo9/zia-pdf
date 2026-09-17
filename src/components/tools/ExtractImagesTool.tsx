@@ -132,7 +132,7 @@ export default function ExtractImagesTool() {
   }
 
   const ActionButton = () => (
-    <button onClick={extractImages} disabled={isProcessing} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 ${isNative ? 'py-4 rounded-lg text-sm' : 'p-6 rounded-xl text-xl'}`}>
+    <button onClick={extractImages} disabled={isProcessing} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-medium transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 ${isNative ? 'py-4 rounded-lg text-sm' : 'p-6 rounded-xl text-xl'}`}>
       {isProcessing ? <><Loader2 className="animate-spin" /> {progress}%</> : <><Sparkles size={18} /> Extract Raw Images</>}
     </button>
   )
@@ -172,7 +172,7 @@ export default function ExtractImagesTool() {
                     </p>
                   </div>
                   <div className="p-4 bg-amber-50 dark:bg-amber-900/10 rounded-xl border border-amber-100 dark:border-amber-900/20 text-center">
-                    <p className="text-[10px] text-amber-700 dark:text-amber-400 font-bold uppercase tracking-widest">
+                    <p className="text-[10px] text-amber-700 dark:text-amber-400 font-medium">
                       Note: If no images are detected, the file may have been compressed using rasterization (printing to PDF).
                     </p>
                   </div>

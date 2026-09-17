@@ -167,7 +167,7 @@ export default function SplitTool() {
     <button 
       onClick={splitPDF}
       disabled={isProcessing || selectedPages.size === 0}
-      className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:p-6 md:rounded-xl md:text-xl flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20`}
+      className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-medium transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:text-base flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20`}
     >
       {isProcessing ? <><Loader2 className="animate-spin" /> Working...</> : <>Extract {selectedPages.size} Pages <ArrowRight size={18} /></>}
     </button>
@@ -219,7 +219,7 @@ export default function SplitTool() {
             <button 
               onClick={handleUnlock}
               disabled={!unlockPassword || isLoadingMeta}
-              className="w-full bg-blue-500 text-white p-4 rounded-lg font-semibold uppercase tracking-widest text-xs transition-all active:scale-95 disabled:opacity-50"
+              className="w-full bg-blue-500 text-white p-4 rounded-lg font-medium text-xs transition-all active:scale-95 disabled:opacity-50"
             >
               Unlock PDF
             </button>
@@ -242,7 +242,7 @@ export default function SplitTool() {
                   <Zap size={16} />
                </div>
                <div className="min-w-0">
-                  <p className="text-[10px] font-semibold uppercase tracking-widest leading-none mb-1">Heavy Document</p>
+                  <p className="text-[10px] font-medium leading-none mb-1">Heavy Document</p>
                   <p className="text-[11px] font-medium leading-tight">Visual selection for large files may be slower. Use range selection for speed.</p>
                </div>
             </div>
@@ -252,7 +252,7 @@ export default function SplitTool() {
             <div className="lg:col-span-2 space-y-6">
               <div className="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-gray-100 dark:border-white/5 shadow-sm">
                 <div className="flex justify-between items-center mb-6">
-                  <h4 className="font-semibold uppercase tracking-widest text-[10px] text-gray-400 px-2">Page Selection</h4>
+                  <h4 className="font-medium text-[10px] text-gray-400 px-2">Page Selection</h4>
                   <div className="flex gap-2">
                     <button onClick={() => { const all = new Set<number>(); for(let i=1;i<=pdfData.pageCount;i++) all.add(i); setSelectedPages(all); }} className="text-[10px] font-semibold uppercase text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 px-2 py-1 rounded-lg transition-colors">Select All</button>
                     <button onClick={() => setSelectedPages(new Set())} className="text-[10px] font-semibold uppercase text-gray-400 px-2 py-1 hover:bg-gray-50 dark:hover:bg-white/5 rounded-lg transition-colors">Clear</button>
@@ -282,7 +282,7 @@ export default function SplitTool() {
                 <div className="space-y-6">
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3">Split Mode</label>
+                      <label className="block text-[10px] font-medium text-gray-400 mb-3">Split Mode</label>
                       <div className="grid grid-cols-2 gap-2 bg-gray-50 dark:bg-black p-1 rounded-lg">
                         <button onClick={() => { setSplitMode('single'); clearUrls(); }} className={`py-2 px-3 rounded-xl text-[9px] font-semibold uppercase transition-all ${splitMode === 'single' ? 'bg-white dark:bg-zinc-800 text-blue-500 shadow-sm' : 'text-gray-400'}`}>One Document</button>
                         <button onClick={() => { setSplitMode('individual'); clearUrls(); }} className={`py-2 px-3 rounded-xl text-[9px] font-semibold uppercase transition-all ${splitMode === 'individual' ? 'bg-white dark:bg-zinc-800 text-blue-500 shadow-sm' : 'text-gray-400'}`}>Separate Files</button>
@@ -293,11 +293,11 @@ export default function SplitTool() {
                       </p>
                     </div>
                     <div>
-                      <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3">Output Filename</label>
+                      <label className="block text-[10px] font-medium text-gray-400 mb-3">Output Filename</label>
                       <input type="text" value={customFileName} onChange={(e) => setCustomFileName(e.target.value)} className="w-full bg-gray-50 dark:bg-black rounded-xl px-4 py-3 border border-transparent focus:border-blue-500 outline-none font-bold text-sm dark:text-white" />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3">Range Selection</label>
+                      <label className="block text-[10px] font-medium text-gray-400 mb-3">Range Selection</label>
                       <div className="flex gap-2">
                         <input type="text" value={rangeInput} onChange={(e) => setRangeInput(e.target.value)} placeholder="e.g. 1, 3-5" className="flex-1 bg-gray-50 dark:bg-black rounded-xl px-4 py-3 border border-transparent focus:border-blue-500 outline-none font-bold text-sm dark:text-white" />
                         <button onClick={() => parseRange(rangeInput)} className="px-4 bg-blue-500 text-white rounded-xl font-semibold text-[10px] uppercase active:scale-95 transition-transform">Apply</button>
@@ -308,7 +308,7 @@ export default function SplitTool() {
                   <div className="pt-6 border-t border-gray-100 dark:border-white/5">
                     <div className="flex justify-between items-end mb-4 px-1">
                       <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-[0.2em]">Selected</span>
-                      <span className="text-xl font-semibold text-blue-500">{selectedPages.size} <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Pages</span></span>
+                      <span className="text-xl font-semibold text-blue-500">{selectedPages.size} <span className="text-[10px] text-gray-400 font-medium">Pages</span></span>
                     </div>
                     {objectUrl && (
                       <SuccessState 

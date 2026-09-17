@@ -332,10 +332,11 @@ export default function ExifRemoverTool() {
   }
 
   const badgeFor = (info: ExifInfo) => {
-    if (info.format === 'other') return <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-gray-500 dark:bg-white/5 dark:text-zinc-400">No EXIF in format</span>
-    if (!info.hasExif) return <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400"><ShieldCheck size={10} /> Clean</span>
-    if (info.hasGps) return <span className="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-red-600 dark:bg-red-900/20 dark:text-red-400"><MapPin size={10} /> GPS found</span>
-    return <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-amber-600 dark:bg-amber-900/20 dark:text-amber-400">EXIF found</span>
+    const tone = 'inline-flex items-center gap-1 rounded-ui border px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.06em]'
+    if (info.format === 'other') return <span className={`${tone} border-line-soft bg-hover text-muted`}>No EXIF in format</span>
+    if (!info.hasExif) return <span className={`${tone} border-transparent bg-success-soft text-success`}><ShieldCheck size={11} /> Clean</span>
+    if (info.hasGps) return <span className={`${tone} border-transparent bg-danger-soft text-danger`}><MapPin size={11} /> GPS found</span>
+    return <span className={`${tone} border-transparent bg-warning-soft text-warning`}>EXIF found</span>
   }
 
   const ActionButton = () => (

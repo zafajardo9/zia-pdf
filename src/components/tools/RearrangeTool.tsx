@@ -121,7 +121,7 @@ export default function RearrangeTool() {
   }
 
   const ActionButton = () => (
-    <button onClick={savePDF} disabled={isProcessing} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:p-6 md:rounded-xl md:text-xl flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20`}>
+    <button onClick={savePDF} disabled={isProcessing} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-medium transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:text-base flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20`}>
       {isProcessing ? <Loader2 className="animate-spin" /> : <RefreshCcw size={20} />} Save New Order
     </button>
   )
@@ -158,7 +158,7 @@ export default function RearrangeTool() {
 
           <div className="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-gray-100 dark:border-white/5 shadow-sm">
             <div className="flex justify-between items-center mb-6 px-2">
-              <h4 className="font-semibold uppercase tracking-widest text-[10px] text-gray-400">Hold & drag pages</h4>
+              <h4 className="font-medium text-[10px] text-gray-400">Hold & drag pages</h4>
               <button onClick={() => setPageOrder(Array.from({ length: pdfData.pageCount }, (_, i) => (i + 1).toString()))} className="text-[10px] font-semibold uppercase text-gray-400 flex items-center gap-1 hover:text-blue-500 transition-colors font-bold"><RefreshCcw size={12}/> Reset</button>
             </div>
             

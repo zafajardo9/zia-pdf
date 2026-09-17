@@ -106,7 +106,7 @@ export default function PdfToTextTool() {
   }
 
   const ActionButton = () => (
-    <button onClick={handleStartExtraction} disabled={isProcessing} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 ${isNative ? 'py-4 rounded-lg text-sm' : 'p-6 rounded-xl text-xl'}`}>
+    <button onClick={handleStartExtraction} disabled={isProcessing} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-medium transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 ${isNative ? 'py-4 rounded-lg text-sm' : 'p-6 rounded-xl text-xl'}`}>
       {isProcessing ? <><Loader2 className="animate-spin" /> {progress}%</> : <>Extract Text <ArrowRight size={18} /></>}
     </button>
   )
@@ -164,16 +164,16 @@ export default function PdfToTextTool() {
                     )}
                     {extractionMode === 'ocr' && !isOcrDisabled && (
                       <div className="p-4 bg-amber-50 dark:bg-amber-900/10 rounded-xl border border-amber-100 dark:border-amber-900/20">
-                         <p className="text-[10px] text-amber-700 dark:text-amber-400 font-bold uppercase tracking-widest text-center">
+                         <p className="text-[10px] text-amber-700 dark:text-amber-400 font-medium text-center">
                             Note: Deep OCR is CPU-intensive and may take a few minutes depending on your device performance.
                          </p>
                       </div>
                     )}
                     <div className="p-4 bg-blue-50 dark:bg-blue-900/10 rounded-xl border border-blue-100 dark:border-blue-900/20 text-center">
-                      <p className="text-[10px] text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest">Select mode and tap Extract</p>
+                      <p className="text-[10px] text-blue-600 dark:text-blue-400 font-medium">Select mode and tap Extract</p>
                     </div>
                     <div>
-                      <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3 px-1">Output Filename</label>
+                      <label className="block text-[10px] font-medium text-gray-400 mb-3 px-1">Output Filename</label>
                       <input 
                         type="text" 
                         value={customFileName} 

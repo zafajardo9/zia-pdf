@@ -164,7 +164,7 @@ export default function PdfInspectorTool() {
   }
 
   const ActionButton = () => (
-    <button onClick={inspect} disabled={isProcessing} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 ${isNative ? 'py-4 rounded-lg text-sm' : 'p-6 rounded-xl text-xl'}`}>
+    <button onClick={inspect} disabled={isProcessing} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-medium transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 ${isNative ? 'py-4 rounded-lg text-sm' : 'p-6 rounded-xl text-xl'}`}>
       {isProcessing ? <><Loader2 className="animate-spin" /> {progress}%</> : <>Inspect Document <ArrowRight size={18} /></>}
     </button>
   )
@@ -203,10 +203,10 @@ export default function PdfInspectorTool() {
                 {!isProcessing && (
                   <div className="space-y-4">
                     <div className="p-4 bg-blue-50 dark:bg-blue-900/10 rounded-xl border border-blue-100 dark:border-blue-900/20">
-                      <p className="text-[10px] text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest text-center leading-relaxed">Detects text-based vs scanned pages, then rebuilds the content as markdown with headings and reading order.</p>
+                      <p className="text-[10px] text-blue-600 dark:text-blue-400 font-medium text-center leading-relaxed">Detects text-based vs scanned pages, then rebuilds the content as markdown with headings and reading order.</p>
                     </div>
                     <div>
-                      <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3 px-1">Output Filename</label>
+                      <label className="block text-[10px] font-medium text-gray-400 mb-3 px-1">Output Filename</label>
                       <input type="text" value={customFileName} onChange={(e) => setCustomFileName(e.target.value)} className="w-full bg-gray-50 dark:bg-black rounded-xl px-4 py-3 border border-transparent focus:border-blue-500 outline-none font-bold text-sm dark:text-white" />
                     </div>
                   </div>
@@ -216,11 +216,11 @@ export default function PdfInspectorTool() {
               <div className="space-y-6">
                 <div className="flex flex-col gap-4 md:flex-row">
                   <div className={`flex-1 rounded-xl border p-5 ${typeBadge[result.classification.pdfType].className}`}>
-                    <p className="text-[9px] font-bold uppercase tracking-widest opacity-70 mb-1">Classification</p>
+                    <p className="text-[9px] font-medium opacity-70 mb-1">Classification</p>
                     <p className="text-2xl font-semibold tracking-tight">{typeBadge[result.classification.pdfType].label}</p>
                   </div>
                   <div className="flex-1 rounded-xl border border-gray-100 dark:border-white/5 bg-gray-50 dark:bg-black p-5">
-                    <p className="text-[9px] font-bold uppercase tracking-widest text-gray-400 mb-1">OCR Routing</p>
+                    <p className="text-[9px] font-medium text-gray-400 mb-1">OCR Routing</p>
                     <p className="text-sm font-semibold dark:text-white leading-relaxed">
                       {result.classification.pagesNeedingOcr.length === 0
                         ? 'No pages need OCR — full text layer present.'
@@ -231,7 +231,7 @@ export default function PdfInspectorTool() {
 
                 {result.classification.pdfType !== 'TextBased' && (
                   <div className="p-4 bg-amber-50 dark:bg-amber-900/10 rounded-xl border border-amber-100 dark:border-amber-900/20">
-                    <p className="text-[10px] text-amber-700 dark:text-amber-400 font-bold uppercase tracking-widest text-center leading-relaxed">Scanned pages have no text layer. Use the PDF to Text tool with Deep OCR to recover their content.</p>
+                    <p className="text-[10px] text-amber-700 dark:text-amber-400 font-medium text-center leading-relaxed">Scanned pages have no text layer. Use the PDF to Text tool with Deep OCR to recover their content.</p>
                   </div>
                 )}
 

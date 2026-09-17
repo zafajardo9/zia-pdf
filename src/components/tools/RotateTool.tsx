@@ -94,7 +94,7 @@ export default function RotateTool() {
   }
 
   const ActionButton = () => (
-    <button onClick={savePDF} disabled={isProcessing} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 py-4 rounded-lg text-sm md:p-6 md:rounded-xl md:text-xl`}>
+    <button onClick={savePDF} disabled={isProcessing} className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-medium transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 py-4 rounded-lg text-sm md:text-base`}>
       {isProcessing ? <Loader2 className="animate-spin" /> : <RotateCw size={20} />} Save Rotated PDF
     </button>
   )
@@ -141,7 +141,7 @@ export default function RotateTool() {
 
           <div className="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-gray-100 dark:border-white/5 shadow-sm">
             <div className="flex justify-between items-center mb-6">
-              <h4 className="font-semibold uppercase tracking-widest text-[10px] text-gray-400">Page Preview</h4>
+              <h4 className="font-medium text-[10px] text-gray-400">Page Preview</h4>
               <div className="flex gap-2">
                 <button onClick={rotateAll} className="text-[10px] font-semibold uppercase text-blue-500 flex items-center gap-1 font-bold"><RotateCw size={12}/> All</button>
                 <button onClick={() => setRotations({})} className="text-[10px] font-semibold uppercase text-gray-400 flex items-center gap-1 font-bold"><RefreshCcw size={12}/> Reset</button>

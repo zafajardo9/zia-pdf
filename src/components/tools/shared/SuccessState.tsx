@@ -105,7 +105,7 @@ export default function SuccessState({ message, downloadUrl, fileName, onStartOv
         />
       )}
 
-      <div className="flex items-center gap-3 rounded-panel border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold text-emerald-700 dark:border-emerald-900/50 dark:bg-emerald-950/30 dark:text-emerald-400">
+      <div className="flex items-center gap-3 rounded-panel border border-tertiary/40 bg-success-soft p-4 text-sm font-medium text-success">
         <CheckCircle2 size={16} /> {message}
       </div>
       
@@ -114,31 +114,31 @@ export default function SuccessState({ message, downloadUrl, fileName, onStartOv
           {showPreview && (
             <button 
               onClick={handlePreview}
-              className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-ui border border-line bg-surface px-4 py-3 text-sm font-semibold text-ink hover:bg-hover"
+              className="system-button-secondary flex min-h-12 flex-1 items-center justify-center gap-2"
             >
-              <Eye size={20} /> Preview
+              <Eye size={19} /> Preview
             </button>
           )}
           
           <button 
             onClick={handleShare}
-            className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-ui border border-line bg-surface px-4 py-3 text-sm font-semibold text-ink hover:bg-hover"
+            className="system-button-secondary flex min-h-12 flex-1 items-center justify-center gap-2"
           >
-            <Share2 size={20} /> Share
+            <Share2 size={19} /> Share
           </button>
         </div>
         
         <button 
           onClick={handleDownload}
-          className="system-button-primary flex w-full items-center justify-center gap-2"
+          className="system-button-primary flex min-h-12 w-full items-center justify-center gap-2"
         >
-          <Download size={24} /> {isNative ? 'Save to Device' : 'Download'}
+          <Download size={21} /> {isNative ? 'Save to Device' : 'Download'}
         </button>
       </div>
 
       <button 
         onClick={onStartOver}
-        className="mt-2 flex w-full items-center justify-center gap-2 rounded-ui px-4 py-3 text-xs font-semibold text-muted hover:bg-hover hover:text-accent"
+        className="mt-2 flex w-full items-center justify-center gap-2 rounded-ui px-4 py-3 text-xs font-medium text-muted hover:bg-hover hover:text-accent"
       >
         <RotateCcw size={14} /> Start New Session
       </button>

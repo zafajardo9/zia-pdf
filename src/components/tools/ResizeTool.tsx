@@ -133,7 +133,7 @@ export default function ResizeTool() {
     <button
       onClick={resizePdf}
       disabled={isProcessing}
-      className="w-full bg-blue-500 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:p-6 md:rounded-xl md:text-xl flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20"
+      className="w-full bg-blue-500 text-white font-medium transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:text-base flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20"
     >
       {isProcessing ? <Loader2 className="animate-spin" /> : <Scaling size={18} />} Resize Pages
     </button>
@@ -193,7 +193,7 @@ export default function ResizeTool() {
                 )}
 
                 <div>
-                  <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3 px-1">Target Size</label>
+                  <label className="block text-[10px] font-medium text-gray-400 mb-3 px-1">Target Size</label>
                   <div className="flex flex-wrap gap-2">
                     {(['A3', 'A4', 'A5', 'Letter', 'Legal'] as Exclude<SizeKey, 'custom'>[]).map(k => (
                       <button
@@ -207,7 +207,7 @@ export default function ResizeTool() {
                     ))}
                     <button
                       onClick={() => setTarget('custom')}
-                      className={`px-4 py-2 rounded-ui text-xs font-semibold uppercase tracking-widest transition-all ${target === 'custom' ? 'bg-blue-500 text-white' : 'bg-gray-50 dark:bg-black text-gray-500 dark:text-gray-400 border border-gray-100 dark:border-zinc-800 hover:border-blue-300'}`}
+                      className={`px-4 py-2 rounded-ui text-xs font-medium transition-all ${target === 'custom' ? 'bg-blue-500 text-white' : 'bg-gray-50 dark:bg-black text-gray-500 dark:text-gray-400 border border-gray-100 dark:border-zinc-800 hover:border-blue-300'}`}
                     >
                       Custom
                     </button>
@@ -228,7 +228,7 @@ export default function ResizeTool() {
                 )}
 
                 <div>
-                  <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3 px-1">Mode</label>
+                  <label className="block text-[10px] font-medium text-gray-400 mb-3 px-1">Mode</label>
                   <div className="flex gap-2">
                     <button
                       onClick={() => setMode('fit')}
@@ -249,7 +249,7 @@ export default function ResizeTool() {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3 px-1">Output Filename</label>
+                  <label className="block text-[10px] font-medium text-gray-400 mb-3 px-1">Output Filename</label>
                   <input
                     type="text"
                     value={customFileName}

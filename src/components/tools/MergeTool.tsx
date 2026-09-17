@@ -96,7 +96,7 @@ function SortableItem({ id, file, onRemove, onRotate, onUnlock }: { id: string, 
             <button 
               onClick={handleUnlockClick}
               disabled={!localPass || isUnlocking}
-              className="bg-blue-500 text-white px-2 py-1 rounded-lg text-[8px] font-semibold uppercase tracking-widest disabled:opacity-50 hover:scale-105 active:scale-95 transition-transform"
+              className="bg-blue-500 text-white px-2 py-1 rounded-lg text-[8px] font-medium disabled:opacity-50 hover:scale-105 active:scale-95 transition-transform"
             >
               {isUnlocking ? '...' : 'Unlock'}
             </button>
@@ -372,7 +372,7 @@ export default function MergeTool() {
     <button 
       onClick={mergePDFs}
       disabled={isProcessing || !canMerge}
-      className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:p-6 md:rounded-xl md:text-xl flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20`}
+      className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-medium transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:text-base flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20`}
     >
       {isProcessing ? <><Loader2 className="animate-spin" /> {progress}%</> : <>Merge PDFs <ArrowRight size={18} /></>}
     </button>
@@ -419,7 +419,7 @@ export default function MergeTool() {
                 </button>
                 <button 
                   onClick={() => { clearWorkspace('merge'); setHasRestorableWorkspace(false); }}
-                  className="flex-1 md:flex-none px-6 py-3 bg-white dark:bg-zinc-800 text-gray-400 hover:text-blue-500 rounded-xl text-xs font-semibold uppercase tracking-widest transition-colors active:scale-95"
+                  className="flex-1 md:flex-none px-6 py-3 bg-white dark:bg-zinc-800 text-gray-400 hover:text-blue-500 rounded-xl text-xs font-medium transition-colors active:scale-95"
                 >
                   Discard
                 </button>
@@ -431,7 +431,7 @@ export default function MergeTool() {
           {files.length > 0 ? (
             <div className="space-y-4">
               <div className="flex justify-between items-center px-1">
-                <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400">
+                <p className="text-[10px] font-medium text-gray-400">
                   {files.length} Files • {totalPages} Pages
                 </p>
                 <button onClick={() => { setFiles([]); clearUrls(); clearWorkspace('merge'); }} className="text-[10px] font-semibold uppercase text-blue-500/60 hover:text-blue-500 transition-colors font-bold">Clear All</button>
@@ -449,14 +449,14 @@ export default function MergeTool() {
 
               <button 
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full py-4 border-2 border-dashed border-gray-200 dark:border-zinc-800 rounded-lg text-gray-400 font-semibold uppercase text-[10px] tracking-widest flex items-center justify-center gap-2 hover:border-blue-500 hover:text-blue-500 transition-all"
+                className="w-full py-4 border-2 border-dashed border-gray-200 dark:border-zinc-800 rounded-lg text-gray-400 font-medium text-[10px] flex items-center justify-center gap-2 hover:border-blue-500 hover:text-blue-500 transition-all"
               >
                 <Plus size={16} /> Add More Files
               </button>
 
               {!objectUrl && (
                 <div className="p-6 bg-white dark:bg-zinc-900 rounded-xl border border-gray-100 dark:border-white/5 shadow-sm">
-                   <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3">Output Filename</label>
+                   <label className="block text-[10px] font-medium text-gray-400 mb-3">Output Filename</label>
                    <input 
                       type="text" 
                       value={customFileName}

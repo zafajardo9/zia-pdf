@@ -37,10 +37,10 @@ export default function AndroidToolsView({ tools }: { tools: Tool[] }) {
     <div className="min-h-screen bg-canvas pb-32 text-ink">
       <header className="px-6 pt-[calc(env(safe-area-inset-top)+0.75rem)] pb-6">
         <p className="system-label mb-2">Local toolkit</p>
-        <h1 className="mb-6 text-3xl font-semibold tracking-[-0.035em]">All tools</h1>
+        <h1 className="type-headline-lg mb-6">All tools</h1>
         
         <div className="relative group">
-          <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-gray-500">
+          <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-muted">
             <Search size={20} />
           </div>
           <input 
@@ -67,16 +67,16 @@ export default function AndroidToolsView({ tools }: { tools: Tool[] }) {
                   <button
                     key={i}
                     onClick={() => tool.implemented && tool.path && navigate(tool.path)}
-                    className="flex items-center gap-4 rounded-panel border border-line bg-surface p-4 hover:border-accent/40 hover:bg-hover"
+                    className="flex items-center gap-4 rounded-panel border border-line-soft bg-surface p-4 hover:bg-hover"
                   >
-                    <div className={`w-12 h-12 ${colors.bg} ${colors.icon} rounded-xl flex items-center justify-center shrink-0`}>
+                    <div className={`w-12 h-12 ${colors.bg} ${colors.icon} rounded-xl2 flex items-center justify-center shrink-0`}>
                       <Icon size={24} strokeWidth={1.5} />
                     </div>
                     <div className="flex-1 min-w-0 text-left">
-                      <h4 className="font-bold text-sm dark:text-white truncate">{tool.title}</h4>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{tool.desc}</p>
+                      <h4 className="type-label-md text-ink truncate">{tool.title}</h4>
+                      <p className="type-label-sm text-muted truncate">{tool.desc}</p>
                     </div>
-                    <ChevronRight size={18} className="text-gray-300" />
+                    <ChevronRight size={18} className="text-muted" />
                   </button>
                 )
               })}
@@ -87,7 +87,7 @@ export default function AndroidToolsView({ tools }: { tools: Tool[] }) {
 
       <footer className="text-center py-12 opacity-20">
          <BrandLogo size={24} className="mx-auto mb-4" />
-         <p className="text-[9px] font-semibold uppercase tracking-[0.5em]">{BRAND.name} Version {BRAND.version}</p>
+         <p className="system-label">{BRAND.name} Version {BRAND.version}</p>
       </footer>
     </div>
   )

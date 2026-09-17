@@ -58,7 +58,7 @@ export default function RepairTool() {
   }
 
   const ActionButton = () => (
-    <button onClick={startRepair} disabled={isProcessing} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:p-6 md:rounded-xl md:text-xl flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20">
+    <button onClick={startRepair} disabled={isProcessing} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium transition-all active:scale-95 disabled:opacity-50 py-4 rounded-lg text-sm md:text-base flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20">
       {isProcessing ? <Loader2 className="animate-spin" /> : <FileCheck size={20} />} Attempt Repair
     </button>
   )

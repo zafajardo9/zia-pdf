@@ -156,13 +156,13 @@ export default function ZipTool() {
   const ActionButtons = () => {
     if (mode === 'compress') {
       return (
-        <button onClick={createZip} disabled={isProcessing || files.length === 0} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 py-4 rounded-lg text-sm md:p-6 md:rounded-xl md:text-xl">
+        <button onClick={createZip} disabled={isProcessing || files.length === 0} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 py-4 rounded-lg text-sm md:text-base">
           {isProcessing ? <><Loader2 className="animate-spin" /> {progress}%</> : <><FileArchive size={18} /> Create ZIP ({files.length} {files.length === 1 ? 'File' : 'Files'})</>}
         </button>
       )
     }
     return (
-      <button onClick={extractSelected} disabled={isProcessing || selected.length === 0} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 py-4 rounded-lg text-sm md:p-6 md:rounded-xl md:text-xl">
+      <button onClick={extractSelected} disabled={isProcessing || selected.length === 0} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 shadow-sm shadow-blue-500/20 py-4 rounded-lg text-sm md:text-base">
         {isProcessing ? <><Loader2 className="animate-spin" /> {progress}%</> : <><FolderOpen size={18} /> Extract {selected.length} {selected.length === 1 ? 'File' : 'Files'}</>}
       </button>
     )
@@ -198,7 +198,7 @@ export default function ZipTool() {
               <>
                 <div className="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-gray-100 dark:border-white/5 shadow-sm">
                   <div className="mb-4 flex items-center justify-between">
-                    <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400">{files.length} files • {formatSize(totalSize)}</p>
+                    <p className="text-[10px] font-medium text-gray-400">{files.length} files • {formatSize(totalSize)}</p>
                     <button onClick={() => compressInputRef.current?.click()} className="flex items-center gap-1 text-xs font-semibold text-blue-500 hover:text-blue-600"><Plus size={14} /> Add more</button>
                   </div>
                   <div className="max-h-72 space-y-2 overflow-y-auto">
@@ -214,7 +214,7 @@ export default function ZipTool() {
                 </div>
                 <div className="space-y-6 bg-white p-8 rounded-xl border border-gray-100 shadow-sm dark:bg-zinc-900 dark:border-white/5">
                   <div>
-                    <label className="mb-3 block px-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Output Filename</label>
+                    <label className="mb-3 block px-1 text-[10px] font-medium text-gray-400">Output Filename</label>
                     <input type="text" value={customFileName} onChange={(e) => setCustomFileName(e.target.value)} className="w-full rounded-xl bg-gray-50 px-4 py-3 text-sm font-bold outline-none focus:border-blue-500 border border-transparent dark:bg-black dark:text-white" />
                   </div>
                   {isProcessing && ProgressBar}
@@ -241,7 +241,7 @@ export default function ZipTool() {
               <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-500 dark:bg-blue-900/20"><FileArchive size={24} /></div>
               <div className="min-w-0 flex-1">
                 <h3 className="truncate text-sm font-bold dark:text-white">{zipFile.name}</h3>
-                <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400">{entries.length} files • {formatSize(zipFile.size)}</p>
+                <p className="text-[10px] font-medium text-gray-400">{entries.length} files • {formatSize(zipFile.size)}</p>
               </div>
               <button onClick={resetAll} className="p-2 text-gray-400 transition-colors hover:text-blue-500"><X size={20} /></button>
             </div>
@@ -260,7 +260,7 @@ export default function ZipTool() {
                   )
                 })}
               </div>
-              <p className="pt-2 text-[10px] font-semibold uppercase tracking-widest text-gray-300 dark:text-zinc-600">Folders are skipped • paths are flattened safely</p>
+              <p className="pt-2 text-[10px] font-medium text-gray-300 dark:text-zinc-600">Folders are skipped • paths are flattened safely</p>
               {isProcessing && ProgressBar}
             </div>
           </div>

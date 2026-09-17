@@ -46,18 +46,22 @@ const LazyPage = ({ pdfDoc, pageNum }: { pdfDoc: any, pageNum: number }) => {
       data-page-num={pageNum}
       className="relative flex flex-col items-center justify-center snap-center"
     >
-      <div className="bg-white p-0.5 rounded-sm shadow-[0_10px_30px_rgba(0,0,0,0.3)] group relative overflow-hidden transition-all duration-500 w-full max-w-[95%] md:max-w-full flex items-center justify-center min-h-[300px]">
+      {/* The sheet itself stays white — it is the document, not UI chrome. */}
+      <div className="group relative flex min-h-[300px] w-full max-w-[95%] items-center justify-center overflow-hidden rounded-panel bg-white shadow-card ring-1 ring-[var(--border-soft)] transition-shadow duration-500 md:max-w-full">
         {img ? (
           <img 
             src={img} 
             alt={`Page ${pageNum}`} 
-            className="max-w-full h-auto object-contain select-none" 
+            className="h-auto max-w-full select-none object-contain" 
           />
         ) : (
           <div className="flex flex-col items-center gap-3 py-20">
-             <Loader2 className="w-6 h-6 text-zinc-800 animate-spin" />
+             <Loader2 className="h-6 w-6 animate-spin text-accent" />
           </div>
         )}
+        <span className="system-label absolute bottom-3 right-4 rounded-ui bg-surface/85 px-2 py-0.5 opacity-0 transition-opacity group-hover:opacity-100">
+          {pageNum}
+        </span>
       </div>
     </div>
   )
@@ -139,42 +143,45 @@ export default function PdfPreview({ file, onClose, onProcess }: PdfPreviewProps
   }
 
   return createPortal(
-    <div 
-      className="fixed inset-0 z-[500] bg-zinc-950 flex flex-col animate-in fade-in duration-300 overflow-hidden overscroll-none"
-    >
+    <div className="fixed inset-0 z-[500] flex flex-col overflow-hidden overscroll-none bg-viewer motion-safe:animate-fade-in">
       
-      {/* Fixed Header - Always Visible */}
-      <header className="fixed top-0 inset-x-0 px-4 pt-[calc(env(safe-area-inset-top)+0.75rem)] pb-4 bg-zinc-900/95 backdrop-blur-xl border-b border-white/5 flex items-center justify-between z-50 shadow-sm" onClick={(e) => e.stopPropagation()}>
-        <div className="flex items-center gap-3">
+      {/* Fixed Header — frosted bar so pages blur underneath while scrolling */}
+      <header
+        className="fixed inset-x-0 top-0 z-50 flex items-center justify-between border-b border-line-soft bg-glass px-4 pb-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] backdrop-blur-xl backdrop-saturate-150"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex min-w-0 items-center gap-2">
           <button 
             onClick={onClose} 
-            className="w-10 h-10 flex items-center justify-center rounded-full text-zinc-400 active:bg-white/10 active:text-white transition-all"
+            aria-label="Close preview"
+            className="-ml-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-ui text-muted transition-colors hover:bg-hover hover:text-ink"
           >
-            <X size={22} strokeWidth={2.5} />
+            <X size={20} strokeWidth={1.8} />
           </button>
-          <div className="flex items-center gap-2.5 min-w-0">
-             <div className="w-9 h-9 bg-white rounded-xl flex items-center justify-center shadow-sm shrink-0">
+          <div className="flex min-w-0 items-center gap-2.5">
+             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-ui bg-hover">
                 <BrandLogo size={20} />
              </div>
-             <div className="hidden sm:block min-w-0">
-                <h2 className="text-sm font-semibold text-white truncate max-w-[140px] leading-tight">{file.name}</h2>
-                <div className="flex items-center gap-1.5 mt-0.5">
-                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-                   <p className="text-[8px] font-semibold text-zinc-500 uppercase tracking-widest">Secure View</p>
+             <div className="min-w-0">
+                <h2 className="max-w-[46vw] truncate text-sm font-medium leading-tight text-ink sm:max-w-[240px]">{file.name}</h2>
+                <div className="mt-1 flex items-center gap-1.5">
+                   <span className="h-1.5 w-1.5 rounded-full bg-tertiary" />
+                   <p className="system-label">Secure view</p>
                 </div>
              </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           <button 
             onClick={(e) => {
               e.stopPropagation();
               handleShare();
-            }} 
-            className="w-10 h-10 flex items-center justify-center bg-white/5 text-zinc-300 rounded-lg active:bg-white/10 transition-all border border-white/5"
+            }}
+            aria-label="Share document"
+            className="flex h-10 w-10 items-center justify-center rounded-ui border border-line-soft bg-surface text-muted transition-colors hover:bg-hover hover:text-ink"
           >
-            <Share2 size={18} strokeWidth={2.5} />
+            <Share2 size={18} strokeWidth={1.8} />
           </button>
 
           <button 
@@ -182,64 +189,65 @@ export default function PdfPreview({ file, onClose, onProcess }: PdfPreviewProps
               e.stopPropagation();
               onProcess();
             }}
-            className="w-10 h-10 flex items-center justify-center bg-blue-500 text-white rounded-lg shadow-sm shadow-blue-500/20 active:scale-95 active:bg-blue-600 transition-all border border-blue-400/20"
+            aria-label="Choose a tool"
+            className="flex h-10 w-10 items-center justify-center rounded-ui bg-accent text-white transition-all hover:bg-accent-hover active:scale-95"
           >
-            <Plus size={22} strokeWidth={3} />
+            <Plus size={20} strokeWidth={1.9} />
           </button>
         </div>
       </header>
 
-      {/* Main Content - Scrollable List of Pages */}
+      {/* Main Content — scrollable list of pages */}
       <main 
         ref={mainRef}
         onScroll={handleScroll}
-        className="flex-1 overflow-y-auto bg-zinc-950 scrollbar-hide overscroll-none"
+        className="flex-1 overflow-y-auto overscroll-none bg-viewer scrollbar-hide"
       >
-        <div className="min-h-full flex flex-col items-center pt-32 pb-40 space-y-12">
+        <div className="flex min-h-full flex-col items-center space-y-10 pb-40 pt-32">
           {isLoading && (
-            <div className="h-full flex flex-col items-center justify-center gap-4">
-              <Loader2 className="w-10 h-10 text-blue-500 animate-spin" />
-              <p className="text-[10px] font-semibold text-zinc-600 uppercase tracking-[0.3em]">Decoding Layers...</p>
+            <div className="flex h-full flex-col items-center justify-center gap-4">
+              <Loader2 className="h-8 w-8 animate-spin text-accent" />
+              <p className="system-label">Decoding layers…</p>
             </div>
           )}
 
           {isLocked ? (
-            <div className="h-full flex flex-col items-center justify-center text-center px-8">
-              <div className="w-20 h-20 bg-blue-500/10 text-blue-500 rounded-xl flex items-center justify-center mb-8 shadow-inner border border-blue-500/20">
-                <Lock size={32} />
+            <div className="flex h-full flex-col items-center justify-center px-8 text-center">
+              <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-xl2 border border-line-soft bg-[var(--accent-soft)] text-accent">
+                <Lock size={26} strokeWidth={1.7} />
               </div>
-              <h3 className="text-2xl font-semibold text-white tracking-tighter mb-3">Layer Protected</h3>
-              <p className="text-sm text-zinc-500 max-w-xs mx-auto leading-relaxed mb-8">This document is encrypted. Enter the password to view the contents.</p>
+              <h3 className="type-headline-lg mb-3 text-ink">This document is protected</h3>
+              <p className="type-body-md mx-auto mb-8 max-w-xs text-muted">
+                Enter the password to preview the contents. Nothing is sent anywhere — unlocking happens on your device.
+              </p>
               
-              <div className="w-full max-w-xs space-y-3 mb-10">
+              <div className="mb-10 w-full max-w-xs space-y-3">
                  <input 
                    type="password" 
                    value={password}
                    onChange={(e) => setPassword(e.target.value)}
                    onKeyDown={(e) => e.key === 'Enter' && handleUnlock()}
-                   placeholder="Enter Password"
-                   className="w-full bg-white/5 border border-white/10 rounded-lg px-6 py-4 text-white font-bold text-center outline-none focus:border-blue-500 transition-all"
+                   placeholder="Enter password"
+                   aria-label="Document password"
+                   className="w-full rounded-ui border border-line bg-surface px-5 py-3.5 text-center text-sm font-medium text-ink outline-none transition-colors placeholder:text-muted focus:border-accent focus:ring-4 focus:ring-[var(--focus)]"
                    autoFocus
                  />
                  <button 
                    onClick={handleUnlock}
                    disabled={!password || isUnlocking}
-                   className="w-full py-4 bg-blue-500 text-white rounded-lg font-semibold uppercase text-xs tracking-widest shadow-sm active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                   className="system-button-primary flex w-full items-center justify-center gap-2"
                  >
                    {isUnlocking ? <Loader2 className="animate-spin" size={16} /> : <Unlock size={16} />} 
-                   Unlock Layer
+                   Unlock document
                  </button>
               </div>
 
-              <button 
-                onClick={onProcess} 
-                className="text-zinc-500 font-semibold uppercase text-[10px] tracking-[0.2em] hover:text-white transition-colors"
-              >
-                Tool Selection
+              <button onClick={onProcess} className="system-button-link">
+                Choose a different tool
               </button>
             </div>
           ) : (
-            <div className="max-w-3xl mx-auto space-y-12">
+            <div className="mx-auto max-w-3xl space-y-10">
               {Array.from({ length: totalPages }).map((_, idx) => (
                 <LazyPage 
                   key={idx} 
@@ -252,14 +260,17 @@ export default function PdfPreview({ file, onClose, onProcess }: PdfPreviewProps
         </div>
       </main>
 
-      {/* Fixed Status Bar - Always Visible */}
-      <footer className="fixed bottom-0 inset-x-0 px-6 py-4 bg-zinc-900/95 backdrop-blur-xl border-t border-white/5 flex items-center justify-between text-[9px] font-semibold uppercase tracking-[0.2em] text-zinc-500 z-50 pb-[calc(env(safe-area-inset-bottom)+1rem)]" onClick={(e) => e.stopPropagation()}>
-         <div className="flex items-center gap-2 opacity-60">
+      {/* Fixed Status Bar */}
+      <footer
+        className="fixed inset-x-0 bottom-0 z-50 flex items-center justify-between border-t border-line-soft bg-glass px-6 py-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur-xl backdrop-saturate-150"
+        onClick={(e) => e.stopPropagation()}
+      >
+         <div className="flex items-center gap-2 text-xs text-muted">
             <span>{(file.size / (1024*1024)).toFixed(2)} MB</span>
-            <span className="opacity-30">•</span>
-            <span>PDF Document</span>
+            <span className="opacity-40">•</span>
+            <span>PDF document</span>
          </div>
-         <div className="text-zinc-400 font-bold tracking-[0.1em]">
+         <div className="text-xs font-medium text-ink">
             {currentPage} / {totalPages}
          </div>
       </footer>

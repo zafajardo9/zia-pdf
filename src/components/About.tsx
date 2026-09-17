@@ -27,23 +27,24 @@ import { ViewMode } from '../types'
 const SpecItem = ({ title, icon: Icon, children, defaultOpen = false }: { title: string, icon: any, children: React.ReactNode, defaultOpen?: boolean }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen)
   return (
-    <div className="border-b border-gray-100 dark:border-zinc-800 last:border-0 overflow-hidden">
+    <div className="overflow-hidden border-b border-line-soft last:border-0">
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full py-6 flex items-center justify-between text-left group transition-all"
+        aria-expanded={isOpen}
+        className="group flex w-full items-center justify-between py-5 text-left"
       >
         <div className="flex items-center gap-5">
-          <div className={`w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-500 ${isOpen ? 'bg-blue-500 text-white shadow-sm shadow-blue-500/20' : 'bg-gray-50 dark:bg-zinc-900 text-gray-400 group-hover:text-blue-500 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/10'}`}>
-            <Icon size={20} strokeWidth={2.5} />
+          <div className={`flex h-11 w-11 items-center justify-center rounded-xl2 transition-colors ${isOpen ? 'bg-[var(--accent-soft)] text-accent' : 'bg-hover text-muted group-hover:text-accent'}`}>
+            <Icon size={19} strokeWidth={1.7} />
           </div>
-          <h4 className="font-semibold text-xs md:text-sm uppercase tracking-[0.2em] text-gray-900 dark:text-white transition-colors">{title}</h4>
+          <h4 className="text-xs uppercase tracking-[0.14em] text-ink md:text-sm">{title}</h4>
         </div>
-        <div className={`p-2 rounded-full transition-all ${isOpen ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-500' : 'text-gray-300'}`}>
+        <div className={`rounded-ui p-2 transition-colors ${isOpen ? 'text-accent' : 'text-muted'}`}>
           <ChevronDownIcon size={18} className={`transition-transform duration-500 ${isOpen ? 'rotate-180' : ''}`} />
         </div>
       </button>
       {isOpen && (
-        <div className="pb-8 pl-16 pr-6 text-sm md:text-base text-gray-500 dark:text-zinc-400 font-medium leading-relaxed animate-in slide-in-from-top-4 duration-500">
+        <div className="animate-in slide-in-from-top-4 pb-7 pl-16 pr-6 text-sm leading-relaxed text-muted md:text-base">
           {children}
         </div>
       )}
@@ -51,95 +52,99 @@ const SpecItem = ({ title, icon: Icon, children, defaultOpen = false }: { title:
   )
 }
 
+const Accent = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-accent">{children}</span>
+)
+
 // --- WEB VERSION (TITAN v1.2 EXPLANATORY) ---
 const AboutWeb = () => {
   const navigate = useNavigate()
   return (
-    <div className="min-h-screen bg-[#FAFAFA] dark:bg-black text-gray-900 dark:text-zinc-100 selection:bg-blue-500 selection:text-white pb-24">
+    <div className="min-h-screen bg-canvas pb-24 text-ink selection:bg-accent selection:text-white">
       
-      {/* 1. Impact Hero - Compact */}
-      <section className="relative pt-20 pb-12 px-6 overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(244,63,94,0.05),transparent_60%)] pointer-events-none" />
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <h1 className="text-5xl md:text-7xl font-semibold tracking-tighter dark:text-white mb-6 leading-[0.9] animate-in fade-in slide-in-from-bottom-4 duration-700">
-            Privacy is a <br/>
-            <span className="text-blue-500 font-semibold">Human Right.</span>
-          </h1>
-          <p className="text-lg md:text-xl text-gray-500 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed font-medium animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
-            {BRAND.name} is an absolute document engine. No servers, no tracking, no compromises. We transform your browser into a self-contained document laboratory.
-          </p>
+      {/* 1. Impact Hero — editorial, left aligned */}
+      <section className="border-b border-line-soft">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:px-8 md:py-24">
+          <div className="max-w-3xl">
+            <p className="system-label mb-6">Why this exists</p>
+            <h1 className="type-display">
+              Privacy is a <br />
+              <span className="text-accent">human right.</span>
+            </h1>
+            <p className="type-body-lg mt-6 max-w-xl text-muted">
+              {BRAND.name} is an absolute document engine. No servers, no tracking, no compromises.
+              We turn your browser into a self-contained document laboratory.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* 2. Sustainability Card - Condensed */}
-      <section className="max-w-5xl mx-auto px-6 mb-20">
-        <div className="bg-blue-500 text-white rounded-xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 relative overflow-hidden shadow-sm shadow-blue-500/20">
-           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_60%)] pointer-events-none" />
-           <div className="w-20 h-20 bg-white/20 rounded-xl flex items-center justify-center shrink-0 backdrop-blur-md border border-white/20">
-              <HeartIcon size={32} fill="currentColor" />
+      {/* 2. Sustainability */}
+      <section className="mx-auto max-w-7xl px-6 py-16 md:px-8 md:py-20">
+        <div className="flex flex-col items-start gap-8 rounded-panel border border-line-soft bg-surface p-8 shadow-card md:flex-row md:items-center md:p-12">
+           <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl2 bg-[var(--accent-soft)] text-accent">
+              <HeartIcon size={28} strokeWidth={1.6} />
            </div>
-           <div className="flex-1 text-center md:text-left relative z-10">
-              <h3 className="text-3xl font-semibold tracking-tighter mb-3 leading-tight">Why This Is Needed.</h3>
-              <p className="text-blue-100 font-medium text-base mb-3 max-w-xl leading-relaxed">
+           <div className="flex-1">
+              <h3 className="type-headline-md mb-4">Why this is needed.</h3>
+              <p className="mb-4 max-w-2xl text-sm leading-relaxed text-muted md:text-base">
                  Every day, sensitive documents — IDs, contracts, medical records — get uploaded to anonymous servers just to merge or compress a file. {BRAND.name} exists to end that trade-off: professional document tools that never let your files leave your device.
               </p>
-              <p className="text-blue-100 font-medium text-base mb-6 max-w-xl leading-relaxed">
+              <p className="mb-7 max-w-2xl text-sm leading-relaxed text-muted md:text-base">
                  What we need to keep it that way: share {BRAND.name} with someone who values privacy, and consider supporting the project — every bit keeps the engine running.
               </p>
-              <div className="flex flex-wrap justify-center md:justify-start gap-3">
-                 <button onClick={() => navigate('/thanks')} className="px-8 py-3.5 bg-white text-blue-600 rounded-lg font-semibold uppercase tracking-widest text-[10px] hover:scale-105 transition-transform shadow-sm flex items-center gap-2">
-                    <SparklesIcon size={14} /> Hall of Fame
-                 </button>
-              </div>
+              <button onClick={() => navigate('/thanks')} className="system-button-primary flex items-center gap-2">
+                 <SparklesIcon size={16} /> Hall of fame
+              </button>
            </div>
         </div>
       </section>
 
-      {/* 3. Deep Specification - Tighter Layout */}
-      <section className="max-w-6xl mx-auto px-6 mb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      {/* 3. Specification */}
+      <section className="mx-auto max-w-7xl px-6 pb-20 md:px-8">
+        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12">
           
           {/* Narrative Column */}
-          <div className="lg:col-span-5 space-y-8">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-zinc-100 dark:bg-white/5 rounded-md text-[9px] font-semibold uppercase tracking-widest text-gray-400 border border-gray-200/50 dark:border-white/5">
-               Technical Manifesto
-            </div>
-            <h2 className="text-3xl font-semibold tracking-tighter dark:text-white leading-[1.1]">
-              Architecture of <br/>
-              <span className="text-blue-500">Absolute Sovereignty.</span>
+          <div className="space-y-7 lg:col-span-5">
+            <span className="system-label inline-flex rounded-ui border border-line-soft bg-surface px-2.5 py-1">
+               Technical manifesto
+            </span>
+            <h2 className="type-headline-lg">
+              Architecture of <br />
+              <span className="text-accent">absolute sovereignty.</span>
             </h2>
-            <p className="text-gray-500 dark:text-zinc-400 text-sm font-medium leading-relaxed">
+            <p className="type-body-md text-muted">
               {BRAND.name} rejects the trade-off between convenience and privacy. We've built an engine that runs where the user is, ensuring your sensitive data never crosses a network boundary.
             </p>
-            <div className="p-6 bg-white dark:bg-zinc-900 rounded-xl border border-gray-100 dark:border-white/5 shadow-sm">
-               <h4 className="font-semibold text-[10px] uppercase tracking-widest text-emerald-500 mb-3 flex items-center gap-2">
-                  <ServerOffIcon size={14} /> Zero Infrastructure
+            <div className="rounded-panel border border-line-soft bg-surface p-6 shadow-card">
+               <h4 className="system-label mb-3 flex items-center gap-2 !text-tertiary">
+                  <ServerOffIcon size={14} /> Zero infrastructure
                </h4>
-               <p className="text-xs text-gray-500 dark:text-zinc-400 font-medium leading-relaxed">
+               <p className="text-xs leading-relaxed text-muted">
                   We operate no backend. No databases. No file caches. {BRAND.name} is a static distribution of code that activates your browser's existing power.
                </p>
             </div>
           </div>
 
-          {/* Accordion Column - Compact */}
-          <div className="lg:col-span-7 bg-white dark:bg-zinc-900 rounded-xl p-2 md:p-6 border border-gray-100 dark:border-white/5 shadow-sm">
-             <SpecItem title="How it Works" icon={CpuIcon} defaultOpen={true}>
-                Every action is executed locally on your device's CPU. Using high-performance <span className="text-blue-500 font-bold">Web Workers</span> and <span className="text-blue-500 font-bold">WebAssembly</span>, {BRAND.name} loads your PDF into a sandboxed environment within your browser tab.
+          {/* Accordion Column */}
+          <div className="rounded-panel border border-line-soft bg-surface p-2 shadow-card md:p-6 lg:col-span-7">
+             <SpecItem title="How it works" icon={CpuIcon} defaultOpen={true}>
+                Every action is executed locally on your device's CPU. Using high-performance <Accent>Web Workers</Accent> and <Accent>WebAssembly</Accent>, {BRAND.name} loads your PDF into a sandboxed environment within your browser tab.
              </SpecItem>
 
-             <SpecItem title="Data Lifecycle" icon={PrivacyIcon}>
-                Your documents live exclusively in your browser's <span className="text-blue-500 font-bold">volatile memory (RAM)</span>. We do not use persistent storage or cookies for your file content. Once the tab is closed, the data is destroyed.
+             <SpecItem title="Data lifecycle" icon={PrivacyIcon}>
+                Your documents live exclusively in your browser's <Accent>volatile memory (RAM)</Accent>. We do not use persistent storage or cookies for your file content. Once the tab is closed, the data is destroyed.
              </SpecItem>
 
-             <SpecItem title="Deep Metadata Clean" icon={DiskIcon}>
+             <SpecItem title="Deep metadata clean" icon={DiskIcon}>
                 Our "Deep Clean" metadata protocol purges identifying strings like Producer, Creator, and XMP metadata that standard editors leave behind, ensuring your files are truly anonymous.
              </SpecItem>
 
-             <SpecItem title="Radical Transparency" icon={CodeIcon}>
-                {BRAND.name} is <span className="text-blue-500 font-bold">100% Open Source</span> under the <span className="text-blue-500 font-bold">GNU AGPL v3</span> license. This gives you the right to audit every line of code and guarantees the engine remains free.
+             <SpecItem title="Radical transparency" icon={CodeIcon}>
+                {BRAND.name} is <Accent>100% open source</Accent> under the <Accent>GNU AGPL v3</Accent> license. This gives you the right to audit every line of code and guarantees the engine remains free.
              </SpecItem>
 
-             <SpecItem title="Privacy Nodes" icon={ShieldIcon}>
+             <SpecItem title="Privacy nodes" icon={ShieldIcon}>
                 By processing documents on-device, every user acts as their own "Privacy Node." There is no central point of failure and no surveillance capability.
              </SpecItem>
           </div>
@@ -147,17 +152,17 @@ const AboutWeb = () => {
         </div>
       </section>
 
-      {/* 4. Final Footer Links - Condensed */}
-      <section className="max-w-4xl mx-auto px-6 text-center border-t border-gray-100 dark:border-zinc-900 pt-16">
-        <div className="flex flex-wrap justify-center gap-8 mb-12">
-           <button onClick={() => navigate('/thanks')} className="flex items-center gap-2.5 text-[10px] font-semibold uppercase tracking-widest text-gray-400 hover:text-blue-500 transition-colors group">
-              <SparklesIcon size={16} /> Credits <ChevronRightIcon size={12} className="opacity-40 group-hover:translate-x-1 transition-transform" />
+      {/* 4. Footer links */}
+      <section className="mx-auto max-w-7xl border-t border-line-soft px-6 pt-12 md:px-8">
+        <div className="mb-12 flex flex-wrap gap-8">
+           <button onClick={() => navigate('/thanks')} className="system-button-link group">
+              <SparklesIcon size={16} /> Credits <ChevronRightIcon size={12} className="opacity-50 transition-transform group-hover:translate-x-1" />
            </button>
         </div>
         
-        <div className="opacity-20 hover:opacity-50 transition-opacity duration-700">
-          <BrandLogo size={32} className="mx-auto mb-4" />
-          <p className="text-[9px] font-semibold uppercase tracking-[0.6em] text-gray-400">Zackery Alline Fajardo</p>
+        <div className="pb-4 opacity-40 transition-opacity duration-700 hover:opacity-80">
+          <BrandLogo size={30} className="mb-4" />
+          <p className="text-[10px] uppercase tracking-[0.4em] text-muted">Zackery Alline Fajardo</p>
         </div>
       </section>
 
@@ -171,89 +176,82 @@ const AboutAPK = () => {
   const navigate = useNavigate()
   return (
     <NativeToolLayout title="Protocol" description="System Internals" actions={null}>
-      <div className="px-4 pb-32 animate-in fade-in slide-in-from-bottom-4 duration-700 space-y-4">
+      <div className="animate-in fade-in slide-in-from-bottom-4 space-y-4 px-4 pb-32 duration-700">
         
         {/* 1. App Identity */}
-        <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-gray-100 dark:border-white/5 shadow-sm flex flex-col items-center text-center">
-          <div className="w-20 h-20 bg-gray-50 dark:bg-black rounded-[1.5rem] flex items-center justify-center shadow-inner mb-4">
+        <div className="flex flex-col items-center rounded-panel border border-line-soft bg-surface p-6 text-center">
+          <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-xl2 bg-hover">
             <BrandLogo size={40} />
           </div>
-          <h2 className="text-2xl font-semibold tracking-tighter dark:text-white leading-none mb-1">{BRAND.name}</h2>
-          <p className="text-[9px] font-semibold uppercase tracking-widest text-blue-500">v1.0.9 Stable • Absolute Privacy</p>
+          <h2 className="type-headline-md mb-1">{BRAND.name}</h2>
+          <p className="text-[10px] uppercase tracking-[0.14em] text-accent">v1.0.9 stable · absolute privacy</p>
         </div>
 
-        {/* 2. Why This Is Needed (Prominent Support - MOVED TO TOP) */}
-        <div className="bg-blue-500 text-white rounded-xl p-6 relative overflow-hidden shadow-sm shadow-blue-500/20">
-           <div className="absolute top-0 right-0 p-6 opacity-10">
-              <HeartIcon size={100} fill="currentColor" />
-           </div>
-           <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-4">
-                 <div className="p-2 bg-white/20 rounded-xl backdrop-blur-md">
-                    <HeartIcon size={20} fill="currentColor" />
-                 </div>
-                 <h3 className="text-lg font-semibold uppercase tracking-tight">Why This Is Needed</h3>
+        {/* 2. Why This Is Needed */}
+        <div className="rounded-panel border border-line-soft bg-surface p-6 shadow-card">
+           <div className="mb-4 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-ui bg-[var(--accent-soft)] text-accent">
+                 <HeartIcon size={19} strokeWidth={1.7} />
               </div>
-              <p className="text-sm font-medium text-blue-100 leading-relaxed mb-3">
-                 Sensitive documents shouldn't have to be uploaded to anonymous servers just to merge or compress a file. {BRAND.name} keeps every operation on your device — nothing leaves your hands.
-              </p>
-              <p className="text-sm font-medium text-blue-100 leading-relaxed mb-6">
-                 What we need: share {BRAND.name} with someone who values privacy, and consider supporting the project to keep it free.
-              </p>
-              <div className="grid grid-cols-2 gap-3">
-                 <button onClick={() => navigate('/thanks')} className="flex items-center justify-center gap-2 py-3 bg-white text-blue-600 rounded-xl font-semibold uppercase text-[9px] tracking-widest shadow-sm active:scale-95 transition-transform">
-                    Hall of Fame
-                 </button>
-              </div>
+              <h3 className="text-base">Why this is needed</h3>
            </div>
+           <p className="mb-3 text-sm leading-relaxed text-muted">
+              Sensitive documents shouldn't have to be uploaded to anonymous servers just to merge or compress a file. {BRAND.name} keeps every operation on your device — nothing leaves your hands.
+           </p>
+           <p className="mb-6 text-sm leading-relaxed text-muted">
+              What we need: share {BRAND.name} with someone who values privacy, and consider supporting the project to keep it free.
+           </p>
+           <button onClick={() => navigate('/thanks')} className="system-button-primary flex w-full items-center justify-center gap-2">
+              Hall of fame
+           </button>
         </div>
 
-        {/* 3. Explainer Protocol (The "Everything") */}
-        <div className="bg-white dark:bg-zinc-900 rounded-xl p-2 border border-gray-100 dark:border-white/5 shadow-sm overflow-hidden">
-           <div className="p-4 border-b border-gray-50 dark:border-white/5">
-              <h3 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-gray-400">System Internal Specification</h3>
+        {/* 3. Explainer Protocol */}
+        <div className="overflow-hidden rounded-panel border border-line-soft bg-surface">
+           <div className="border-b border-line-soft p-4">
+              <h3 className="system-label">System internal specification</h3>
            </div>
            
-           <div className="divide-y divide-gray-50 dark:divide-white/5 px-2">
-              <SpecItem title="How it Works" icon={CpuIcon}>
-                Every action you perform—merging, splitting, or encrypting—happens locally on your device's CPU. {BRAND.name} uses an internal local engine powered by <span className="text-blue-500 font-bold">pdf-lib</span> and <span className="text-blue-500 font-bold">WebAssembly</span>. No data ever leaves your hardware.
+           <div className="divide-y divide-[var(--border-soft)] px-2">
+              <SpecItem title="How it works" icon={CpuIcon}>
+                Every action you perform—merging, splitting, or encrypting—happens locally on your device's CPU. {BRAND.name} uses an internal local engine powered by <Accent>pdf-lib</Accent> and <Accent>WebAssembly</Accent>. No data ever leaves your hardware.
               </SpecItem>
 
-              <SpecItem title="Data Privacy" icon={PrivacyIcon}>
-                Your files are loaded into the app's <span className="text-blue-500 font-bold">volatile memory (RAM)</span> only during your active session. We do not use persistent storage for your PDF content. Once you close the app or navigate away, the processed document is permanently purged.
+              <SpecItem title="Data privacy" icon={PrivacyIcon}>
+                Your files are loaded into the app's <Accent>volatile memory (RAM)</Accent> only during your active session. We do not use persistent storage for your PDF content. Once you close the app or navigate away, the processed document is permanently purged.
               </SpecItem>
 
-              <SpecItem title="Deep Metadata Clean" icon={DiskIcon}>
+              <SpecItem title="Deep metadata clean" icon={DiskIcon}>
                 Privacy isn't just about servers. Most tools leave digital breadcrumbs in the PDF metadata. {BRAND.name}'s "Deep Clean" protocol sanitizes every document, purging Producer, Creator, and XMP metadata to ensure absolute anonymity.
               </SpecItem>
 
-              <SpecItem title="Open Source Integrity" icon={CodeIcon}>
-                Trust is earned through transparency. {BRAND.name} is <span className="text-blue-500 font-bold">100% open-source</span> under the <span className="text-blue-500 font-bold">GNU AGPL v3</span> license. This ensures the engine remains free, auditable, and community-driven forever.
+              <SpecItem title="Open source integrity" icon={CodeIcon}>
+                Trust is earned through transparency. {BRAND.name} is <Accent>100% open-source</Accent> under the <Accent>GNU AGPL v3</Accent> license. This ensures the engine remains free, auditable, and community-driven forever.
               </SpecItem>
 
-              <SpecItem title="Zero Infrastructure" icon={ServerOffIcon}>
-                We operate a <span className="text-blue-500 font-bold">Zero-Server Architecture</span>. We have no backend, no database, and no cloud. Your phone is the laboratory, and your documents stay in your hands alone.
+              <SpecItem title="Zero infrastructure" icon={ServerOffIcon}>
+                We operate a <Accent>Zero-Server Architecture</Accent>. We have no backend, no database, and no cloud. Your phone is the laboratory, and your documents stay in your hands alone.
               </SpecItem>
            </div>
         </div>
 
         {/* 4. Action Tiles */}
         <div className="grid grid-cols-1 gap-2 pt-2">
-          <button onClick={() => navigate('/thanks')} className="flex items-center justify-between p-5 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-white/5 rounded-xl active:scale-[0.98] transition-all">
+          <button onClick={() => navigate('/thanks')} className="flex items-center justify-between rounded-panel border border-line-soft bg-surface p-5 transition-all hover:bg-hover active:scale-[0.98]">
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 rounded-xl flex items-center justify-center">
-                   <SparklesIcon size={20} className="text-blue-500" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-ui bg-[var(--accent-soft)] text-accent">
+                   <SparklesIcon size={19} strokeWidth={1.7} />
                 </div>
                 <div className="text-left">
-                   <h4 className="font-bold text-sm dark:text-white">Credits</h4>
-                   <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wide">Hall of Fame</p>
+                   <h4 className="text-sm">Credits</h4>
+                   <p className="system-label mt-0.5">Hall of fame</p>
                 </div>
               </div>
-              <ChevronRightIcon size={16} className="text-gray-300" />
+              <ChevronRightIcon size={16} className="text-muted" />
           </button>
         </div>
 
-        <p className="text-[8px] font-semibold uppercase text-center text-gray-400 tracking-[0.5em] pt-8 pb-4">Handcrafted by Zackery Alline Fajardo</p>
+        <p className="pt-8 pb-4 text-center text-[9px] uppercase tracking-[0.4em] text-muted">Handcrafted by Zackery Alline Fajardo</p>
       </div>
     </NativeToolLayout>
   )

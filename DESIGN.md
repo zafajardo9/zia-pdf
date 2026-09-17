@@ -1,257 +1,297 @@
-# DESIGN.md
-
-A modern, minimalist approach to system user interfaces. This document outlines the core principles, visual language, and interactive patterns designed to create highly functional, aesthetically restrained, and lightweight desktop/web environments.
-
+---
+version: alpha
+name: stripe.com
+description: Stripe’s homepage design system emphasizes a minimal white canvas, high-contrast indigo CTA color, light-weight sans typography, restrained borders, and a single dramatic multicolor ribbon hero accent. Tokens below are inferred from the provided Context.dev styleguide and screenshot; where details are not explicit, values are conservative.
+colors:
+  background: "#ffffff"
+  surface: "#ffffff"
+  on-surface: "#0a2540"
+  primary: "#533afd"
+  secondary: "#b9b9f9"
+  tertiary: "#81b81a"
+  neutral: "#d9d9e3"
+  muted: "#66758f"
+  accent: "#533afd"
+  error: "#df1b41"
+typography:
+  fontFamily: "sohne-var, \"SF Pro Display\", sans-serif"
+  headline-display:
+    fontFamily: "sohne-var, \"SF Pro Display\", sans-serif"
+    fontSize: "48px"
+    lineHeight: 55.2px
+    letterSpacing: "-0.96px"
+    fontWeight: 300
+  headline-lg:
+    fontFamily: "sohne-var, \"SF Pro Display\", sans-serif"
+    fontSize: "32px"
+    lineHeight: 35.2px
+    letterSpacing: "-0.64px"
+    fontWeight: 300
+  headline-md:
+    fontFamily: "sohne-var, \"SF Pro Display\", sans-serif"
+    fontSize: "19.845px"
+    lineHeight: 22.2264px
+    letterSpacing: "-0.19845px"
+    fontWeight: 300
+  body-lg:
+    fontFamily: "sohne-var, \"SF Pro Display\", sans-serif"
+    fontSize: "16px"
+    lineHeight: 22.2264px
+    letterSpacing: "0px"
+    fontWeight: 300
+  body-md:
+    fontFamily: "sohne-var, \"SF Pro Display\", sans-serif"
+    fontSize: "14px"
+    lineHeight: 35.2px
+    letterSpacing: "-0.64px"
+    fontWeight: 300
+  body-sm:
+    fontFamily: "sohne-var, \"SF Pro Display\", sans-serif"
+    fontSize: "12px"
+    lineHeight: 18px
+    letterSpacing: "0px"
+    fontWeight: 400
+  label-lg:
+    fontFamily: "sohne-var, \"SF Pro Display\", sans-serif"
+    fontSize: "16px"
+    lineHeight: 22.2264px
+    letterSpacing: "0px"
+    fontWeight: 400
+  label-md:
+    fontFamily: "sohne-var, \"SF Pro Display\", sans-serif"
+    fontSize: "14px"
+    lineHeight: 20px
+    letterSpacing: "0px"
+    fontWeight: 400
+  label-sm:
+    fontFamily: "sohne-var, \"SF Pro Display\", sans-serif"
+    fontSize: "12px"
+    lineHeight: 16px
+    letterSpacing: "0px"
+    fontWeight: 400
+rounded:
+  none: "0px"
+  sm: "4px"
+  md: "6px"
+  lg: "8px"
+  xl: "12px"
+  full: "9999px"
+spacing:
+  xs: "6px"
+  sm: "14px"
+  md: "24px"
+  lg: "40px"
+  xl: "80px"
+components:
+  button:
+    primary:
+      backgroundColor: "{colors.primary}"
+      color: "{colors.background}"
+      borderColor: "{colors.background}"
+      borderWidth: "0px"
+      borderStyle: "none"
+      borderRadius: "{rounded.sm}"
+      padding: "15.5px 24px 16.5px"
+      minWidth: "141px"
+      minHeight: "48px"
+      fontFamily: "{typography.fontFamily}"
+      fontSize: "16px"
+      fontWeight: 400
+      textDecoration: "none"
+      boxShadow: "none"
+    secondary:
+      backgroundColor: "{colors.background}"
+      color: "{colors.primary}"
+      borderColor: "{colors.secondary}"
+      borderWidth: "1px"
+      borderStyle: "solid"
+      borderRadius: "{rounded.sm}"
+      padding: "15.5px 24px 16.5px"
+      minWidth: "141px"
+      minHeight: "48px"
+      fontFamily: "{typography.fontFamily}"
+      fontSize: "16px"
+      fontWeight: 400
+      textDecoration: "none"
+      boxShadow: "none"
+    link:
+      backgroundColor: "transparent"
+      color: "{colors.primary}"
+      borderColor: "transparent"
+      borderWidth: "0px"
+      borderStyle: "none"
+      borderRadius: "{rounded.none}"
+      padding: "0px"
+      minWidth: "0px"
+      minHeight: "0px"
+      fontFamily: "{typography.fontFamily}"
+      fontSize: "16px"
+      fontWeight: 400
+      textDecoration: "none"
+      boxShadow: "none"
+  card:
+    backgroundColor: "{colors.surface}"
+    color: "{colors.on-surface}"
+    borderColor: "{colors.surface}"
+    borderWidth: "0px"
+    borderStyle: "none"
+    borderRadius: "{rounded.md}"
+    padding: "8px"
+    boxShadow: "rgba(0, 0, 0, 0.1) 0px 20.187px 40.374px -20.187px"
 ---
 
-## 1. Design Philosophy
+# Overview
 
-Modern minimalist systems UI is not just about removing elements; it is about **increasing the clarity of what remains**. It prioritizes content, reduces cognitive load, and respects the user’s focus.
+Stripe’s homepage is a premium, low-noise marketing surface built around white space, sparse navigation, and a dominant hero story. The visual system pairs a neutral white background with indigo actions, dark navy copy, and a vivid multicolor ribbon graphic that creates motion without adding UI chrome.
 
-*   **Subtraction as Addition:** If an element does not serve a direct informational or navigational purpose, it is omitted.
-*   **Immediacy:** Content is the interface. Chrome, borders, and heavy containers are minimized so that the data itself shapes the layout.
-*   **Typographic Hierarchy:** Bold scale contrasts replace heavy borders and backgrounds as primary structural separators.
-*   **Deliberate Motion:** Animation is utilized purely as spatial communication (e.g., demonstrating where a window collapsed or how a menu emerged), never as ornamentation.
+The page hierarchy is clear:
+1. global nav,
+2. large hero statement,
+3. primary and secondary CTAs,
+4. trust logos,
+5. modular content bands and cards.
 
----
+Treat the composition as editorial rather than app-like. Keep sections roomy, copy concise, and interactive elements visually lightweight.
 
-## 2. Visual Language & Variables
+# Colors
 
-A cohesive, modern system UI is built upon a highly structured, scalable design token foundation.
+## Core palette
+- `primary` is the signature Stripe indigo: `#533afd`.
+- `background` and `surface` are white: `#ffffff`.
+- `on-surface` should be a deep navy-like text color. The exact homepage text color is not provided in the source payload, so keep it conservative and high contrast.
+- `secondary` is a pale indigo border/outline tone: `#b9b9f9`.
+- `tertiary` reflects an unexpected green accent seen in the extracted payload: `#81b81a`.
+- `error` is not explicitly provided; use a standard accessible red if needed.
 
-### A. The Monochromatic Accent Palette
-Minimalism thrives on high contrast but low color fatigue. We utilize a single-accent neutral system.
+## Usage guidance
+- Use white as the default canvas.
+- Use `primary` for core CTAs, links, and emphasized brand actions.
+- Use `secondary` only for borders and low-emphasis outlines, not as a fill color.
+- Avoid heavy fills or saturated backgrounds outside the hero artwork.
+- The multicolor ribbon is decorative imagery, not a tokenized UI color system.
 
-| Token | Light Mode | Dark Mode | Usage / Role |
-| :--- | :--- | :--- | :--- |
-| `--bg-primary` | `#F6F7F9` | `#0B0D10` | Screen canvas, deep desktop background |
-| `--bg-secondary`| `#FFFFFF` | `#12151A` | Active surface and system panels |
-| `--bg-elevated` | `#FFFFFF` | `#171A20` | Dialogs, menus, and floating surfaces |
-| `--bg-hover` | `#F0F2F5` | `#1D2128` | Interactive states and list-item hovering |
-| `--fg-primary` | `#101114` | `#F3F5F7` | Primary text, titles, high-emphasis icons |
-| `--fg-muted` | `#686D76` | `#9AA1AB` | Supporting labels, descriptions, metadata |
-| `--border` | `#DDE0E5` | `#292E36` | Ultra-thin dividers and structural definition |
-| `--accent` | `#0969DA` | `#58A6FF` | Intentional focus, active states, key CTAs |
-| `--accent-soft` | `#EAF3FF` | `rgba(56,139,253,.14)` | Selected items and quiet accent surfaces |
+# Typography
 
-### B. Spatial Grid & Layout scale
-A strict 8px / 4px incremental grid ensures alignment harmony across varying viewport scales.
-*   **Base Unit:** `8px` (`0.5rem`)
-*   **Border Radius:** `6px` for small interactive components (buttons, inputs), `12px` for surface containers (cards, modals). Keep corner shapes sharp but slightly softened.
-*   **Border Width:** Consistent `1px` or `1.5px` solid outlines. Heavy borders or double strokes are strictly prohibited.
+Stripe’s type is light, large, and tightly tracked. Headings use `sohne-var` with `fontWeight: 300`, creating a refined, modern tone.
 
----
+## Recommended text styles
+- `headline-display`: 48px / 55.2px / -0.96px / 300
+- `headline-lg`: 32px / 35.2px / -0.64px / 300
+- `headline-md`: 19.845px / 22.2264px / -0.19845px / 300
+- `body-lg`: 16px / 22.2264px / 0px / 300
+- `body-md`: 14px / 35.2px / -0.64px / 300
+- `label-lg`: 16px / 22.2264px / 400
+- `label-md`: 14px / 20px / 400
+- `label-sm`: 12px / 16px / 400
 
-## 3. Core Structural Patterns
+## Rules
+- Use `sohne-var, "SF Pro Display", sans-serif` for all text.
+- Keep headlines light unless a control requires stronger emphasis.
+- Preserve the generous headline sizes and negative tracking on hero and section titles.
+- Avoid bold, condensed, or display-serif treatments.
 
-### A. Flat Surface Architecture
-Traditional design relies on multi-layered shadows to establish hierarchy. The modern minimalist approach uses **tonal elevation** instead of heavy box-shadows.
+# Layout
 
-```
-┌───────────────────────────────────────────────┐  <-- `--bg-primary` (Desktop Canvas)
-│  ┌─────────────────────────────────────────┐  │
-│  │                                         │  │  <-- `--bg-secondary` (App Surface)
-│  │  ┌───────────────┐   ┌───────────────┐  │  │
-│  │  │  Active Item  │   │  Muted Label  │  │  │  <-- `--border` (1px clean separation)
-│  │  └───────────────┘   └───────────────┘  │  │
-│  └─────────────────────────────────────────┘  │
-└───────────────────────────────────────────────┘
-```
+## Structure
+- Desktop layout is centered in a wide content column with large gutters.
+- The hero occupies a large vertical band with the ribbon graphic bleeding in from the upper right and lower right edges.
+- Content sections stack vertically with generous whitespace between them.
+- Logos and metrics appear in clean horizontal rows.
 
-*   **Shadows:** Limit shadows to a single, highly diffused environmental ambient glow for floating elements only (e.g., `box-shadow: 0 4px 30px rgba(0,0,0,0.03);`). Avoid hard outlines or multi-tiered drop-shadow offsets.
+## Spacing
+Use the provided spacing scale:
+- `xs`: 6px
+- `sm`: 14px
+- `md`: 24px
+- `lg`: 40px
+- `xl`: 80px
 
-### B. Micro-Chromed Windows
-Maximize the viewport canvas by eliminating traditional multi-row window headers. 
+## Practical rules
+- Prefer large vertical spacing over dense grids.
+- Align primary content to a left column within the centered page frame.
+- Keep secondary content modular and card-like, with clear section boundaries.
+- Avoid full-width dark bands and complex multi-column dashboards on the homepage.
 
-1.  **Unified Titlebar:** Merge the titlebar with the application global navigation bar.
-2.  **Compact Window Controls:** Utilize simple, non-colored wireframe icons for close, minimize, and expand actions. They only reveal color or high-contrast states upon proximity hover.
-3.  **No Status Bars:** Push non-critical background processes or status strings into an overlay HUD (Heads-Up Display) that fades out when idle.
+# Elevation & Depth
 
----
+Stripe is mostly flat. Depth is subtle and used sparingly.
+- Cards use a soft shadow: `rgba(0, 0, 0, 0.1) 0px 20.187px 40.374px -20.187px`
+- Smaller elevated surfaces may use `rgba(23, 23, 23, 0.08) 0px 15px 35px 0px` when needed
+- Buttons do not use elevation
+- Avoid layered shadow stacks and strong blur effects
 
-## 4. Typography Rules
+Depth should support hierarchy, not decorate it.
 
-Minimalism depends on typography to convey structure. When you take away borders, size and font weight do the heavy lifting.
+# Shapes
 
-*   **Primary System Font:** Plus Jakarta Sans, bundled locally for reliable offline use, with the system sans-serif stack as fallback.
-*   **Code/Data Font:** SF Mono, JetBrains Mono, or Fira Code. Used for precise spatial alignment in tables, terminals, or status readouts.
+Rounded corners are restrained:
+- `none`: 0px
+- `sm`: 4px
+- `md`: 6px
+- `lg`: 8px
+- `xl`: 12px
+- `full`: 9999px
 
-```
-H1 (Large Titles)      ───  24–60px ─  SemiBold (600)  ───  tracking -0.02em to -0.045em
-H2 (Sections)          ───  16px  ───  Medium (500)    ───  tracking -0.01em
-Body (Regular)         ───  13px  ───  Regular (400)   ───  tracking  0
-Caption / Metadata     ───  11px  ───  Regular (400)   ───  tracking +0.01em
-```
+## Shape guidance
+- Primary and secondary buttons use 4px radius.
+- Cards use a slightly softer 6px radius.
+- Keep borders thin and clean.
+- Avoid pill-shaped CTAs except where a product pattern explicitly requires them.
 
----
+# Components
 
-## 5. UI Elements & Interaction States
+## Primary button
+Use for the main conversion action.
+- Fill: `#533afd`
+- Text: `#ffffff`
+- Radius: 4px
+- Height: 48px min
+- Padding: `15.5px 24px 16.5px`
+- Font: 16px, weight 400
+- No shadow
 
-To keep the system intuitive without visual clutter, rely heavily on precise micro-transitions for user feedback:
+## Secondary button
+Use for alternate actions near the primary CTA.
+- Fill: white
+- Text: `#533afd`
+- Border: `1px solid #b9b9f9`
+- Radius: 4px
+- Height: 48px min
+- Padding: `15.5px 24px 16.5px`
+- No shadow
 
-### Interactive States Reference
-*   **Default State:** `--fg-muted` text, border `--border`, no background fill.
-*   **Hover State:** Background shifts to `--bg-hover`. Cursor transitions to `pointer`.
-*   **Active/Focused State:** Border transitions to `--accent` (or a `2px` subtle outline offset of `--accent`).
-*   **Disabled State:** Opacity reduced globally to `40%`. Interactivity disabled.
+## Link button
+Use for tertiary navigation and inline calls to action.
+- Transparent background
+- Text: `#533afd`
+- No border
+- No radius treatment
+- No padding beyond text needs
 
-### Form Fields & Inputs
-Keep form fields completely borderless on three sides, or use a clean 1px border. 
-*   **Minimalist Input:** An input with only a bottom-border `1px solid --border` that expands outward to `--accent` when focused is often cleaner than a fully enclosed box.
-*   **Validation:** Use semantic colors (`#EF4444` for error, `#10B981` for success) sparingly. Rather than coloring the entire input container, use a single 4px indicator dot or clean text caption beneath the field.
+## Card
+Use for supporting stories, product modules, and trust content.
+- White background
+- No border
+- 6px radius
+- 8px padding baseline
+- Soft shadow only
 
----
+# Do's and Don'ts
 
-## 6. Implementation Example (CSS Utility Class Blueprint)
+## Do
+- Do keep the homepage predominantly white with one strong brand accent color.
+- Do use very large, light-weight headlines with tight letter spacing.
+- Do place primary CTAs directly under the hero copy.
+- Do keep borders subtle and pale.
+- Do use cards and metrics in modular, horizontally readable bands.
+- Do preserve generous whitespace around all major sections.
+- Do treat the multicolor hero ribbon as a decorative hero asset only.
 
-Here is a quick-reference implementation CSS stylesheet blueprint for enforcing this modern minimalist UI framework:
-
-```css
-/* Core System Variables */
-:root {
-  --bg-primary: #f6f7f9;
-  --bg-secondary: #ffffff;
-  --bg-hover: #f4f4f5;
-  --fg-primary: #101114;
-  --fg-muted: #686d76;
-  --border: #dde0e5;
-  --accent: #0969da;
-  
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-}
-
-/* Dark Mode Override */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-primary: #09090b;
-    --bg-secondary: #121212;
-    --bg-hover: #1c1c1e;
-    --fg-primary: #f4f4f5;
-    --fg-muted: #a1a1aa;
-    --border: #27272a;
-    --accent: #3b82f6;
-  }
-}
-
-/* Base Body Application */
-body {
-  background-color: var(--bg-primary);
-  color: var(--fg-primary);
-  font-family: var(--font-sans);
-  margin: 0;
-  padding: 24px;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Minimal Card Surface */
-.system-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 16px;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-.system-card:hover {
-  border-color: var(--fg-muted);
-}
-
-/* Interactive Component Action */
-.system-button {
-  background: var(--fg-primary);
-  color: var(--bg-secondary);
-  border: none;
-  border-radius: var(--radius-sm);
-  padding: 8px 16px;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: opacity 0.1s ease;
-}
-
-.system-button:hover {
-  opacity: 0.9;
-}
-```
-
----
-
-## 7. Zia-PDF Component System
-
-The product uses the same visual grammar on web, PWA, and Android. Platform layouts may change position or density, but not color meaning, type hierarchy, component geometry, or workflow order.
-
-### Application Shell
-
-* **Web:** A single 64px title/navigation bar contains brand, current tool selector, About, theme, and activity. Tool content begins immediately below it.
-* **Android:** A compact safe-area header and bottom navigation provide Home, Tools, Open, Activity, and Settings. The primary Open action is prominent but never ornamental.
-* **Drawers and Menus:** Use `--bg-elevated`, a 1px border, 12px radius, and only the ambient shadow token. Active rows use `--accent-soft` plus `--accent` text.
-
-### Core Primitives
-
-| Component | Required anatomy |
-| :--- | :--- |
-| Primary button | 44px minimum height, 6px radius, accent fill, 13px/600 label |
-| Secondary button | 44px minimum height, surface fill, 1px border, primary text |
-| Icon button | 40–44px square, 6px radius, visible accessible label |
-| Field | Persistent label, 1px border, 6px radius, accent focus ring, inline help/error |
-| Surface | Secondary background, 1px border, 12px radius, no default shadow |
-| Drop zone | 1px dashed border, clear file-type instruction, keyboard-operable control |
-| Dialog / sheet | Elevated surface, 12px radius on floating edges, focus containment and restoration |
-| Progress | Text status plus visual progress; never communicate progress by animation alone |
-| Status badge | Neutral by default; green, amber, and red are reserved for semantic status only |
-
-### PDF Workflow
-
-Every PDF tool follows one predictable sequence:
-
-1. **Select** — choose or drop supported local files.
-2. **Inspect** — show the selected file, size, page count, and encrypted state.
-3. **Configure** — expose only options relevant to the current operation.
-4. **Process** — lock duplicate actions and show meaningful local progress.
-5. **Complete** — confirm success, then offer preview, share, download, and a new session.
-
-Shared workflow chrome lives in `src/components/tools/shared`. Tool-specific PDF logic stays inside each tool component.
-
-### Tool Library
-
-Tool cards use one blue interaction accent regardless of category. Category remains textual metadata for scanning and filtering; it is not represented by a rainbow palette. Cards are flat modules with a 12px radius, 1px border, compact icon container, and directional affordance.
-
----
-
-## 8. Responsive and Accessibility Contract
-
-* Use a 44px minimum touch target on Android and touch-capable layouts.
-* Keep visible `:focus-visible` outlines on every interactive control.
-* Dialogs must expose `role="dialog"`, `aria-modal="true"`, an accessible title, Escape dismissal where safe, and focus restoration.
-* Progress and result changes use polite live regions. Errors are placed beside the relevant control.
-* At 200% zoom, core tasks must remain usable without horizontal page scrolling.
-* Long filenames truncate visually but retain an accessible full name.
-* Light and dark themes must maintain WCAG AA contrast for body text and controls.
-* `prefers-reduced-motion` reduces all non-essential transitions and disables spatial animation.
-* Motion durations are 100–180ms for controls and no more than 300ms for spatial overlays.
-
----
-
-## 9. Implementation Map
-
-| System responsibility | Source |
-| :--- | :--- |
-| Semantic tokens, theme, focus, reduced motion | `src/index.css` |
-| Tailwind semantic utilities | `tailwind.config.js` |
-| Global web/native shell, menus, history | `src/components/Layout.tsx` |
-| Web workspace and tool library | `src/components/WebView.tsx` |
-| Android home, tool library, activity | `src/components/AndroidView.tsx`, `AndroidToolsView.tsx`, `AndroidHistoryView.tsx` |
-| Tool header, content frame, actions, privacy, completion | `src/components/tools/shared/` |
-| Global preview and quick tool selection | `src/components/PdfPreview.tsx`, `src/App.tsx` |
-
-No design element may add remote fonts, analytics, telemetry, or network-backed assets. Visual enhancements must preserve Zia-PDF's offline and local-processing guarantees.
-
----
-
-## 10. Best Practices Checklist
-- [ ] **Are borders necessary?** Can spacing, layout, or color differences separate elements instead?
-- [ ] **Are there too many colors?** Limit your interface to 1 accent color, 2 text shades, and 2 background shades.
-- [ ] **Is the layout breathing?** Increase white space by at least 20% more than you think you need.
-- [ ] **Are icons uniform?** Keep all icons from the same set, utilizing the same stroke-width (ideally 1.5px or 2px outline icons). Avoid solid filled icons mixed with outline icons.
+## Don't
+- Don't introduce heavy gradients, dark backgrounds, or dense chrome.
+- Don't use bold headline weights or decorative fonts.
+- Don't make buttons pill-shaped or oversized beyond the provided 48px baseline.
+- Don't add heavy outlines, hard shadows, or layered elevation.
+- Don't crowd the hero with extra copy, icons, or secondary navigation.
+- Don't replace the single dominant CTA hierarchy with equal-weight actions.
+- Don't use the hero artwork as a repeatable page background pattern.
