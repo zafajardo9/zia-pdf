@@ -7,9 +7,10 @@
   "scripts": {
     "brand:sync": "node scripts/sync-branding.mjs",
     "tesseract:sync": "node scripts/sync-tesseract.mjs",
-    "predev": "npm run brand:sync && npm run tesseract:sync",
+    "pdfjs:sync": "node scripts/sync-pdfjs-assets.mjs",
+    "predev": "npm run brand:sync && npm run tesseract:sync && npm run pdfjs:sync",
     "dev": "vite",
-    "prebuild": "npm run brand:sync && npm run tesseract:sync",
+    "prebuild": "npm run brand:sync && npm run tesseract:sync && npm run pdfjs:sync",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "test": "vitest run",

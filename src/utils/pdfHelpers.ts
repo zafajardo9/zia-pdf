@@ -24,10 +24,13 @@ export interface PdfMetaData {
   isLocked: boolean
 }
 
-// Fixed cMapUrl for true offline usage (relative to base)
-const getCMapUrl = () => {
+// Fixed asset URLs for true offline usage (relative to base).
+// PDF.js fetches cmaps, standard fonts, and wasm at runtime, so these folders
+// are served from `public/` (see scripts/sync-pdfjs-assets.mjs) and precached
+// by the service worker.
+const getAssetUrl = (folder: string) => {
   const isCapacitor = Capacitor.isNativePlatform();
-  return isCapacitor ? 'cmaps/' : `${import.meta.env.BASE_URL}cmaps/`;
+  return isCapacitor ? folder : `${import.meta.env.BASE_URL}${folder}`;
 };
 
 /**
@@ -173,8 +176,10 @@ export const loadPdfDocument = async (file: File) => {
   try {
     const loadingTask = pdfjsLib.getDocument({
       data: arrayBuffer,
-      cMapUrl: getCMapUrl(),
+      cMapUrl: getAssetUrl('cmaps/'),
       cMapPacked: true,
+      standardFontDataUrl: getAssetUrl('standard_fonts/'),
+      wasmUrl: getAssetUrl('wasm/'),
     });
     return await loadingTask.promise;
   } catch (error: any) {
@@ -183,8 +188,10 @@ export const loadPdfDocument = async (file: File) => {
     }
     const loadingTask = pdfjsLib.getDocument({
       data: arrayBuffer,
-      cMapUrl: getCMapUrl(),
+      cMapUrl: getAssetUrl('cmaps/'),
       cMapPacked: true,
+      standardFontDataUrl: getAssetUrl('standard_fonts/'),
+      wasmUrl: getAssetUrl('wasm/'),
       stopAtErrors: false,
     });
     return await loadingTask.promise;
@@ -276,8 +283,10 @@ export const getPdfMetaData = async (file: File): Promise<PdfMetaData> => {
   try {
     const loadingTask = pdfjsLib.getDocument({
       data: await file.arrayBuffer(),
-      cMapUrl: getCMapUrl(),
+      cMapUrl: getAssetUrl('cmaps/'),
       cMapPacked: true,
+      standardFontDataUrl: getAssetUrl('standard_fonts/'),
+      wasmUrl: getAssetUrl('wasm/'),
     });
     
     loadingTask.onPassword = () => { throw new Error('PASSWORD_REQUIRED'); };
@@ -304,8 +313,10 @@ export const unlockPdf = async (file: File, password: string): Promise<PdfMetaDa
     const loadingTask = pdfjsLib.getDocument({
       data: arrayBuffer,
       password: password,
-      cMapUrl: getCMapUrl(),
+      cMapUrl: getAssetUrl('cmaps/'),
       cMapPacked: true,
+      standardFontDataUrl: getAssetUrl('standard_fonts/'),
+      wasmUrl: getAssetUrl('wasm/'),
     });
 
     const pdf = await loadingTask.promise;

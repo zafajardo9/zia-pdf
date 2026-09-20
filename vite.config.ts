@@ -24,6 +24,13 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       workbox: {
+        // PDF.js (worker, cmaps, wasm, standard fonts) and Tesseract assets use
+        // file extensions that Workbox's default globPatterns
+        // (`**/*.{js,wasm,css,html}`) does not match. Without listing them they
+        // are never precached and stay network-only, so opening a PDF offline
+        // fails with "Setting up fake worker failed: Failed to fetch
+        // dynamically imported module" because the `.mjs` worker is unavailable.
+        globPatterns: ['**/*.{js,mjs,css,html,ico,png,svg,woff,woff2,ttf,pfb,bcmap,wasm,gz}'],
         // OCR assets (Tesseract core + language data) exceed Workbox's 2 MiB
         // default, so raise the limit so they are precached and work offline.
         maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
